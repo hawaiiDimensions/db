@@ -5,3 +5,4 @@ library(RCurl)
 colEvent <- getURL('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?gid=0&single=true&output=csv')
 colEvent <- read.csv(textConnection(colEvent))
 
+head(colEvent)
