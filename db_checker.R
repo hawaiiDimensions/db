@@ -14,15 +14,48 @@ sapply(colEvent, class)
 str(colEvent)
 head(colEvent)
 db_status <- df_status(colEvent)
-## create dataframe of rows with empty values in "Collector"; 
-## return corrected indices of the rows of invalid collector columns
-inval_col <- colEvent[,"Collector"] == ""
-INVALID_COLLECTOR <- which(inval_col, arr.ind = TRUE, useNames = TRUE) + 1
-## create dataframe of row with empty values in "Location"
-## return corrected indices of the rows of invalid location columns
-inval_plo <- colEvent[,"Plot"] == ""
-INVALID_PLOT <- which(inval_plo, arr.ind = TRUE, useNames = TRUE) + 1
+## create dataframe of row with empty values in "Plot"
+## return corrected indices of the rows of empty plot columns
+empt_plo <- colEvent[,"Plot"] == ""
+EMPTY_PLOT <- which(empt_plo, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_PLOT
 ## create dataframe of row with empty values in "Date"
-## return corrected indices of the rows of invalid date columns
-inval_dat <- colEvent[,"Date"] == ""
-INVALID_DATE <- which(inval_dat, arr.ind = TRUE, useNames = TRUE) + 1
+## return corrected indices of the rows of empty date columns
+empt_dat <- colEvent[,"Date"] == ""
+EMPTY_DATE <- which(empt_dat, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_DATE
+## create dataframe of rows with empty values in "Collector"; 
+## return corrected indices of the rows of empty collector columns
+empt_col <- colEvent[,"Collector"] == ""
+EMPTY_COLLECTOR <- which(empt_col, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_COLLECTOR
+## create dataframe of rows with empty values in "Method";
+## return corrected indices of the row of empty method columns
+empt_met <- colEvent[,"Method"] == ""
+EMPTY_METHOD <- which(empt_met, arr.ind = TRUE, useNames = TRUE) +1
+EMPTY_METHOD
+## create dataframe of beating entries, create vector of 
+## row indices of said entries
+beat_col <- colEvent[,"Method"] == "beating"
+beat_ind <- which(beat_col, arr.ind = TRUE, useNames = TRUE)
+## find indices of empty entries of any of the four beating 
+## information columns
+beat_pla <- colEvent[,"Plant"] == ""
+empt_pla <- which(beat_pla, arr.ind = TRUE, useNames = TRUE)
+beat_dur <- colEvent[,"BeatingDuration"] == ""
+empt_dur <- which(beat_dur, arr.ind = TRUE, useNames = TRUE)
+beat_beg <- colEvent[,"TimeBegin"] == ""
+empt_beg <- which(beat_beg, arr.ind = TRUE, useNames = TRUE)
+beat_end <- colEvent[,"TimeEnd"] == ""
+empt_end <- which(beat_end, arr.ind = TRUE, useNames = TRUE)
+## combine vectors of indices of empty entries of
+## beating information colums and create vector of 
+## unique index values
+beat_var <- c(empt_end, empt_beg, empt_dur, empt_pla)
+uni_beat_var <- unique(beat_var)
+## combine vector of the indices of empty beating information
+## indices with the beating rows indices and isolate the 
+## duplicate values; adjust for accuracy
+empt_beat <- c(beat_ind, uni_beat_var)
+EMPTY_BEATING <- unique(empt_beat[duplicated(empt_beat)]) + 1
+EMPTY_BEATING
