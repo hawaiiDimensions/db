@@ -14,7 +14,15 @@ sapply(colEvent, class)
 str(colEvent)
 head(colEvent)
 db_status <- df_status(colEvent)
-## create dataframe of rows with empty values in "Collector"
+## create dataframe of rows with empty values in "Collector"; 
+## return corrected indices of the rows of invalid collector columns
 inval_col <- colEvent[,"Collector"] == ""
-## return indices of the rows of invalid collector columns
-which(inval_col, arr.ind = TRUE, useNames = TRUE)
+INVALID_COLLECTOR <- which(inval_col, arr.ind = TRUE, useNames = TRUE) + 1
+## create dataframe of row with empty values in "Location"
+## return corrected indices of the rows of invalid location columns
+inval_plo <- colEvent[,"Plot"] == ""
+INVALID_PLOT <- which(inval_plo, arr.ind = TRUE, useNames = TRUE) + 1
+## create dataframe of row with empty values in "Date"
+## return corrected indices of the rows of invalid date columns
+inval_dat <- colEvent[,"Date"] == ""
+INVALID_DATE <- which(inval_dat, arr.ind = TRUE, useNames = TRUE) + 1
