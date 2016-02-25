@@ -9,6 +9,8 @@ colEvent <- read.csv(textConnection(colEvent))
 colEvent <- table(colEvent)
 ## convert factors to characters
 colEvent[] <- lapply(colEvent, as.character)
+## convert na values to 0
+colEvent[is.na(colEvent)] <- 0
 ## diagnostic functions to keep in handy
 sapply(colEvent, class)
 str(colEvent)
@@ -34,6 +36,21 @@ EMPTY_COLLECTOR
 empt_met <- colEvent[,"Method"] == ""
 EMPTY_METHOD <- which(empt_met, arr.ind = TRUE, useNames = TRUE) +1
 EMPTY_METHOD
+## create dataframe of rows with empty values in "Whereabouts"; 
+## return corrected indices of the rows of empty whereabouts columns
+empt_whe <- colEvent[,"Whereabouts"] == ""
+EMPTY_WHEREABOUTS <- which(empt_whe, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_WHEREABOUTS
+## create dataframe of rows with empty values in "SamplingRound"; 
+## return corrected indices of the rows of empty smapling round columns
+empt_sam <- colEvent[,"SamplingRound"] == c(0)
+EMPTY_SAMPLINGROUND <- which(empt_sam, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_SAMPLINGROUND
+## create dataframe of rows with empty values in "NoOfVials"; 
+## return corrected indices of the rows of empty vial number columns
+empt_via <- colEvent[,"NoOfVials"] == ""
+EMPTY_VIALNUM <- which(empt_via, arr.ind = TRUE, useNames = TRUE) + 1
+EMPTY_VIALNUM
 ## create dataframe of beating entries, create vector of 
 ## row indices of said entries
 beat_col <- colEvent[,"Method"] == "beating"
@@ -59,3 +76,11 @@ uni_beat_var <- unique(beat_var)
 empt_beat <- c(beat_ind, uni_beat_var)
 EMPTY_BEATING <- unique(empt_beat[duplicated(empt_beat)]) + 1
 EMPTY_BEATING
+
+## function to extract indices of empty row entries
+empty_indices <- function(column, dataframe) {
+    empty_rows <- dataframe[,column] == ""
+    indices <- which(empty_rows, arr.ind = TRUE, useNames = TRUE) + 1
+    return(indices)
+}
+empty_indices(column_number, colEvent)
