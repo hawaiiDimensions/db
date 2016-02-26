@@ -10,7 +10,7 @@ colEvent <- table(colEvent)
 ## convert factors to characters
 colEvent[] <- lapply(colEvent, as.character)
 ## convert na values to 0
-colEvent[is.na(colEvent)] <- 0
+colEvent[is.na(colEvent)] <- ""
 ## diagnostic functions to keep in handy
 sapply(colEvent, class)
 str(colEvent)
@@ -43,7 +43,7 @@ EMPTY_WHEREABOUTS <- which(empt_whe, arr.ind = TRUE, useNames = TRUE) + 1
 EMPTY_WHEREABOUTS
 ## create dataframe of rows with empty values in "SamplingRound"; 
 ## return corrected indices of the rows of empty smapling round columns
-empt_sam <- colEvent[,"SamplingRound"] == c(0)
+empt_sam <- colEvent[,"SamplingRound"] == ""
 EMPTY_SAMPLINGROUND <- which(empt_sam, arr.ind = TRUE, useNames = TRUE) + 1
 EMPTY_SAMPLINGROUND
 ## create dataframe of rows with empty values in "NoOfVials"; 
@@ -76,11 +76,26 @@ uni_beat_var <- unique(beat_var)
 empt_beat <- c(beat_ind, uni_beat_var)
 EMPTY_BEATING <- unique(empt_beat[duplicated(empt_beat)]) + 1
 EMPTY_BEATING
-
 ## function to extract indices of empty row entries
 empty_indices <- function(column, dataframe) {
     empty_rows <- dataframe[,column] == ""
     indices <- which(empty_rows, arr.ind = TRUE, useNames = TRUE) + 1
     return(indices)
 }
-empty_indices(column_number, colEvent)
+## function to extract row indices of any empty entries in relevant
+## columns to the set of rows that have a certain entry in another
+## column; e.g. the row indices of empty entries of columns relevant
+## to the method "beating".
+empty_method <- function(column, method, dataframe, metavector) {
+    method_col <- dataframe[,column] == method
+    method_ind <- which(method_col, arr.ind = TRUE, useNames = TRUE)
+    method_vec <- dataframe[,metavector] == ""
+    vector_ind <- which(method_vec, arr.ind = TRUE, useNames = TRUE)
+    unique_vec <- unique(vector_ind)
+    empty_ind <- c(method_ind, unique_vec)
+    empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
+    return(empty_met)
+}
+
+empty_method("Method", "beating", colEvent, "TimeEnd")
+
