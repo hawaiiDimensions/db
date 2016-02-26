@@ -94,8 +94,8 @@ empty_method <- function(column, method, dataframe, metavector) {
     unique_vec <- unique(vector_ind)
     empty_ind <- c(method_ind, unique_vec)
     empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
+    empty_met <- sort(empty_met, decreasing = FALSE)
     return(empty_met)
 }
-
-empty_method("Method", "beating", colEvent, "TimeEnd")
-
+meta_beat <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
+empty_method("Method", "beating", colEvent, meta_beat)
