@@ -96,10 +96,10 @@ empty_indices <- function(column, dataframe) {
 ## columns to the subset of rows that have a certain entry in another
 ## column; e.g. the row indices of empty entries of columns relevant
 ## to the method "beating".
-empty_method <- function(column, method, dataframe, metavector) {
+empty_method <- function(dataframe, column, method, metavector) {
     method_col <- dataframe[,column] == method
     method_ind <- which(method_col, arr.ind = TRUE, useNames = TRUE)
-    method_vec <- apply(colEvent[metavector], 2, function(x) which(x == "",arr.ind = TRUE, useName = TRUE))
+    method_vec <- apply(dataframe[metavector], 2, function(x) which(x == "",arr.ind = TRUE, useName = TRUE))
     unique_vec <- unique(unlist(method_vec, recursive = TRUE, use.names = FALSE))
     empty_ind <- c(method_ind, unique_vec)
     empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
@@ -108,5 +108,15 @@ empty_method <- function(column, method, dataframe, metavector) {
 }
 
 metavector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
-empty_method("Method", "beating", colEvent, metavector)
+empty_method(colEvent, "Method", "beating", metavector)
 
+invalid_indices <- function(dataframe, column, correctvector){
+    invalid_ind <- unique (grep(paste(correctvector,collapse="|"), dataframe$column, value=TRUE, invert = TRUE))
+    return(invalid_ind)
+}
+correct_where <- c("BERKELEY", "UHH", "Hilgard 220", "Hilo Boys (in packing box)")
+invalid_indices(colEvent, "Whereabouts", correct_where)
+invalid_ind <- unique (grep(paste(correctvector,collapse="|"), 
+                        dataframe$column, value=TRUE, invert = TRUE))
+unique (grep(paste(correct_where,collapse="|"), 
+             colEvent["Whereabouts"], invert = TRUE))
