@@ -87,7 +87,9 @@ EMPTY_BEATING
 
 ## function to extract indices of empty row entries
 empty_indices <- function(dataframe, column) {
+    # logical vector of whether entry is empy or not
     empty_rows <- dataframe[,column] == ""
+    # indices, adjusted
     indices <- which(empty_rows) + 1
     return(indices)
 }
@@ -98,25 +100,55 @@ empty_indices(colEvent, "Whereabouts")
 ## column; e.g. the row indices of empty entries of columns relevant
 ## to the method "beating".
 empty_method <- function(dataframe, column, method, metavector) {
+    # logical vector of entries corresponding to method
     method_col <- dataframe[,column] == method
+    # unadjusted indices of entries
     method_ind <- which(method_col)
+    # list of vectors of unadjusted indices of empty entries in factor columns
     method_vec <- apply(dataframe[metavector], 2, function(x) which(x == ""))
+    # split the list into seperate vector elements
     unique_vec <- unique(unlist(method_vec, recursive = TRUE))
+    # combine the unadjusted indices of the method entries and factor entries
     empty_ind <- c(method_ind, unique_vec)
+    # find unique indices of the combined vector and adjust for accuracy
     empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
+    # sort the indices, descending = FALSE
     empty_met <- sort(empty_met)
     return(empty_met)
 }
-
 metavector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
 empty_method(colEvent, "Method", "beating", metavector)
 
 # function to retrieve row indices of entries not matching a predetermined 
 # list of possible valid entries in a certain column.
-invalid_indices <- function(dataframe, column, correctvector){
+misspelled_indices <- function(dataframe, column, correctvector){
     return(which(!dataframe[,column] %in% correctvector ) + 1)
 }
+correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+misspelled_indices(colEvent, "Whereabouts", correct_where)
 
-correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN")
-invalid_indices(colEvent, "Whereabouts", correct_where)
+# function to create list with vectors corresponding to certain columns where
+# empty entries are an issue and rows containing indice entries of empty row entries
+empty_list <- function(dataframe, columnvector){
+    return(apply(dataframe[columnvector], 2, function(x) which(x == "")))
+}
+columnvector <- c("Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
+empty_list(colEvent, columnvector)
 
+# function to create dataframe with vectors corresponding to certain columns where
+# empty entries are an issue and rows containing indice entries of empty row entries
+empty_frame <- function(dataframe, columnvector){
+    split_list <- list2env(empty_list(dataframe, columnvector),.GlobalEnv)
+    padded_list <- rbind.fill(split_list)
+    return(padded_list)
+}
+    # return(data.frame(padded_list[c(1:length(padded_list))]))
+
+empty_frame(colEvent, columnvector)
+str(rbind(empty_list(colEvent, columnvector)))
+
+INVALID_colEvent <- rbind.fill(data.frame(EMPTY_PLOT), data.frame(EMPTY_DATE), data.frame(EMPTY_COLLECTOR), 
+                               data.frame(EMPTY_METHOD), data.frame(EMPTY_WHEREABOUTS), 
+                               data.frame(EMPTY_SAMPLINGROUND), data.frame(EMPTY_VIALNUM), 
+                               data.frame(EMPTY_BEATING))
+head(INVALID_colEvent)
