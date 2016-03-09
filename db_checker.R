@@ -86,15 +86,24 @@ empty_indices <- function(column, dataframe) {
 ## columns to the set of rows that have a certain entry in another
 ## column; e.g. the row indices of empty entries of columns relevant
 ## to the method "beating".
+# empty_method <- function(column, method, dataframe, metavector) {
+#     method_col <- dataframe[,column] == method
+#     method_ind <- which(method_col, arr.ind = TRUE, useNames = TRUE)
+#     method_vec <- dataframe[,metavector] == ""
+#     vector_ind <- which(method_vec, arr.ind = TRUE, useNames = TRUE)
+#     unique_vec <- unique(vector_ind)
+#     empty_ind <- c(method_ind, unique_vec)
+#     empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
+#     empty_met <- sort(empty_met, decreasing = FALSE)
+#     return(empty_met)
+# }
 empty_method <- function(column, method, dataframe, metavector) {
     method_col <- dataframe[,column] == method
     method_ind <- which(method_col, arr.ind = TRUE, useNames = TRUE)
-    method_vec <- dataframe[,metavector] == ""
-    vector_ind <- which(method_vec, arr.ind = TRUE, useNames = TRUE)
-    unique_vec <- unique(vector_ind)
-    empty_ind <- c(method_ind, unique_vec)
-    empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
-    empty_met <- sort(empty_met, decreasing = FALSE)
+#     method_vec <- apply(dataframe[,metavector], 1, function(x) dataframe[,x] == "")
+#     vector_ind <- which(apply(dataframe[,metavector], 1, function(x) dataframe[,x] == ""), arr.ind = TRUE, useNames = TRUE)
+    unique_vec <- unique(which(apply(dataframe[,metavector], 1, function(x) c(dataframe[,x] == "")), arr.ind = TRUE, useNames = TRUE))
+    empty_met <- sort(unique(c(method_ind, unique(vector_ind))[duplicated(c(method_ind, unique(vector_ind)))]) + 1, decreasing = FALSE)
     return(empty_met)
 }
 meta_beat <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
