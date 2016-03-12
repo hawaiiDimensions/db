@@ -136,3 +136,16 @@ ListInvalid(colEvent, columnvector)
   # source(), setwd(oldwd)
   # STOP 
 
+HDIMempty <- function(dataframe, column){
+    # Extracts HDIM numbers of empty entries within a target column.
+    # 
+    # Args: 
+    #   dataframe: name of the target dataframe
+    #   column: name of the target column
+    # 
+    # Returns: 
+    #   Vector of HDIM numbers of empty entries within a column.
+    empty.indice <- which(dataframe[, column] == "")
+    return(dataframe[empty.indice,]$HDIM)
+}
+
