@@ -93,8 +93,8 @@ IndiceMisspelled <- function(dataframe, column, vector){
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 IndiceMisspelled(colEvent, "Whereabouts", correct_where)
 
-ListInvalid <- function(dataframe, vector){
-  # Creates list of row indices of empty entries in multiple columns
+ListEmptyIndice <- function(dataframe, vector){
+  # Creates list of row indices of empty entries in multiple columns.
   # 
   # Args:
   #   dataframe: The name of the target dataframe.
@@ -105,7 +105,7 @@ ListInvalid <- function(dataframe, vector){
   return(apply(dataframe[, vector], 2, function(x) which(x == "") + 1))
 }
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
-ListInvalid(colEvent, columnvector)
+ListEmptyIndice(colEvent, columnvector)
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
@@ -166,18 +166,31 @@ HDIMmethod <- function(dataframe, column, method, vector){
 HDIMmethod(colEvent, "Method", "beating", metavector)
 
 HDIMmisspelled <- function(dataframe, column, vector){
-    # Extracts HDIM numbers of misspelled entries by column.
-    # 
-    # Args:
-    #   dataframe: The name of the target dataframe.
-    #   column: The name of the target column within the dataframe.
-    #   vector: A vector of the accepted entries for the target column.
-    #   
-    # Returns: 
-    #   Vector of HDIM numbers of misspelled entries within a column.
-    indice.misspelled <- (which(!dataframe[, column] %in% vector) + 1)
-    return(dataframe[indice.misspelled,]$HDIM)
+  # Extracts HDIM numbers of misspelled entries by column.
+  # 
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   column: The name of the target column within the dataframe.
+  #   vector: A vector of the accepted entries for the target column.
+  #   
+  # Returns: 
+  #   Vector of HDIM numbers of misspelled entries within a column.
+  indice.misspelled <- (which(!dataframe[, column] %in% vector))
+  return(dataframe[indice.misspelled,]$HDIM)
 }
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 HDIMmisspelled(colEvent, "Whereabouts", correct_where)
 
+ListEmptyHDIM <- function(dataframe, vector){
+  # Creates list of HDIM numbers of empty entries in multiple columns.
+  # 
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   vector: The vector of names of target columns within the dataframe.
+  # 
+  # Returns:
+  #   List of vectors of HDIM numbers named by the targeted column.
+    return(apply(dataframe[, vector], 2, function(x) dataframe[which(x == ""),]$HDIM))
+}
+columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
+ListEmptyHDIM(colEvent, columnvector)
