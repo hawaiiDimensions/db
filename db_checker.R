@@ -1,25 +1,25 @@
-## package to interface with web
+  # package to interface with web
 library(RCurl)
-## package to play around with dataframes
+  # package to play around with dataframes
 install.packages("funModeling")
-## retrive sheets from google drive (requires sheet be published as a CSV)
+  # retrive sheets from google drive (requires sheet be published as a CSV)
 colEvent <- getURL('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?gid=0&single=true&output=csv')
 colEvent <- read.csv(textConnection(colEvent))
-## convert to dataframe
+  # convert to dataframe
 colEvent <- table(colEvent)
-## convert factors to characters
+  # convert factors to characters
 colEvent[] <- lapply(colEvent, as.character)
-## convert null values to 0
+  # convert null values to 0
 colEvent[is.na(colEvent)] <- ""
-## diagnostic functions to keep in handy
+  # diagnostic functions to keep in handy
 sapply(colEvent, class)
 str(colEvent)
 head(colEvent)
 db_status <- df_status(colEvent)
 
-## create dataframe of row with empty values in "Plot, Date, 
-## Collector, Method, Whereabouts, SamplingRound, NoOfVials"
-## return corrected indices of the rows of empty column
+  # create dataframes of columns with empty values in "Plot, Date,
+  # Collector, Method, Whereabouts, SamplingRound, NoOfVials"
+  # return corrected indices of the rows of empty column
 empt_hdi <- which(colEvent[,"HDIM"] == "") + 1
 empt_plo <- which(colEvent[,"Plot"] == "") + 1
 empt_dat <- which(colEvent[,"Date"] == "") + 1
@@ -29,89 +29,110 @@ empt_whe <- which(colEvent[,"Whereabouts"] == "") + 1
 empt_sam <- which(colEvent[,"SamplingRound"] == "") + 1
 empt_via <- which(colEvent[,"NoOfVials"] == "") + 1
 
-## create dataframe of beating entries, create vector of 
-## row indices of said entries
+  # create dataframe of beating entries; create vector of 
+  # row indices of said entries
 beat_ind <- which(colEvent[,"Method"] == "beating")
-## find indices of empty entries of any of the four beating 
-## information columns
+  # find indices of empty entries of any of the four beating 
+  # information columns
 beat_pla <- which(colEvent[,"Plant"] == "")
 beat_dur <- which(colEvent[,"BeatingDuration"] == "")
 beat_beg <- which(colEvent[,"TimeBegin"] == "")
 beat_end <- which(colEvent[,"TimeEnd"] == "")
-## combine vectors of indices of empty entries of
-## beating information colums; create vector of 
-## unique index values
+  # combine vectors of indices of empty entries of
+  # beating information colums; create vector of 
+  # unique index values
 beat_var <- unique(c(beat_end, beat_beg, beat_dur, beat_pla))
-## combine vector of the indices of empty beating information
-## indices with the beating rows indices and isolate the 
-## duplicate values; adjust for accuracy
+  # combine vector of the indices of empty beating information
+  # indices with the beating rows indices and isolate the 
+  # duplicate values; adjust for accuracy
 beat_emp <- c(beat_ind, uni_beat_var)
 empt_bea <- sort(unique(beat_emp[duplicated(beat_emp)]) + 1)
 
-## function to extract indices of empty row entries
-## logical vector of whether entry is empy or not
-## indices, adjusted
-empty_indices <- function(dataframe, column) {
-    return(which(dataframe[,column] == "") + 1)
+IndiceEmpty <- function(dataframe, column) {
+    # Extracts row indices of all empty entries by column.
+    # 
+    # Args: 
+    #   dataframe: name of the target dataframe
+    #   column: name of the target column within the dataframe
+    #
+    # Returns:
+    #   Vector of sorted indices of empty entries in a column. 
+    return(which(dataframe[, column] == "") + 1)
 }
-empty_indices(colEvent, "Whereabouts")
+IndiceEmpty(colEvent, "Plot")
 
-## function to extract row indices of any empty entries in relevant
-## columns to the subset of rows that have a certain entry in another
-## column; e.g. the row indices of empty entries of columns relevant
-## to the method "beating".
-empty_method <- function(dataframe, column, method, metavector) {
-    # logical vector of entries corresponding to method;
-    # unadjusted indices of entries
-    method_ind <- which(dataframe[,column] == method)
-    # list of vectors of unadjusted indices of empty entries in factor columns
-    method_vec <- apply(dataframe[metavector], 2, function(x) which(x == ""))
-    # split the list into seperate vector elements
-    unique_vec <- unique(unlist(method_vec, recursive = TRUE))
-    # combine the unadjusted indices of the method entries and factor entries
-    empty_ind <- c(method_ind, unique_vec)
-    # find unique indices of the combined vector and adjust for accuracy
-    empty_met <- unique(empty_ind[duplicated(empty_ind)]) + 1
-    # sort the indices, descending = FALSE
-    empty_met <- sort(empty_met)
-    return(empty_met)
+IndiceMethod <- function(dataframe, column, method, vector) {
+    # Extracts row indices of empty entries contingent to method.
+    #
+    # Args:
+    #   dataframe: name of the target dataframe
+    #   column: name of the method column within the dataframe
+    #   method: name of the target method in the method column
+    #   vector: vector of the names of the contingent columns
+    #               to the target method
+    #   
+    # Returns:
+    #   Vector of sorted row indices of empty entries in all columns contingent
+    #   to the target method.
+    method.ind <- which(dataframe[, column] == method)
+    method.vec <- apply(dataframe[vector], 2, function(x) which(x == ""))
+    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
+    empty.met <- sort(unique(empty.ind[duplicated(empty.ind)]) + 1)
+    return(empty.met)
 }
 metavector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
-empty_method(colEvent, "Method", "beating", metavector)
+IndiceMethod(colEvent, "Method", "beating", metavector)
 
-## function to retrieve row indices of entries not matching a predetermined 
-## list of possible valid entries in a certain column.
-misspelled_indices <- function(dataframe, column, correctvector){
-    # logical vector of pattern matches of correctvector in dataframe column
-    # return adjusted row indices from logical vector
-    return(which(!dataframe[,column] %in% correctvector ) + 1)
+IndiceMisspelled <- function(dataframe, column, vector){
+    # Extracts row indices of misspelled entries by column.
+    # 
+    # Args:
+    #   dataframe: name of the target dataframe
+    #   column: name of the target column within the dataframe
+    #   vector: vector of the accepted entries for the target column
+    #   
+    # Returns: 
+    #   Vector of sorted row indices of misspelled entries within a column.
+    return(which(!dataframe[, column] %in% vector) + 1)
 }
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-misspelled_indices(colEvent, "Whereabouts", correct_where)
+IndiceMisspelled(colEvent, "Whereabouts", correct_where)
 
-## function to create list with vectors corresponding to certain columns where
-## empty entries are an issue and rows containing indice entries of empty row entries
-empty_list <- function(dataframe, columnvector){
-    # apply empty_indices to each column of dataframe and return list of results
-    return(apply(dataframe[columnvector], 2, function(x) which(x == "")))
+ListInvalid <- function(dataframe, vector){
+    # Creates list of row indices of empty entries in multiple columns
+    # 
+    # Args:
+    #   dataframe: name of the target dataframe
+    #   vector: vector of names of target columns within the dataframe
+    # 
+    # Returns:
+    #   List of vectors of sorted empty row indices named by the targeted column.
+    return(apply(dataframe[, vector], 2, function(x) which(x == "") + 1))
 }
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
-empty_list(colEvent, columnvector)
+ListInvalid(colEvent, columnvector)
 
-# function to create dataframe with vectors corresponding to certain columns where
-# empty entries are an issue and rows containing indice entries of empty row entries
-empty_frame <- function(dataframe, columnvector){
-    split_list <- list2env(empty_list(dataframe, columnvector),.GlobalEnv)
-    padded_list <- rbind.fill(split_list)
-    return(padded_list)
-}
-    # return(data.frame(padded_list[c(1:length(padded_list))]))
+  # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
+  #
+  # modfy functions to return HDIM number instead of row indices
+  # modify empty_list function to return adjusted row indices - DONE
+  # look at Google R Style Guide - DONE
+  # date.mispelling function -> library(stringr) 
+  # str_split() can unpack date entries into a new dataframe for analysis
+  # Use Jupyter notebook to initialize code and to introduce package to laymen
+  # Comprehensive list of Plot names located in Siteinfo Google Drive file 
+  # use source() to initialize all relevant function from a seperate script 
+  # file (.R) 
+  # output invalid entry information in a comprehensive list that can be 
+  # returned with a wrapper function
 
-empty_frame(colEvent, columnvector)
-str(rbind(empty_list(colEvent, columnvector)))
+  # 03.10.16 NOTES FROM MEETING WITH ROMINGER - HILGARD 305
+  # Function to return list of all mispellings and empty entries by HDIM number 
+  # Ways to source functions
+  # list.files(file_location)
+  # oldwd() < - setwd(new_directory)
+  # files2load <- c(file1, file2, file3)
+  # lapply(files2load, source)
+  # source(), setwd(oldwd)
+  # STOP 
 
-INVALID_colEvent <- rbind.fill(data.frame(empt_hdi), data.frame(empt_plo), data.frame(empt_dat), 
-                               data.frame(empt_col), data.frame(empt_met), data.frame(empt_whe), 
-                               data.frame(empt_sam), data.frame(empt_via), data.frame(empt_bea))
-head(INVALID_colEvent)
-df_status(INVALID_colEvent)
