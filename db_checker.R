@@ -144,6 +144,26 @@ HDIMempty <- function(dataframe, column){
 }
 HDIMempty(colEvent, "Whereabouts")
 
+HDIMmethod <- function(dataframe, column, method, vector){
+  # Extracts HDIM numbers of empty entries contingent to method.
+  #
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   column: The name of the method column within the dataframe.
+  #   method: The name of the target method in the method column.
+  #   vector: The vector of the names of the contingent columns
+  #           to the target method.
+  #   
+  # Returns:
+  #   Vector of HDIM numbers of empty entries in all columns contingent
+  #   to the target method.
+  method.ind <- which(dataframe[, column] == method)
+  method.vec <- apply(dataframe[vector], 2, function(x) which(x == ""))
+  empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
+  empt.met <- (dataframe[unique(empty.ind[duplicated(empty.ind)]),]$HDIM)
+  return(empt.met)
+}
+HDIMmethod(colEvent, "Method", "beating", metavector)
 
 
 
