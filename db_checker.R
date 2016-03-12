@@ -109,7 +109,7 @@ ListInvalid(colEvent, columnvector)
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
-# modfy functions to return HDIM number instead of row indices
+# modfy functions to return HDIM number instead of row indices - 
 # modify empty_list function to return adjusted row indices - DONE
 # look at Google R Style Guide - DONE
 # date.mispelling function -> library(stringr) 
@@ -165,5 +165,19 @@ HDIMmethod <- function(dataframe, column, method, vector){
 }
 HDIMmethod(colEvent, "Method", "beating", metavector)
 
-
+HDIMmisspelled <- function(dataframe, column, vector){
+    # Extracts HDIM numbers of misspelled entries by column.
+    # 
+    # Args:
+    #   dataframe: The name of the target dataframe.
+    #   column: The name of the target column within the dataframe.
+    #   vector: A vector of the accepted entries for the target column.
+    #   
+    # Returns: 
+    #   Vector of HDIM numbers of misspelled entries within a column.
+    indice.misspelled <- (which(!dataframe[, column] %in% vector) + 1)
+    return(dataframe[indice.misspelled,]$HDIM)
+}
+correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+HDIMmisspelled(colEvent, "Whereabouts", correct_where)
 
