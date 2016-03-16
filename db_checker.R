@@ -83,8 +83,8 @@ IndiceMethod <- function(dataframe, column, method, vector) {
   empty.met <- sort(unique(empty.ind[duplicated(empty.ind)]) + 1)
   return(empty.met)
 }
-metavector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
-IndiceMethod(colEvent, "Method", "beating", metavector)
+beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
+IndiceMethod(colEvent, "Method", "beating", beat.vector)
 
 IndiceMisspelled <- function(dataframe, column, vector){
   # Extracts row indices of misspelled entries by column.
@@ -98,9 +98,8 @@ IndiceMisspelled <- function(dataframe, column, vector){
   #   Vector of sorted row indices of misspelled entries within a column.
   return(which(!dataframe[, column] %in% vector) + 1)
 }
-correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-IndiceMisspelled(colEvent, "Whereabouts", correct_where)
-correct_plot <- siteInfo()
+correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+IndiceMisspelled(colEvent, "Whereabouts", correct.where)
 
 ListEmptyIndice <- function(dataframe, vector){
   # Creates list of row indices of empty entries in multiple columns.
@@ -120,7 +119,7 @@ ListEmptyIndice(colEvent, columnvector)
 #   
 # modfy functions to return HDIM number instead of row indices
 # modify empty_list function to return adjusted row indices
-# look at Google R Style Guide - DONE
+# look at Google R Style Guide 
 # date.mispelling function -> library(stringr) 
 # str_split() can unpack date entries into a new dataframe for analysis
 # Use Jupyter notebook to initialize code and to introduce package to laymen
@@ -188,8 +187,7 @@ HDIMmisspelled <- function(dataframe, column, vector){
   return(dataframe[indice.misspelled,]$HDIM)
 }
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-correct_plot <- c(unlist(siteInfo[, "Plot"]))
-HDIMmisspelled(colEvent, "Plot", plot_vector)  # Output indicates inconsistent data entry format
+HDIMmisspelled(colEvent, "Plot", correct_where)  # Output indicates inconsistent data entry format
 
 
 ListEmptyHDIM <- function(dataframe, vector){
@@ -206,7 +204,23 @@ ListEmptyHDIM <- function(dataframe, vector){
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, columnvector)
 
-siteInfo["HDIM", ]
+UniqueEntries <- function(dataframe, column){
+  # Extracts all unique elements of a column within a dataframe.
+  # 
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   column: The name of the column from which the values are to be extracted.
+  #
+  # Returns:
+  #   Vector of unique elements of the target column within the dataframe.
+  return(unique(c(unlist(dataframe[, column]))))
+}
+UniqueEntries(SiteInfo, "Plot")
+correct.plot <- unique(c(unlist(siteInfo[, "Plot"]))) 
+# Vector of correct plots from Site Info file - dissimilar to plots listed in
+# the google drive file "Collection Events".
+correct.method <- unique(c(unlist(colEvent[, "Method"]))) 
+# Vector of unvalidated correct method names
 
 
 MisspelledDate <- function(dataframe, column, vector)
