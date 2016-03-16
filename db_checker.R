@@ -189,7 +189,6 @@ HDIMmisspelled <- function(dataframe, column, vector){
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 HDIMmisspelled(colEvent, "Plot", correct_where)  # Output indicates inconsistent data entry format
 
-
 ListEmptyHDIM <- function(dataframe, vector){
   # Creates list of HDIM numbers of empty entries in multiple columns.
   # 
@@ -222,6 +221,31 @@ correct.plot <- unique(c(unlist(siteInfo[, "Plot"])))
 correct.method <- unique(c(unlist(colEvent[, "Method"]))) 
 # Vector of unvalidated correct method names
 
+InvalidDateInd <- function(dataframe, date.column){
+  # Extracts indices of invalid date entries in the date column of a dataframe.
+  #
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   date.column: The name of the target date column.
+  #  
+  # Returns:
+  #   Numerical vector of indices of invalid date entries in the columm.
+  dates <- (as.Date(dataframe[, date.column], format = "%m/%d/%Y" ))
+  return(which(is.na(as.character(dates)) == "TRUE") + 1)
+}
+InvalidDateInd(colEvent, "Date") # Only a rudimentary date format check.
 
-MisspelledDate <- function(dataframe, column, vector)
-
+InvalidDateHDIM <- function(dataframe, date.column){
+  # Retrieves HDIM numbers of invalid date entries in a dataframe date column.
+  #
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   date.column: The name of the target date column.
+  #  
+  # Returns:
+  #   Numerical vector of HIDM numbers of invalid date entries in the columm.
+  dates <- (as.Date(dataframe[, date.column], format = "%m/%d/%Y" ))
+  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+  return(dataframe[dates.indices,]$HDIM)
+} 
+InvalidDateHDIM(colEvent, "Date")
