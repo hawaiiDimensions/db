@@ -109,7 +109,7 @@ ListEmptyIndice(colEvent, columnvector)
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
-# modfy functions to return HDIM number instead of row indices - 
+# modfy functions to return HDIM number instead of row indices - DONE
 # modify empty_list function to return adjusted row indices - DONE
 # look at Google R Style Guide - DONE
 # date.mispelling function -> library(stringr) 
@@ -194,3 +194,5 @@ ListEmptyHDIM <- function(dataframe, vector){
 }
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, columnvector)
+
+
