@@ -195,4 +195,23 @@ ListEmptyHDIM <- function(dataframe, vector){
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, columnvector)
 
+ImportDb <- function(database, url){
+  # Imports .csv from a URL as a database; formats for use with db package.
+  #
+  # Args:
+  #   database: The name that the dataframe will be called.
+  #   url: The web address of the .csv file.
+  # 
+  # Returns:
+  #   A formatted dataframe from the database file hosted online.
+  library(RCurl)
+  dataframe <- getURL(url)
+  dataframe <- read.csv(textConnection(dataframe))
+  dataframe[] <- lapply(dataframe, as.character)
+  dataframe[is.na(dataframe)] <- ""
+  assign("database", dataframe,.GlobalEnv)
+  return(str(database))
+}
+ImportDb(foo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
+
 
