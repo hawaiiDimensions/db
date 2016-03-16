@@ -1,14 +1,22 @@
-# package to interface with web
+# ackage to interface with web
 library(RCurl)
-# package to play around with dataframes
+
+# download packages to play around with dataframes
 install.packages("funModeling")
-# retrive sheets from google drive (requires sheet be published as a CSV)
+install.packages("pryr")
+
+# retrieve Collection Events from Dimensions Google drive as .csv
 colEvent <- getURL('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?gid=0&single=true&output=csv')
 colEvent <- read.csv(textConnection(colEvent))
-# convert factors to characters
 colEvent[] <- lapply(colEvent, as.character)
-# convert null values to 0
 colEvent[is.na(colEvent)] <- ""
+
+# retrieve Site Info from Dimensions Google Drive as .csv
+siteInfo <- getURL('https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
+siteInfo <- read.csv(textConnection(siteInfo))
+siteInfo[] <- lapply(siteInfo, as.character)
+siteInfo[is.na(siteInfo)] <- ""
+
 # diagnostic functions to keep in handy
 sapply(colEvent, class)
 str(colEvent)
@@ -92,6 +100,7 @@ IndiceMisspelled <- function(dataframe, column, vector){
 }
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 IndiceMisspelled(colEvent, "Whereabouts", correct_where)
+correct_plot <- siteInfo()
 
 ListEmptyIndice <- function(dataframe, vector){
   # Creates list of row indices of empty entries in multiple columns.
@@ -109,8 +118,8 @@ ListEmptyIndice(colEvent, columnvector)
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
-# modfy functions to return HDIM number instead of row indices - DONE
-# modify empty_list function to return adjusted row indices - DONE
+# modfy functions to return HDIM number instead of row indices
+# modify empty_list function to return adjusted row indices
 # look at Google R Style Guide - DONE
 # date.mispelling function -> library(stringr) 
 # str_split() can unpack date entries into a new dataframe for analysis
@@ -179,7 +188,9 @@ HDIMmisspelled <- function(dataframe, column, vector){
   return(dataframe[indice.misspelled,]$HDIM)
 }
 correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-HDIMmisspelled(colEvent, "Whereabouts", correct_where)
+correct_plot <- c(unlist(siteInfo[, "Plot"]))
+HDIMmisspelled(colEvent, "Plot", plot_vector)  # Output indicates inconsistent data entry format
+
 
 ListEmptyHDIM <- function(dataframe, vector){
   # Creates list of HDIM numbers of empty entries in multiple columns.
@@ -195,23 +206,8 @@ ListEmptyHDIM <- function(dataframe, vector){
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, columnvector)
 
-ImportDb <- function(database, url){
-  # Imports .csv from a URL as a database; formats for use with db package.
-  #
-  # Args:
-  #   database: The name that the dataframe will be called.
-  #   url: The web address of the .csv file.
-  # 
-  # Returns:
-  #   A formatted dataframe from the database file hosted online.
-  library(RCurl)
-  dataframe <- getURL(url)
-  dataframe <- read.csv(textConnection(dataframe))
-  dataframe[] <- lapply(dataframe, as.character)
-  dataframe[is.na(dataframe)] <- ""
-  assign("database", dataframe,.GlobalEnv)
-  return(str(database))
-}
-ImportDb(foo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
+siteInfo["HDIM", ]
 
+
+MisspelledDate <- function(dataframe, column, vector)
 
