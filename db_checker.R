@@ -1,4 +1,4 @@
-# ackage to interface with web
+# package to interface with web
 library(RCurl)
 
 # download packages to play around with dataframes
@@ -200,8 +200,8 @@ ListEmptyHDIM <- function(dataframe, vector){
   #   List of vectors of HDIM numbers named by the targeted column.
     return(apply(dataframe[, vector], 2, function(x) dataframe[which(x == ""), ]$HDIM))
 }
-columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
-ListEmptyHDIM(colEvent, columnvector)
+empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
+ListEmptyHDIM(colEvent, empty.columns)
 
 UniqueEntries <- function(dataframe, column){
   # Extracts all unique elements of a column within a dataframe.
@@ -268,4 +268,38 @@ StoreDb <- function(dataframe, url){
 }
 StoreDb(siteInfo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
 
+ListMisspellingHDIM <- function(dataframe, mispelled.columns, correct.list){
+    # Extracts HDIM numbers of misspelled entries by columns.
+    # 
+    # Args:
+    #   dataframe: The name of the target dataframe.
+    #   mispelled.columns: The name of the target columns within the dataframe.
+    #   correct.list: A list of the accepted entries for the target column.
+    #   
+    # Returns: 
+    #   List of vectors of HDIM numbers of misspelled entries by column.
+    return(mapply(PatternHDIM, misspelled.columns, correct.list))
+}
+
+misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")]
+correct.plot <- c(UniqueEntries(siteInfo, "Plot"), "")
+correct.collector <- c(UniqueEntries(colEvent, "Collector"), "")
+correct.method <- c(UniqueEntries(colEvent, "Method"), "")
+correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+correct.samplerd <- c(1:2, "")
+correct.vialno <- c(1:2, "")
+correct.list <- list(correct.plot, correct.collector, correct.method, correct.where, correct.samplerd, correct.vialno)
+mapply(PatternHDIM, misspelled.columns, correct.list)
+
+PatternHDIM <- function(column, vector){
+    # Finds HDIM location of pattern within colEvent column.
+    #
+    # Args:
+    #   column: The targeted colEvent column
+    #   vector: The pattern to be matched, as a vector.
+    #  
+    # Returns: HDIM indices of pattern matches within the vector.
+    return(colEvent[which(!column %in% vector), ]$HDIM)
+}
+PatternHDIM(colEvent[, "Whereabouts"], correct.where)
 
