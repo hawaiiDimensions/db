@@ -139,6 +139,8 @@ ListEmptyIndice(colEvent, empty.vector)
 # output invalid entry information in a comprehensive list that can be 
 # returned with a wrapper function
 # 
+# =============================================================================
+#
 # 03.10.16 NOTES FROM MEETING WITH ROMINGER - HILGARD 305
 # Function to return list of all mispellings and empty entries by HDIM number 
 # Ways to source functions
@@ -378,24 +380,25 @@ contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
                         Insectazooka.columns, soil.extraction.columns)
 ListEmptyMethod(methods, contingent.list)
 
+
 # ATTENTION: EVERYTHING BELOW THE DOUBLE LINE HAS NOT BEEN TESTED.
 # =============================================================================
 # =============================================================================
 
 HDIMmisspelledMethod <- function(contingent.list, correct.list){
-    # Creates list of HDIM indices of misspelled entries contingent to a method.
-    # 
-    # Args:
-    #   contingent.list: List of vectors of contingent columns.
-    #   correct.list: List of vectors of correct entries, corresponding to the 
-    #                 order of contingent.list.
-    #
-    # Returns:
-    #   A list of vectors of HDIM indices corresponding to misspellings in 
-    #   factor columns contingent to a target collection method.
-    return(by(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
-                         "TimeEnd", "DateEnd", "PitFallSlice")], 
-              list.methods, function(x) ListMisspelledHDIM(contingent.list, correct.list)))
+  # Creates list of HDIM indices of misspelled entries contingent to a method.
+  # 
+  # Args:
+  #   contingent.list: List of vectors of contingent columns.
+  #   correct.list: List of vectors of correct entries, corresponding to the 
+  #                 order of contingent.list.
+  #
+  # Returns:
+  #   A list of vectors of HDIM indices corresponding to misspellings in 
+  #   factor columns contingent to a target collection method.
+  return(by(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
+                       "TimeEnd", "DateEnd", "PitFallSlice")], 
+            list.methods, function(x) ListMisspelledHDIM(contingent.list, correct.list)))
 }
 methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise", 
              "Insectazooka", "soil extraction")
@@ -405,23 +408,22 @@ str(HDIMmisspelledMethod(misspelled.columns, correct.list))
 # =============================================================================
 
 DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, method.columns){ # customized for colEvent
-    # Throroughly checks the Dimensions database for invalid and missing entries.
-    #
-    # Args;
-    #   dataframe: The name of the target dataframe.
-    #   empty.columns: Columns marked to be checked for missing entries.
-    #   misspelled.columns: Columns marked to be checked for misspellings.
-    #   method.columns: Columns marked for special columns.
-    #
-    # Returns:
-    #   List of vectors of HDIM numbers corresponding to invalid database entries.
-    empty.list <- ListEmptyHDIM(dataframe, empty.columns)
-    empty.method <- ListEmptyMethod(methods, contingent.list)
-    mispelled.list <- ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
-    invalid.date <- InvalidDateHDIM(colEvent, "Date")
-    invalid.method <- HDIMmisspelledMethod(contingent.list, correct.list)
-    return(list(empty.list, empty.mispelling, empty.method, invalid.date, invalid.method))
+  # Throroughly checks the Dimensions database for invalid and missing entries.
+  #
+  # Args;
+  #   dataframe: The name of the target dataframe.
+  #   empty.columns: Columns marked to be checked for missing entries.
+  #   misspelled.columns: Columns marked to be checked for misspellings.
+  #   method.columns: Columns marked for special columns.
+  #
+  # Returns:
+  #   List of vectors of HDIM numbers corresponding to invalid database entries.
+  empty.list <- ListEmptyHDIM(dataframe, empty.columns)
+  empty.method <- ListEmptyMethod(methods, contingent.list)
+  mispelled.list <- ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
+  invalid.date <- InvalidDateHDIM(colEvent, "Date")
+  invalid.method <- HDIMmisspelledMethod(contingent.list, correct.list)
+  return(list(empty.list, empty.mispelling, empty.method, invalid.date, invalid.method))
 }  
-
 
 # =============================================================================
