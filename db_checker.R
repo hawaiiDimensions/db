@@ -51,6 +51,8 @@ beat.var <- unique(c(beat.end, beat.beg, beat.dur, beat.pla))
 beat.emp <- c(beat.ind, beat.var)
 empt.bea <- sort(unique(beat.emp[duplicated(beat.emp)]) + 1)
 
+# =============================================================================
+
 IndiceEmpty <- function(dataframe, column) {
   # Extracts row indices of all empty entries by column.
   # 
@@ -63,6 +65,8 @@ IndiceEmpty <- function(dataframe, column) {
     return(which(dataframe[, column] == "") + 1)
 }
 IndiceEmpty(colEvent, "Whereabouts")
+
+# =============================================================================
 
 IndiceMethod <- function(dataframe, column, method, vector) {
   # Extracts row indices of empty entries contingent to method.
@@ -86,6 +90,8 @@ IndiceMethod <- function(dataframe, column, method, vector) {
 beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
 IndiceMethod(colEvent, "Method", "beating", beat.vector)
 
+# =============================================================================
+
 IndiceMisspelled <- function(dataframe, column, vector){
   # Extracts row indices of misspelled entries by column.
   # 
@@ -101,6 +107,8 @@ IndiceMisspelled <- function(dataframe, column, vector){
 correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 IndiceMisspelled(colEvent, "Whereabouts", correct.where)
 
+# =============================================================================
+
 ListEmptyIndice <- function(dataframe, vector){
   # Creates list of row indices of empty entries in multiple columns.
   # 
@@ -114,6 +122,8 @@ ListEmptyIndice <- function(dataframe, vector){
 }
 empty.vector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyIndice(colEvent, empty.vector)
+
+# =============================================================================
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
@@ -139,6 +149,8 @@ ListEmptyIndice(colEvent, empty.vector)
 # source(), setwd(oldwd)
 # STOP 
 
+# =============================================================================
+
 HDIMempty <- function(dataframe, column){
   # Extracts HDIM numbers of empty entries within a target column.
   # 
@@ -151,6 +163,8 @@ HDIMempty <- function(dataframe, column){
   return(dataframe[which(dataframe[, column] == ""),]$HDIM)
 }
 HDIMempty(colEvent, "Whereabouts")
+
+# =============================================================================
 
 HDIMmethod <- function(dataframe, column, method, vector){
   # Extracts HDIM numbers of empty entries contingent to method.
@@ -173,6 +187,8 @@ HDIMmethod <- function(dataframe, column, method, vector){
 }
 HDIMmethod(colEvent, "Method", "beating", beat.vector)
 
+# =============================================================================
+
 HDIMmisspelled <- function(dataframe, column, vector){
   # Extracts HDIM numbers of misspelled entries by column.
   # 
@@ -189,6 +205,8 @@ HDIMmisspelled <- function(dataframe, column, vector){
 correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
 HDIMmisspelled(colEvent, "Plot", correct.where)  # Output indicates inconsistent data entry format
 
+# =============================================================================
+
 ListEmptyHDIM <- function(dataframe, vector){
   # Creates list of HDIM numbers of empty entries in multiple columns.
   # 
@@ -203,6 +221,8 @@ ListEmptyHDIM <- function(dataframe, vector){
 empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, empty.columns)
 
+# =============================================================================
+
 UniqueEntries <- function(dataframe, column){
   # Extracts all unique elements of a column within a dataframe.
   # 
@@ -214,12 +234,13 @@ UniqueEntries <- function(dataframe, column){
   #   Vector of unique elements of the target column within the dataframe.
   return(unique(c(unlist(dataframe[, column]))))
 }
-UniqueEntries(siteInfo, "Plot")
-correct.plot <- unique(c(unlist(siteInfo[, "Plot"]))) 
-# Vector of correct plots from Site Info file - dissimilar to plots listed in
+correct.plot <- UniqueEntries(siteInfo, "Plot")
+# Vector of correct plots from Site Info file; dissimilar to plots listed in
 # the google drive file "Collection Events".
 correct.method <- unique(c(unlist(colEvent[, "Method"]))) 
 # Vector of unvalidated correct method names
+
+# =============================================================================
 
 InvalidDateInd <- function(dataframe, date.column){
   # Extracts indices of invalid date entries in the date column of a dataframe.
@@ -235,6 +256,8 @@ InvalidDateInd <- function(dataframe, date.column){
 }
 InvalidDateInd(colEvent, "Date") # Only a rudimentary date format check.
 
+# =============================================================================
+
 InvalidDateHDIM <- function(dataframe, date.column){
   # Retrieves HDIM numbers of invalid date entries in a dataframe date column.
   #
@@ -249,6 +272,8 @@ InvalidDateHDIM <- function(dataframe, date.column){
   return(dataframe[dates.indices,]$HDIM)
 }
 InvalidDateHDIM(colEvent, "Date")
+
+# =============================================================================
 
 StoreDb <- function(dataframe, url){
   # Imports .csv from a URL as a database; formats for use with db package.
@@ -268,19 +293,20 @@ StoreDb <- function(dataframe, url){
 }
 StoreDb(siteInfo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
 
-ListMisspelledHDIM <- function(dataframe, mispelled.columns, correct.list){
+# =============================================================================
+
+ListMisspelledHDIM <- function(mispelled.columns, correct.list){
   # Extracts HDIM numbers of misspelled entries by columns.
   # 
   # Args:
   #   dataframe: The name of the target dataframe.
-  #   mispelled.columns: The name of the target columns within the dataframe.
+  #   mispelled.columns: The list of target columns within the dataframe.
   #   correct.list: A list of the accepted entries for the target column.
   #   
   # Returns: 
   #   List of vectors of HDIM numbers of misspelled entries by column.
   return(mapply(PatternHDIM, misspelled.columns, correct.list))
 }
-
 misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")]
 correct.plot <- c(UniqueEntries(siteInfo, "Plot"), "")
 correct.collector <- c(UniqueEntries(colEvent, "Collector"), "")
@@ -289,10 +315,12 @@ correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "H
 correct.samplerd <- c(1:2, "")
 correct.vialno <- c(1:2, "")
 correct.list <- list(correct.plot, correct.collector, correct.method, correct.where, correct.samplerd, correct.vialno)
-ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
+ListMisspelledHDIM(misspelled.columns, correct.list)
+
+# =============================================================================
 
 PatternHDIM <- function(column, vector){
-  # Finds HDIM location of pattern within colEvent column.
+  # Finds HDIM location of pattern mismatches within colEvent column.
   #
   # Args:
   #   column: The targeted colEvent column
@@ -303,8 +331,10 @@ PatternHDIM <- function(column, vector){
 }
 PatternHDIM(colEvent[, "Whereabouts"], correct.where)
 
+# =============================================================================
+
 PrimerMethod <- function(method, contingent.list){
-  # Finds HDIM numbers of empty entries of columns contingent ot a method.
+  # Finds HDIM numbers of empty entries of columns contingent to a method.
   # 
   # Args:
   #   method: The name of the target collection method.
@@ -319,8 +349,10 @@ PrimerMethod <- function(method, contingent.list){
 }
 PrimerMethod("beating", beating.columns)
 
+# =============================================================================
+
 ListEmptyMethod <- function(method, contingent.list){
-  # Finds HDIM numbers of emptry entries contingent to collection methods.
+  # Finds HDIM numbers of empty entries contingent to collection methods.
   #
   # Args:
   #   method: The name of the target collection method.
@@ -345,3 +377,51 @@ contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
                         canopy.malaise.columns, ground.malaise.columns,
                         Insectazooka.columns, soil.extraction.columns)
 ListEmptyMethod(methods, contingent.list)
+
+# ATTENTION: EVERYTHING BELOW THE DOUBLE LINE HAS NOT BEEN TESTED.
+# =============================================================================
+# =============================================================================
+
+HDIMmisspelledMethod <- function(contingent.list, correct.list){
+    # Creates list of HDIM indices of misspelled entries contingent to a method.
+    # 
+    # Args:
+    #   contingent.list: List of vectors of contingent columns.
+    #   correct.list: List of vectors of correct entries, corresponding to the 
+    #                 order of contingent.list.
+    #
+    # Returns:
+    #   A list of vectors of HDIM indices corresponding to misspellings in 
+    #   factor columns contingent to a target collection method.
+    return(by(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
+                         "TimeEnd", "DateEnd", "PitFallSlice")], 
+              list.methods, function(x) ListMisspelledHDIM(contingent.list, correct.list)))
+}
+methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise", 
+             "Insectazooka", "soil extraction")
+list.methods <- list(which(colEvent["Method"] == methods))
+str(HDIMmisspelledMethod(misspelled.columns, correct.list))
+
+# =============================================================================
+
+DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, method.columns){ # customized for colEvent
+    # Throroughly checks the Dimensions database for invalid and missing entries.
+    #
+    # Args;
+    #   dataframe: The name of the target dataframe.
+    #   empty.columns: Columns marked to be checked for missing entries.
+    #   misspelled.columns: Columns marked to be checked for misspellings.
+    #   method.columns: Columns marked for special columns.
+    #
+    # Returns:
+    #   List of vectors of HDIM numbers corresponding to invalid database entries.
+    empty.list <- ListEmptyHDIM(dataframe, empty.columns)
+    empty.method <- ListEmptyMethod(methods, contingent.list)
+    mispelled.list <- ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
+    invalid.date <- InvalidDateHDIM(colEvent, "Date")
+    invalid.method <- HDIMmisspelledMethod(contingent.list, correct.list)
+    return(list(empty.list, empty.mispelling, empty.method, invalid.date, invalid.method))
+}  
+
+
+# =============================================================================
