@@ -251,34 +251,34 @@ InvalidDateHDIM <- function(dataframe, date.column){
 InvalidDateHDIM(colEvent, "Date")
 
 StoreDb <- function(dataframe, url){
-    # Imports .csv from a URL as a database; formats for use with db package.
-    #
-    # Args:
-    #   database: The name that the dataframe will be called.
-    #   url: The web address of the .csv file.
-    # 
-    # Returns:
-    #   A formatted dataframe from the database file hosted online.
-    library(RCurl)
-    dataframe <- getURL(url)
-    dataframe <- read.csv(textConnection(dataframe))
-    dataframe[] <- lapply(dataframe, as.character)
-    dataframe[is.na(dataframe)] <- ""
-    return(dataframe)
+  # Imports .csv from a URL as a database; formats for use with db package.
+  #
+  # Args:
+  #   database: The name that the dataframe will be called.
+  #   url: The web address of the .csv file.
+  # 
+  # Returns:
+  #   A formatted dataframe from the database file hosted online.
+  library(RCurl)
+  dataframe <- getURL(url)
+  dataframe <- read.csv(textConnection(dataframe))
+  dataframe[] <- lapply(dataframe, as.character)
+  dataframe[is.na(dataframe)] <- ""
+  return(dataframe)
 }
 StoreDb(siteInfo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
 
-ListMisspellingHDIM <- function(dataframe, mispelled.columns, correct.list){
-    # Extracts HDIM numbers of misspelled entries by columns.
-    # 
-    # Args:
-    #   dataframe: The name of the target dataframe.
-    #   mispelled.columns: The name of the target columns within the dataframe.
-    #   correct.list: A list of the accepted entries for the target column.
-    #   
-    # Returns: 
-    #   List of vectors of HDIM numbers of misspelled entries by column.
-    return(mapply(PatternHDIM, misspelled.columns, correct.list))
+ListMisspelledHDIM <- function(dataframe, mispelled.columns, correct.list){
+  # Extracts HDIM numbers of misspelled entries by columns.
+  # 
+  # Args:
+  #   dataframe: The name of the target dataframe.
+  #   mispelled.columns: The name of the target columns within the dataframe.
+  #   correct.list: A list of the accepted entries for the target column.
+  #   
+  # Returns: 
+  #   List of vectors of HDIM numbers of misspelled entries by column.
+  return(mapply(PatternHDIM, misspelled.columns, correct.list))
 }
 
 misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")]
@@ -289,17 +289,59 @@ correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "H
 correct.samplerd <- c(1:2, "")
 correct.vialno <- c(1:2, "")
 correct.list <- list(correct.plot, correct.collector, correct.method, correct.where, correct.samplerd, correct.vialno)
-mapply(PatternHDIM, misspelled.columns, correct.list)
+ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
 
 PatternHDIM <- function(column, vector){
-    # Finds HDIM location of pattern within colEvent column.
-    #
-    # Args:
-    #   column: The targeted colEvent column
-    #   vector: The pattern to be matched, as a vector.
-    #  
-    # Returns: HDIM indices of pattern matches within the vector.
-    return(colEvent[which(!column %in% vector), ]$HDIM)
+  # Finds HDIM location of pattern within colEvent column.
+  #
+  # Args:
+  #   column: The targeted colEvent column
+  #   vector: The pattern to be matched, as a vector.
+  #  
+  # Returns: HDIM indices of pattern matches within the vector.
+  return(colEvent[which(!column %in% vector), ]$HDIM)
 }
 PatternHDIM(colEvent[, "Whereabouts"], correct.where)
 
+PrimerMethod <- function(method, contingent.list){
+  # Finds HDIM numbers of empty entries of columns contingent ot a method.
+  # 
+  # Args:
+  #   method: The name of the target collection method.
+  #   contingent.column: Vector of contingent columns to the target method.
+  #
+  # Returns: 
+  #   Vector of HDIM numbers of the empty entries corresponding to a method.
+  method.ind <- which(colEvent[, "Method"] == method)
+  method.vec <- apply(colEvent[contingent.list], 2, function(x) which(x == ""))
+  empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
+  return(colEvent[unique(empty.ind[duplicated(empty.ind)]),]$HDIM)
+}
+PrimerMethod("beating", beating.columns)
+
+ListEmptyMethod <- function(method, contingent.list){
+  # Finds HDIM numbers of emptry entries contingent to collection methods.
+  #
+  # Args:
+  #   method: The name of the target collection method.
+  #   contingent.column: Vector of contingent columns to the target method.
+  #
+  # Returns:
+  #   A list of vectors corresponding to HDIM numbers of the empty entries 
+  #   contingent to collection method.
+  return(mapply(PrimerMethod, method, contingent.list))
+}
+UniqueEntries(colEvent, "Method")
+methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
+            "Insectazooka", "soil extraction")
+beating.columns <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
+pitfall.columns <- c("DateEnd", "PitFallSlice")
+litter.columns <- "PitFallSlice"
+canopy.malaise.columns <- c("DateEnd", "PitFallSlice")
+ground.malaise.columns <- c("DateEnd", "PitFallSlice")
+Insectazooka.columns <- "PitFallSlice"
+soil.extraction.columns <- "PitFallSlice"
+contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
+                        canopy.malaise.columns, ground.malaise.columns,
+                        Insectazooka.columns, soil.extraction.columns)
+ListEmptyMethod(methods, contingent.list)
