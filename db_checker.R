@@ -112,8 +112,8 @@ ListEmptyIndice <- function(dataframe, vector){
   #   List of vectors of sorted empty row indices named by the targeted column.
   return(apply(dataframe[, vector], 2, function(x) which(x == "") + 1))
 }
-columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
-ListEmptyIndice(colEvent, columnvector)
+empty.vector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
+ListEmptyIndice(colEvent, empty.vector)
 
 # 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
 #   
@@ -171,7 +171,7 @@ HDIMmethod <- function(dataframe, column, method, vector){
   empt.met <- (dataframe[unique(empty.ind[duplicated(empty.ind)]),]$HDIM)
   return(empt.met)
 }
-HDIMmethod(colEvent, "Method", "beating", metavector)
+HDIMmethod(colEvent, "Method", "beating", beat.vector)
 
 HDIMmisspelled <- function(dataframe, column, vector){
   # Extracts HDIM numbers of misspelled entries by column.
@@ -214,7 +214,7 @@ UniqueEntries <- function(dataframe, column){
   #   Vector of unique elements of the target column within the dataframe.
   return(unique(c(unlist(dataframe[, column]))))
 }
-UniqueEntries(SiteInfo, "Plot")
+UniqueEntries(siteInfo, "Plot")
 correct.plot <- unique(c(unlist(siteInfo[, "Plot"]))) 
 # Vector of correct plots from Site Info file - dissimilar to plots listed in
 # the google drive file "Collection Events".
@@ -247,5 +247,25 @@ InvalidDateHDIM <- function(dataframe, date.column){
   dates <- (as.Date(dataframe[, date.column], format = "%m/%d/%Y" ))
   dates.indices <- which(is.na(as.character(dates)) == "TRUE")
   return(dataframe[dates.indices,]$HDIM)
-} 
+}
 InvalidDateHDIM(colEvent, "Date")
+
+StoreDb <- function(dataframe, url){
+    # Imports .csv from a URL as a database; formats for use with db package.
+    #
+    # Args:
+    #   database: The name that the dataframe will be called.
+    #   url: The web address of the .csv file.
+    # 
+    # Returns:
+    #   A formatted dataframe from the database file hosted online.
+    library(RCurl)
+    dataframe <- getURL(url)
+    dataframe <- read.csv(textConnection(dataframe))
+    dataframe[] <- lapply(dataframe, as.character)
+    dataframe[is.na(dataframe)] <- ""
+    return(dataframe)
+}
+StoreDb(siteInfo, 'https://docs.google.com/spreadsheets/d/1EGeeVTpk4wPxigOwrI2TGviZram9FSo87BKbPBED7gw/pub?gid=0&single=true&output=csv')
+
+
