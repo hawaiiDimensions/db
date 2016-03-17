@@ -21,35 +21,35 @@ siteInfo[is.na(siteInfo)] <- ""
 sapply(colEvent, class)
 str(colEvent)
 head(colEvent)
-db_status <- df_status(colEvent)
+db.status <- df_status(colEvent)
 
 # create dataframes of columns with empty values in "Plot, Date, Collector,
 # Method, Whereabouts, SamplingRound, NoOfVials" return corrected indices of
 # the rows of empty column
-empt_hdi <- which(colEvent[,"HDIM"] == "") + 1
-empt_plo <- which(colEvent[,"Plot"] == "") + 1
-empt_dat <- which(colEvent[,"Date"] == "") + 1
-empt_col <- which(colEvent[,"Collector"] == "") + 1
-empt_met <- which(colEvent[,"Method"] == "") +1
-empt_whe <- which(colEvent[,"Whereabouts"] == "") + 1
-empt_sam <- which(colEvent[,"SamplingRound"] == "") + 1
-empt_via <- which(colEvent[,"NoOfVials"] == "") + 1
+empt.hdi <- which(colEvent[,"HDIM"] == "") + 1
+empt.plo <- which(colEvent[,"Plot"] == "") + 1
+empt.dat <- which(colEvent[,"Date"] == "") + 1
+empt.col <- which(colEvent[,"Collector"] == "") + 1
+empt.met <- which(colEvent[,"Method"] == "") +1
+empt.whe <- which(colEvent[,"Whereabouts"] == "") + 1
+empt.sam <- which(colEvent[,"SamplingRound"] == "") + 1
+empt.via <- which(colEvent[,"NoOfVials"] == "") + 1
 
 # create dataframe of beating entries; create vector of row indices of said 
 # entries
-beat_ind <- which(colEvent[,"Method"] == "beating")
+beat.ind <- which(colEvent[,"Method"] == "beating")
 # find indices of empty entries of any of the four beating information columns
-beat_pla <- which(colEvent[,"Plant"] == "")
-beat_dur <- which(colEvent[,"BeatingDuration"] == "")
-beat_beg <- which(colEvent[,"TimeBegin"] == "")
-beat_end <- which(colEvent[,"TimeEnd"] == "")
+beat.pla <- which(colEvent[,"Plant"] == "")
+beat.dur <- which(colEvent[,"BeatingDuration"] == "")
+beat.beg <- which(colEvent[,"TimeBegin"] == "")
+beat.end <- which(colEvent[,"TimeEnd"] == "")
 # combine vectors of indices of empty entries of beating information colums;
 # create vector of unique index values
-beat_var <- unique(c(beat_end, beat_beg, beat_dur, beat_pla))
+beat.var <- unique(c(beat.end, beat.beg, beat.dur, beat.pla))
 # combine vector of the indices of empty beating information indices with the
 # beating rows indices and isolate the duplicate values; adjust for accuracy
-beat_emp <- c(beat_ind, beat_var)
-empt_bea <- sort(unique(beat_emp[duplicated(beat_emp)]) + 1)
+beat.emp <- c(beat.ind, beat.var)
+empt.bea <- sort(unique(beat.emp[duplicated(beat.emp)]) + 1)
 
 IndiceEmpty <- function(dataframe, column) {
   # Extracts row indices of all empty entries by column.
@@ -186,8 +186,8 @@ HDIMmisspelled <- function(dataframe, column, vector){
   indice.misspelled <- (which(!dataframe[, column] %in% vector))
   return(dataframe[indice.misspelled,]$HDIM)
 }
-correct_where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-HDIMmisspelled(colEvent, "Plot", correct_where)  # Output indicates inconsistent data entry format
+correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+HDIMmisspelled(colEvent, "Plot", correct.where)  # Output indicates inconsistent data entry format
 
 ListEmptyHDIM <- function(dataframe, vector){
   # Creates list of HDIM numbers of empty entries in multiple columns.
@@ -198,7 +198,7 @@ ListEmptyHDIM <- function(dataframe, vector){
   # 
   # Returns:
   #   List of vectors of HDIM numbers named by the targeted column.
-    return(apply(dataframe[, vector], 2, function(x) dataframe[which(x == ""),]$HDIM))
+    return(apply(dataframe[, vector], 2, function(x) dataframe[which(x == ""), ]$HDIM))
 }
 columnvector <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, columnvector)
