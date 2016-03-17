@@ -1,0 +1,26 @@
+## 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
+## modfy functions to return HDIM number instead of row indices - COMPLETE
+## modify empty_list function to return adjusted row indices - COMPLETE
+## look at Google R Style Guide (https://google.github.io/styleguide/Rguide.xml) - COMPLETE
+## library(stringr) - NOTED
+## str_split() can unpack date entries into a new dataframe for analysis - NOTED
+## Use Jupyter notebook to initialize code and to introduce package to laymen
+## Comprehensive list of Plot names located in Siteinfo Google Drive file - COMPLETE
+## use source() to initialize all relevant function from a seperate script file (.R) 
+## output invalid entry information in a comprehensive list that can be returned with a wrapper function 
+
+## 03.10.16 NOTES FROM MEETING WITH ROMINGER - HILGARD 305
+## Function to return list of all mispellings and empty entries by HDIM number
+## Ways to source functions
+## list.files(file_location)
+## oldwd() < - setwd(new_directory)
+## files2load <- c(file1, file2, file3)
+## lapply(files2load, source)
+## source(), setwd(oldwd)
+
+## PERSONAL NOTES
+## Look into contstructing a Shiny app with the database information
+## To import google sheets as a .csv, use the url suffix "pub?gid=0&single=true&output=csv"
+## Function for invalid BeatingDuration entries
+## Function to compile misspelled function outputs as a list
+## Function to find misspelled method-contingent entries
