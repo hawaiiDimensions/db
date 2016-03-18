@@ -22,5 +22,4 @@
 ## Look into contstructing a Shiny app with the database information
 ## To import google sheets as a .csv, use the url suffix "pub?gid=0&single=true&output=csv"
 ## Function for invalid BeatingDuration entries
-## Function to compile misspelled function outputs as a list
 ## Function to find misspelled method-contingent entries
