@@ -309,14 +309,24 @@ ListMisspelledHDIM <- function(mispelled.columns, correct.list){
   #   List of vectors of HDIM numbers of misspelled entries by column.
   return(mapply(PatternHDIM, misspelled.columns, correct.list))
 }
-misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")]
+misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
+                                 "BeatingDuration", "PitFallSlice", 
+                                 "Whereabouts", "SamplingRound", "NoOfVials")]
 correct.plot <- c(UniqueEntries(siteInfo, "Plot"), "")
 correct.collector <- c(UniqueEntries(colEvent, "Collector"), "")
 correct.method <- c(UniqueEntries(colEvent, "Method"), "")
-correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
+correct.plant <- c(UniqueEntries(colEvent, "Plant"), "")
+correct.beatingduration <- c(0:120, "")
+correct.pitfallslice <- c("Up", "Down", "A", "B", "C", "D", "E", "F", "Ground"
+                          , "")
+correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys",
+                   "Hilo Boys (in packing box)", "NNNNN",  "")
 correct.samplerd <- c(1:2, "")
 correct.vialno <- c(1:2, "")
-correct.list <- list(correct.plot, correct.collector, correct.method, correct.where, correct.samplerd, correct.vialno)
+correct.list <- list(correct.plot, correct.collector, correct.method, 
+                     correct.plant, correct.beatingduration, 
+                     correct.pitfallslice, correct.where, correct.samplerd,
+                     correct.vialno)
 ListMisspelledHDIM(misspelled.columns, correct.list)
 
 # =============================================================================
@@ -382,23 +392,23 @@ ListEmptyMethod(methods, contingent.list)
 
 # =============================================================================
 
-InvalidMethodDateHDIM <- function(dataframe, date.column){
+InvalidMethodDateHDIM <- function(dataframe, date.column, date.format){
     # Retrieves HDIM numbers of invalid date entries in a method column.
     #
     # Args:
     #   dataframe: The name of the target dataframe.
     #   date.column: The name of the target date column.
+    #   date.format: The format of the date for which is being tested.
     #  
     # Returns:
     #  Vector of HIDM numbers of invalid date entries in the columm.
     empty.dates <- which(dataframe[, date.column] != "")
-    dates <- (as.Date(dataframe[, date.column], format = "%m/%d/%Y" ))
+    dates <- (as.Date(dataframe[, date.column], format = date.format ))
     dates.indices <- which(is.na(as.character(dates)) == "TRUE")
     dates.vector <- c(empty.dates, dates.indices)
     return(dataframe[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
 }
-InvalidMethodDateHDIM(colEvent, "DateEnd")
-
+InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
 
 # ATTENTION: EVERYTHING BELOW THE DOUBLE LINE HAS NOT BEEN TESTED.
 # =============================================================================
@@ -441,13 +451,11 @@ DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, method.colu
   empty.method <- ListEmptyMethod(methods, contingent.list)
   mispelled.list <- ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
   invalid.date <- InvalidDateHDIM(colEvent, "Date")
-  invalid.method.date <- #########(colEvent, "DateEnd")
-
+  invalid.method.date <- InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
+  invalid.time <- InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
+  
   return(list(empty.list, empty.mispelling, empty.method, invalid.date, invalid.method))
 }  
-
-
-
 
 # 5. Mispelled method columns, HDIM
 # =============================================================================
