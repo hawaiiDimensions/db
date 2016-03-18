@@ -430,10 +430,10 @@ DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns,
   empty.list <- ListEmptyHDIM(dataframe, empty.columns)
   empty.method <- ListEmptyMethod(methods, contingent.list)
   misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
-  invalid.time <- list(InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
-                       , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m")
-                       , InvalidDateHDIM(colEvent, "Date")
-                       , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y"))
+  invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
+                       , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
+                       , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
+                       , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
   results <- (list(empty.list, empty.method, misspelled.list, invalid.time))
   return(results)
 }  
@@ -454,7 +454,7 @@ contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
 DiagnoseDb(colEvent, empty.columns, misspelled.columns, 
            correct.list, methods, contingent.list)
 
-str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
+(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
                methods, contingent.list))
 
 # =============================================================================
