@@ -410,30 +410,6 @@ InvalidMethodDateHDIM <- function(dataframe, date.column, date.format){
 }
 InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
 
-# ATTENTION: EVERYTHING BELOW THE DOUBLE LINE HAS NOT BEEN TESTED.
-# =============================================================================
-# =============================================================================
-
-HDIMmisspelledMethod <- function(contingent.list, correct.list){
-  # Creates list of HDIM indices of misspelled entries contingent to a method.
-  # 
-  # Args:
-  #   contingent.list: List of vectors of contingent columns.
-  #   correct.list: List of vectors of correct entries, corresponding to the 
-  #                 order of contingent.list.
-  #
-  # Returns:
-  #   A list of vectors of HDIM indices corresponding to misspellings in 
-  #   factor columns contingent to a target collection method.
-  return(mapply(ListMisspelledHDIM, ...)(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
-                       "TimeEnd", "DateEnd", "PitFallSlice")], 
-            list.methods, function(x) ListMisspelledHDIM(contingent.list, correct.list)))
-}
-methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise", 
-             "Insectazooka", "soil extraction")
-list.methods <- list(which(colEvent["Method"] == methods))
-str(HDIMmisspelledMethod(misspelled.columns, correct.list))
-
 # =============================================================================
 
 DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, 
