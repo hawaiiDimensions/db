@@ -184,7 +184,7 @@ HDIMmethod <- function(dataframe, column, method, vector){
   method.ind <- which(dataframe[, column] == method)
   method.vec <- apply(dataframe[vector], 2, function(x) which(x == ""))
   empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
-  empt.met <- (dataframe[unique(empty.ind[duplicated(empty.ind)]),]$HDIM)
+  empt.met <- (dataframe[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
   return(empt.met)
 }
 HDIMmethod(colEvent, "Method", "beating", beat.vector)
@@ -322,7 +322,7 @@ ListMisspelledHDIM(misspelled.columns, correct.list)
 # =============================================================================
 
 PatternHDIM <- function(column, vector){
-  # Finds HDIM location of pattern mismatches within colEvent column.
+  # Finds HDIM locations of pattern mismatches within acolEvent column.
   #
   # Args:
   #   column: The targeted colEvent column
@@ -335,12 +335,12 @@ PatternHDIM(colEvent[, "Whereabouts"], correct.where)
 
 # =============================================================================
 
-PrimerMethod <- function(method, contingent.list){
-  # Finds HDIM numbers of empty entries of columns contingent to a method.
+colEventMethod <- function(method, contingent.list){
+  # colEvent specific version of HDIMmethod with fewer arguments.
   # 
   # Args:
   #   method: The name of the target collection method.
-  #   contingent.column: Vector of contingent columns to the target method.
+  #   contingent.list: Vector of contingent columns to the target method.
   #
   # Returns: 
   #   Vector of HDIM numbers of the empty entries corresponding to a method.
@@ -349,7 +349,7 @@ PrimerMethod <- function(method, contingent.list){
   empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
   return(colEvent[unique(empty.ind[duplicated(empty.ind)]),]$HDIM)
 }
-PrimerMethod("beating", beating.columns)
+colEventMethod("beating", beating.columns)
 
 # =============================================================================
 
@@ -363,7 +363,7 @@ ListEmptyMethod <- function(method, contingent.list){
   # Returns:
   #   A list of vectors corresponding to HDIM numbers of the empty entries 
   #   contingent to collection method.
-  return(mapply(PrimerMethod, method, contingent.list))
+  return(mapply(colEventMethod, method, contingent.list))
 }
 UniqueEntries(colEvent, "Method")
 methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
@@ -379,6 +379,25 @@ contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
                         canopy.malaise.columns, ground.malaise.columns,
                         Insectazooka.columns, soil.extraction.columns)
 ListEmptyMethod(methods, contingent.list)
+
+# =============================================================================
+
+InvalidMethodDateHDIM <- function(dataframe, date.column){
+    # Retrieves HDIM numbers of invalid date entries in a method column.
+    #
+    # Args:
+    #   dataframe: The name of the target dataframe.
+    #   date.column: The name of the target date column.
+    #  
+    # Returns:
+    #  Vector of HIDM numbers of invalid date entries in the columm.
+    empty.dates <- which(dataframe[, date.column] != "")
+    dates <- (as.Date(dataframe[, date.column], format = "%m/%d/%Y" ))
+    dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+    dates.vector <- c(empty.dates, dates.indices)
+    return(dataframe[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
+}
+InvalidMethodDateHDIM(colEvent, "DateEnd")
 
 
 # ATTENTION: EVERYTHING BELOW THE DOUBLE LINE HAS NOT BEEN TESTED.
@@ -396,7 +415,7 @@ HDIMmisspelledMethod <- function(contingent.list, correct.list){
   # Returns:
   #   A list of vectors of HDIM indices corresponding to misspellings in 
   #   factor columns contingent to a target collection method.
-  return(by(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
+  return(mapply(ListMisspelledHDIM, ...)(colEvent[c("Plant", "BeatingDuration", "TimeBegin", 
                        "TimeEnd", "DateEnd", "PitFallSlice")], 
             list.methods, function(x) ListMisspelledHDIM(contingent.list, correct.list)))
 }
@@ -422,8 +441,13 @@ DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, method.colu
   empty.method <- ListEmptyMethod(methods, contingent.list)
   mispelled.list <- ListMisspelledHDIM(colEvent, misspelled.columns, correct.list)
   invalid.date <- InvalidDateHDIM(colEvent, "Date")
-  invalid.method <- HDIMmisspelledMethod(contingent.list, correct.list)
+  invalid.method.date <- #########(colEvent, "DateEnd")
+
   return(list(empty.list, empty.mispelling, empty.method, invalid.date, invalid.method))
 }  
 
+
+
+
+# 5. Mispelled method columns, HDIM
 # =============================================================================
