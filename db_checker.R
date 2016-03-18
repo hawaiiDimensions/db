@@ -415,7 +415,7 @@ InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
 DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns, 
                        correct.list, methods, contingent.list){
   # Customized for colEvent
-  # Throroughly checks the Dimensions database for invalid and missing entries.
+  # Thoroughly checks the Dimensions database for invalid and missing entries.
   #
   # Args;
   #   dataframe: The name of the target dataframe.
@@ -454,7 +454,7 @@ contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
 DiagnoseDb(colEvent, empty.columns, misspelled.columns, 
            correct.list, methods, contingent.list)
 
-(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
+str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
                methods, contingent.list))
 
 # =============================================================================
