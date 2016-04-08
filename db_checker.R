@@ -332,7 +332,7 @@ ListMisspelledHDIM(misspelled.columns, correct.list)
 # =============================================================================
 
 PatternHDIM <- function(column, vector){
-  # Finds HDIM locations of pattern mismatches within acolEvent column.
+  # Finds HDIM locations of pattern mismatches within a colEvent column.
   #
   # Args:
   #   column: The targeted colEvent column
@@ -456,5 +456,75 @@ DiagnoseDb(colEvent, empty.columns, misspelled.columns,
 
 str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
                methods, contingent.list))
+
+# =============================================================================
+
+DiagnoseDimensions <- function(dataframe){
+    # Customized for Dimensions in Biodiversity database 'colEvent'.
+    # Thoroughly checks the Dimensions database for invalid and missing entries.
+    #
+    # Args;
+    #   dataframe: The name of the target dataframe; 'colEvent'.
+    #
+    # Returns:
+    #   List of vectors of HDIM numbers corresponding to invalid database entries.
+    empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
+                       "Whereabouts", "SamplingRound", "NoOfVials")
+    misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
+                                     "BeatingDuration", "PitFallSlice", 
+                                     "Whereabouts", "SamplingRound", "NoOfVials")]
+    correct.list <- list(correct.plot, correct.collector, correct.method, 
+                         correct.plant, correct.beatingduration, 
+                         correct.pitfallslice, correct.where,correct.samplerd,
+                         correct.vialno)
+    methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise", 
+                 "Insectazooka", "soil extraction")
+    contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
+                            canopy.malaise.columns, ground.malaise.columns,
+                            Insectazooka.columns, soil.extraction.columns) 
+    empty.list <- ListEmptyHDIM(colEvent, empty.columns)
+    empty.method <- ListEmptyMethod(methods, contingent.list)
+    misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
+    invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
+                         , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
+                         , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
+                         , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
+    results <- (list(empty.list, empty.method, misspelled.list, invalid.time))
+    return(results)
+}  
+DiagnoseDimensions(colEvent)
+
+str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, methods, contingent.list))
+str(DiagnoseDimensions(colEvent))
+
+# =============================================================================
+
+IndiceDuplicated <- function(dataframe, column){
+    # Extracts indices of duplicated entries within a target column.
+    # 
+    # Args: 
+    #   dataframe: The name of the target dataframe.
+    #   column: The name of the target column.
+    # 
+    # Returns: 
+    #   Vector of indices of duplicated entries within a column.
+    return(which(duplicated(dataframe[, column])))
+}
+IndiceDuplicated(colEvent, "HDIM")
+
+# =============================================================================
+ 
+HDIMduplicated <- function(dataframe, column){
+    # Extracts HDIM numbers of duplicated entries within a target column.
+    # 
+    # Args: 
+    #   dataframe: The name of the target dataframe.
+    #   column: The name of the target column.
+    # 
+    # Returns: 
+    #   Vector of HDIM numbers of duplicated entries within a column.
+    return(dataframe[which(duplicated(dataframe[, column])),]$HDIM)
+}
+HDIMduplicated(colEvent, "HDIM")
 
 # =============================================================================
