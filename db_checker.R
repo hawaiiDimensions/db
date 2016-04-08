@@ -218,9 +218,11 @@ ListEmptyHDIM <- function(dataframe, vector){
   # 
   # Returns:
   #   List of vectors of HDIM numbers named by the targeted column.
-    return(apply(dataframe[, vector], 2, function(x) dataframe[which(x == ""), ]$HDIM))
+    return(apply(dataframe[, vector], 2, 
+                 function(x) dataframe[which(x == ""), ]$HDIM))
 }
-empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", "Whereabouts", "SamplingRound", "NoOfVials")
+empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
+                   "Whereabouts", "SamplingRound", "NoOfVials")
 ListEmptyHDIM(colEvent, empty.columns)
 
 # =============================================================================
@@ -427,14 +429,15 @@ DiagnoseDb <- function(dataframe, empty.columns, misspelled.columns,
   #
   # Returns:
   #   List of vectors of HDIM numbers corresponding to invalid database entries.
+  duplicate.hdim <- IndiceDuplicated(dataframe, "HDIM")
   empty.list <- ListEmptyHDIM(dataframe, empty.columns)
   empty.method <- ListEmptyMethod(methods, contingent.list)
   misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
   invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
-                       , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
-                       , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
-                       , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
-  results <- (list(empty.list, empty.method, misspelled.list, invalid.time))
+                       , InvalidMethodDateHDIM(dataframe, "DateEnd", "%m/%d/%Y")
+                       , InvalidMethodDateHDIM(dataframe, "TimeBegin", "h:m")
+                       , InvalidMethodDateHDIM(dataframe, "TimeEnd", "h:m"))
+  results <- (list(duplicate.hdim, empty.list, empty.method, misspelled.list, invalid.time))
   return(results)
 }  
 empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
@@ -460,37 +463,38 @@ str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list,
 # =============================================================================
 
 DiagnoseDimensions <- function(dataframe){
-    # Customized for Dimensions in Biodiversity database 'colEvent'.
-    # Thoroughly checks the Dimensions database for invalid and missing entries.
-    #
-    # Args;
-    #   dataframe: The name of the target dataframe; 'colEvent'.
-    #
-    # Returns:
-    #   List of vectors of HDIM numbers corresponding to invalid database entries.
-    empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
-                       "Whereabouts", "SamplingRound", "NoOfVials")
-    misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
-                                     "BeatingDuration", "PitFallSlice", 
-                                     "Whereabouts", "SamplingRound", "NoOfVials")]
-    correct.list <- list(correct.plot, correct.collector, correct.method, 
-                         correct.plant, correct.beatingduration, 
-                         correct.pitfallslice, correct.where,correct.samplerd,
-                         correct.vialno)
-    methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise", 
-                 "Insectazooka", "soil extraction")
-    contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
-                            canopy.malaise.columns, ground.malaise.columns,
-                            Insectazooka.columns, soil.extraction.columns) 
-    empty.list <- ListEmptyHDIM(colEvent, empty.columns)
-    empty.method <- ListEmptyMethod(methods, contingent.list)
-    misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
-    invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
-                         , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
-                         , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
-                         , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
-    results <- (list(empty.list, empty.method, misspelled.list, invalid.time))
-    return(results)
+  # Customized for Dimensions in Biodiversity database 'colEvent'.
+  # Thoroughly checks the Dimensions database for invalid and missing entries.
+  #
+  # Args;
+  #   dataframe: The name of the target dataframe; 'colEvent'.
+  #
+  # Returns:
+  #   List of vectors of HDIM numbers corresponding to invalid database entries.
+  duplicate.hdim <- IndiceDuplicated(dataframe, "HDIM")
+  empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
+                     "Whereabouts", "SamplingRound", "NoOfVials")
+  misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
+                                   "BeatingDuration", "PitFallSlice", 
+                                   "Whereabouts", "SamplingRound", "NoOfVials")]
+  correct.list <- list(correct.plot, correct.collector, correct.method, 
+                       correct.plant, correct.beatingduration, 
+                       correct.pitfallslice, correct.where,correct.samplerd,
+                       correct.vialno)
+  methods <- c("beating", "pitfall", "litter", "canopy malaise", 
+               "ground malaise", "Insectazooka", "soil extraction")
+  contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
+                          canopy.malaise.columns, ground.malaise.columns,
+                          Insectazooka.columns, soil.extraction.columns) 
+  empty.list <- ListEmptyHDIM(colEvent, empty.columns)
+  empty.method <- ListEmptyMethod(methods, contingent.list)
+  misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
+  invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
+                     , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
+                     , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
+                     , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
+  results <- (list(duplicate.hdim, empty.list, empty.method, misspelled.list, invalid.time))
+  return(results)
 }  
 DiagnoseDimensions(colEvent)
 
@@ -500,30 +504,30 @@ str(DiagnoseDimensions(colEvent))
 # =============================================================================
 
 IndiceDuplicated <- function(dataframe, column){
-    # Extracts indices of duplicated entries within a target column.
-    # 
-    # Args: 
-    #   dataframe: The name of the target dataframe.
-    #   column: The name of the target column.
-    # 
-    # Returns: 
-    #   Vector of indices of duplicated entries within a column.
-    return(which(duplicated(dataframe[, column])))
+  # Extracts row indices of duplicate entries within a target column.
+  # 
+  # Args: 
+  #   dataframe: The name of the target dataframe.
+  #   column: The name of the target column.
+  # 
+  # Returns: 
+  #   Vector of indices of duplicated entries within a column.
+  return(which(duplicated(dataframe[, column])))
 }
 IndiceDuplicated(colEvent, "HDIM")
 
 # =============================================================================
  
 HDIMduplicated <- function(dataframe, column){
-    # Extracts HDIM numbers of duplicated entries within a target column.
-    # 
-    # Args: 
-    #   dataframe: The name of the target dataframe.
-    #   column: The name of the target column.
-    # 
-    # Returns: 
-    #   Vector of HDIM numbers of duplicated entries within a column.
-    return(dataframe[which(duplicated(dataframe[, column])),]$HDIM)
+  # Extracts HDIM indices of duplicate entries within a target column.
+  # 
+  # Args: 
+  #   dataframe: The name of the target dataframe.
+  #   column: The name of the target column.
+  # 
+  # Returns: 
+  #   Vector of HDIM numbers of duplicated entries within a column.
+  return(dataframe[which(duplicated(dataframe[, column])),]$HDIM)
 }
 HDIMduplicated(colEvent, "HDIM")
 
