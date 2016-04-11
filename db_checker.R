@@ -205,7 +205,7 @@ HDIMmisspelled <- function(dataframe, column, vector){
   return(dataframe[indice.misspelled,]$HDIM)
 }
 correct.where <- c("BERKELEY", "Berkeley", "UHH", "Hilgard 220", "Hilo Boys", "Hilo Boys (in packing box)", "NNNNN",  "")
-HDIMmisspelled(colEvent, "Plot", correct.where)  # Output indicates inconsistent data entry format
+HDIMmisspelled(colEvent, "Whereabouts", correct.where)
 
 # =============================================================================
 
@@ -479,7 +479,7 @@ DiagnoseDimensions <- function(dataframe){
                                    "Whereabouts", "SamplingRound", "NoOfVials")]
   correct.list <- list(correct.plot, correct.collector, correct.method, 
                        correct.plant, correct.beatingduration, 
-                       correct.pitfallslice, correct.where,correct.samplerd,
+                       correct.pitfallslice, correct.where, correct.samplerd,
                        correct.vialno)
   methods <- c("beating", "pitfall", "litter", "canopy malaise", 
                "ground malaise", "Insectazooka", "soil extraction")
@@ -532,3 +532,27 @@ HDIMduplicated <- function(dataframe, column){
 HDIMduplicated(colEvent, "HDIM")
 
 # =============================================================================
+
+CorrectColumn <- function(dataframe, column, correct.vector){
+  # Makes new dataframe of corrected misspellings within a dataframe column
+  corrected.dataframe <- dataframe
+  
+  matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
+  corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
+                                                  c(0:length(corrected.dataframe[matches, column])), 
+                                                  correct.vector[x])
+  return(HDIMmisspelled(corrected.dataframe, column, correct.vector))
+}
+
+CorrectColumn(colEvent, "Whereabouts", correct.where)
+HDIMmisspelled(colEvent, "Whereabouts", correct.where)
+correct.where
+
+sapply(correct.vector, function(x) {
+  m <- agrep(x, corrected.dataframe[, column], max.distance = 0.3, value = TRUE)
+  corrected.dataframe[, column][m] <<- x
+})
+sapply(correct.where, function(x) {
+    m <- agrep(x, corrected.dataframe[, "Whereabouts"], max.distance = 0.3)
+    corrected.dataframe[m, "Whereabouts"] <<- x
+})

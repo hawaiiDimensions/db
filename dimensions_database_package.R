@@ -22,5 +22,9 @@ StoreDb # Imports .csv from a URL as a database; formats for use with db package
 PatternHDIM # Finds HDIM locations of pattern mismatches within a colEvent column.
 colEventMethod # Evolab specific version of HDIMmethod with fewer arguments.
 # =============================================================================
-DiagnoseDb # Throroughly checks the Dimensions database for invalid and missing entries.
+DiagnoseDb # Throroughly checks a Dimensions database for invalid and missing entries.
+DiagnoseDimensions # Throroughly checks the colEvent database for invalid and missing entries.
+# =============================================================================
+IndiceDuplicated # Extracts vector of row indices of duplicate entries within a target column.
+HDIMduplicated # Extracts vector of HDIM indices of duplicate entries within a target column.
 # =============================================================================
