@@ -534,25 +534,36 @@ HDIMduplicated(colEvent, "HDIM")
 # =============================================================================
 
 CorrectColumn <- function(dataframe, column, correct.vector){
-  # Makes new dataframe of corrected misspellings within a dataframe column
+  # Makes new dataframe of corrected misspellings within a dataframe column.
+  #
+  # Args:
+  #   dataframe: Name of the target dataframe.
+  #   column: Name of the target column.
+  #   
+  # Returns:
+  #   Defined dataframe column corrected for misspellings in the global environment.
   corrected.dataframe <- dataframe
-  
-  matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
-  corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
-                                                  c(0:length(corrected.dataframe[matches, column])), 
-                                                  correct.vector[x])
-  return(HDIMmisspelled(corrected.dataframe, column, correct.vector))
+  corrected.vector <-   as.character(correct.where[correct.vector != c("")])
+  sapply(corrected.vector, function(x) {
+      m <- agrep(x, corrected.dataframe[, column])
+      corrected.dataframe[, column][m] <<- x
+  })
+  return(corrected.dataframe[, column])
 }
-
 CorrectColumn(colEvent, "Whereabouts", correct.where)
-HDIMmisspelled(colEvent, "Whereabouts", correct.where)
-correct.where
+corrected.dataframe["Whereabouts"]
+HDIMmisspelled(corrected.dataframe, "Whereabouts", correct.where)
+# =============================================================================
 
-sapply(correct.vector, function(x) {
-  m <- agrep(x, corrected.dataframe[, column], max.distance = 0.3, value = TRUE)
-  corrected.dataframe[, column][m] <<- x
-})
-sapply(correct.where, function(x) {
-    m <- agrep(x, corrected.dataframe[, "Whereabouts"], max.distance = 0.3)
+corrected.dataframe[, "Whereabouts"]
+corrected.where <- as.character(correct.where[correct.where != c("")])
+sapply(corrected.where, function(x) {
+    m <- agrep(x, corrected.dataframe[, "Whereabouts"])
     corrected.dataframe[m, "Whereabouts"] <<- x
 })
+
+# matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
+# corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
+#                                                 c(0:length(corrected.dataframe[matches, column])), 
+#                                                 correct.vector[x])
+
