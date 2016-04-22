@@ -1,102 +1,1 @@
-"verbatimCollector"
-""
-"AR, BC"
-"BC, AR"
-"AR,BC"
-"A. Rominger"
-"L. Guo"
-"N. Graham"
-"K. Jayd"
-"E. Tielens"
-"K. Gallardo"
-"L. Stevens"
-"B. Mathat"
-"C. Nicholas"
-"K. Shiroma"
-"M. Stark"
-"M.Stark"
-"C. Nicholas M. Stark"
-"Loreto V"
-"J.Y. Lim"
-"I. Cho"
-"R. Gillespie"
-"B. Cote"
-"K Jayd"
-"K. Gallardo, R. Gillespie, A. Rominger"
-"L.V.V."
-"L. Villegas-Villeza"
-"AR, JYL"
-"JYL, AR"
-"TF, BC, EA"
-"AR, BC, TF"
-"TF, BC, AR"
-"CE, HK"
-"K. Jayd, L.V.V., C. Ewing, E. Tielens"
-" "
-"L.V.V., C. Ewing"
-"LVV, CE"
-"C. Ewing, B. Cole, N. Graham"
-"N. Graham, A. Miller"
-"C. Ewing"
-"CPE, AR"
-"AR,"
-"CE, AR"
-"A. Miller"
-"B. Cole"
-"B. Cote, B. Cole"
-"B. Cote, M. Stark, N. Graham"
-"B. Cote, M. Stark, N. Graham, R. Gillespie, A. Rominger, K. Gallardo"
-"A. Rominger, L.V.V., K. Shiroma, M. Stark, L. Stevens, C. Nicholas"
-"C.N."
-"L. V. V."
-"C.Nicholas"
-"B. Cote, A. Miller, E. Tielens"
-"B. Cote, E. Tielens, A. Miller"
-"E. Tielens, B. Cote, A. Miller"
-"E. Tielens, N. Graham"
-"ET, BC2"
-"ET"
-"ET, BC"
-"C. Ewing, E. Tielens"
-"N. Graham, L. Polgar, B. Mathat, E. Tielens"
-"AR, BCT, LG, KG"
-"A. Rominger, B. Cote, L. Guo, K. Gallardo"
-"NG, LP, BM, ET"
-"AR, NG, LG, BM"
-"A, Rominger, N. Graham, L. Guo, B. Mathat"
-"CE"
-"KS"
-"CPE"
-"B.Cote"
-"LVV"
-"Lindseg"
-"CE KS BC2"
-"CE CN"
-"CE BC"
-"CE TF"
-"CE TF AM AD"
-"TF CE"
-"AD CE"
-"TF"
-"AR"
-"BC"
-"TF BC"
-"CE AD"
-"AD TF"
-"CE BC AD"
-"ce"
-"tf"
-"AD BC"
-"AD LN"
-"AD LN KR"
-"AD TF KR"
-"AD BC LN"
-"CE TF AD"
-"AD"
-"AD LN AM"
-"TF AR EA"
-"MS AR"
-"MS LVV"
-"BC LVV"
-"BC2"
-"BC2 KS CE"
+verbatimCollector,correctCollector,"AR, BC","A. Rominger, B. Cote""BC, AR","A. Rominger, B. Cote""AR,BC","A. Rominger, B. Cote"A. Rominger,A. RomingerL. Guo,L. GuoN. Graham,N. GrahamK. Jayd,K. JaydE. Tielens,E. TielensK. Gallardo,K. GallardoL. Stevens,L. StevensB. Mathat,B. MathatC. Nicholas,C. NicholasK. Shiroma,K. ShiromaM. Stark,M. StarkM.Stark,M. StarkC. Nicholas M. Stark,"C. Nicholas, M. Stark"Loreto V,L. Villegas-VillezaJ.Y. Lim,J.Y. LimI. Cho,I. ChoR. Gillespie,R. GillespieB. Cote,B. CoteK Jayd,K. Jayd"K. Gallardo, R. Gillespie, A. Rominger","K. Gallardo, R. Gillespie, A. Rominger"L.V.V.,L. Villegas-VillezaL. Villegas-Villeza,L. Villegas-Villeza"AR, JYL","A. Rominger, J.Y. Lim""JYL, AR","A. Rominger, J.Y. Lim""TF, BC, EA","T. Fezza, A. Rominger, E. Armstrong""AR, BC, TF","A. Rominger, B. Cote, T. Fezza""TF, BC, AR","T. Fezza, A. Rominger, B. Cote""CE, HK","C. Ewing, H. Krehenwinkel""K. Jayd, L.V.V., C. Ewing, E. Tielens","K. Jayd, L. Villegas-Villeza, C. Ewing, E. Tielens" ,"L.V.V., C. Ewing","L. Villegas-Villeza, C. Ewing""LVV, CE","L. Villegas-Villeza, C. Ewing""C. Ewing, B. Cole, N. Graham","C. Ewing, B. Cole, N. Graham""N. Graham, A. Miller","N. Graham, A. Miller"C. Ewing,C. Ewing"CPE, AR","C. Ewing, A. Rominger""AR,",A. Rominger"CE, AR","C. Ewing, A. Rominger"A. Miller,A. MillerB. Cole,B. Cole"B. Cote, B. Cole","B. Cote, B. Cole""B. Cote, M. Stark, N. Graham","B. Cote, M. Stark, N. Graham""B. Cote, M. Stark, N. Graham, R. Gillespie, A. Rominger, K. Gallardo","B. Cote, M. Stark, N. Graham, R. Gillespie, A. Rominger, K. Gallardo""A. Rominger, L.V.V., K. Shiroma, M. Stark, L. Stevens, C. Nicholas","A. Rominger, L. Villegas-Villeza, K. Shiroma, M. Stark, L. Stevens, C. Nicholas"C.N.,C. NicholasL. V. V.,L. Villegas-VillezaC.Nicholas,C. Nicholas"B. Cote, A. Miller, E. Tielens","E. Tielens, B. Cote, A. Miller""B. Cote, E. Tielens, A. Miller","E. Tielens, B. Cote, A. Miller""E. Tielens, B. Cote, A. Miller","E. Tielens, B. Cote, A. Miller""E. Tielens, N. Graham","E. Tielens, N. Graham""ET, BC2","E. Tielens, B. Cole"ET,E. Tielens"ET, BC","E. Tielens, B. Cote""C. Ewing, E. Tielens","C. Ewing, E. Tielens""N. Graham, L. Polgar, B. Mathat, E. Tielens","N. Graham, L. Polgar, B. Mathat, E. Tielens""AR, BCT, LG, KG","A. Rominger, B. Cote, L. Guo, K. Gallardo""A. Rominger, B. Cote, L. Guo, K. Gallardo","A. Rominger, B. Cote, L. Guo, K. Gallardo""NG, LP, BM, ET","N. Graham, L. Polgar, B. Mathat, E. Tielens""AR, NG, LG, BM","A. Rominger, N. Graham, L. Polgar, B. Mathat""A. Rominger, N. Graham, L. Guo, B. Mathat","A. Rominger, N. Graham, L. Guo, B. Mathat"CE,C. EwingKS,K. ShiromaCPE,C. EwingB.Cote,B. CoteLVV,L. Villegas-VillezaLindseg,L. StevensCE KS BC2,"B. Cole, K. Shiroma, C. Ewing"CE CN,"C. Ewing, C. Nicholas"CE BC,"C. Ewing, B. Cote"CE TF,"C. Ewing, T. Fezza"CE TF AM AD,"C. Ewing, T. Fezza, A. Miller, A. DeMarco"TF CE,"C. Ewing, T. Fezza"AD CE,"A. DeMarco, C. Ewing"TF,T. FezzaAR,A. RomingerBC,B. CoteTF BC,"T. Fezza, B. Cote"CE AD,"A. DeMarco, C. Ewing"AD TF,"A. DeMarco, T. Fezza"CE BC AD,"A. DeMarco, C. Ewing, B. Cote"ce,C. Ewingtf,T. FezzaAD BC,"A. DeMarco, B. Cote"AD LN,"A. DeMarco, L. Nakagawa"AD LN KR,"A. DeMarco, L. Nakagawa, K. Roy"AD TF KR,"A. DeMarco, T. Fezza, K. Roy"AD BC LN,"A. DeMarco, L. Nakagawa, B. Cote"CE TF AD,"C. Ewing, T. Fezza, A. DeMarco"AD,A. DeMarcoAD LN AM,"A. DeMarco, L. Nakagawa, A. Miller"TF AR EA,"T. Fezza, A. Rominger, E. Armstrong"MS AR,"M. Stark, A. Rominger"MS LVV,"M. Stark, L. Villegas-Villeza"BC LVV,"B. Cote, L. Villegas-Villeza"BC2,B. ColeBC2 KS CE,"B. Cole, K. Shiroma, C. Ewing"
