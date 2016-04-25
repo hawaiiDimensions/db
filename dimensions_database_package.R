@@ -17,7 +17,6 @@ ListEmptyHDIM # Creates list of HDIM numbers of empty entries in multiple column
 ListMisspelledHDIM # Extracts HDIM numbers of misspelled entries by columns.
 ListEmptyMethod # Finds HDIM numbers of empty entries contingent to collection methods
 # =============================================================================
-UniqueEntries # Extracts all unique elements of a column within a dataframe.
 StoreDb # Imports .csv from a URL as a database; formats for use with db package.
 PatternHDIM # Finds HDIM locations of pattern mismatches within a colEvent column.
 colEventMethod # Evolab specific version of HDIMmethod with fewer arguments.
@@ -30,43 +29,6 @@ HDIMduplicated # Extracts vector of HDIM indices of duplicate entries within a t
 # =============================================================================
 CorrectColumn # Makes new dataframe of corrected misspellings within a dataframe column.
 
-CorrectColumn <- function(dataframe, column, correct.vector){
-    # Makes new dataframe of corrected misspellings within a dataframe column.
-    #
-    # Args:
-    #   dataframe: Name of the target dataframe.
-    #   column: Name of the target column.
-    #   
-    # Returns:
-    #   Defined datarame column corrected for misspellings in the global environment.
-    corrected.dataframe <- dataframe
-    corrected.vector <-   as.character(correct.vector[correct.vector != c("")])
-    sapply(corrected.vector, function(x) {
-        m <- agrep(x, corrected.dataframe[, column])
-        corrected.dataframe[, column][m] <<- x
-    })
-    return(corrected.dataframe[, column])
-}
-CorrectColumn(colEvent, "Whereabouts", correct.where)
-corrected.dataframe["Whereabouts"]
-HDIMmisspelled(corrected.dataframe, "Whereabouts", correct.where)
-# =============================================================================
-
-corrected.dataframe[, "Whereabouts"]
-corrected.where <- as.character(correct.where[correct.where != c("")])
-sapply(corrected.where, function(x) {
-    m <- agrep(x, corrected.dataframe[, "Whereabouts"])
-    corrected.dataframe[m, "Whereabouts"] <<- x
-})
-
-# matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
-# corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
-#                                                 c(0:length(corrected.dataframe[matches, column])), 
-#                                                 correct.vector[x])
-
-corrected.dataframe <- colEvent
-corrected.where
-
 CorrectDataframe <- function(dataframe, columns, correct.list){
   # Makes new dataframe of corrected misspellings within a dataframe column.
   #
@@ -78,13 +40,22 @@ CorrectDataframe <- function(dataframe, columns, correct.list){
   #   
   # Returns:
   #   Defined dataframe column corrected for misspellings in the global environment.
-  corrected.dataframe <- dataframe
-  corrected.list <- sapply(correct.list, function(x){
-      as.character(x[x != c("")])
-      })
-  sapply(columns, function(x){
-      mapply(CorrectColumn, corrected.dataframe[, x], corrected.list, 
-             MoreArgs = dataframe = corrected.dataframe)
-  })
+  corrected.dataframe <- mapply(CorrectColumn, dataframe = dataframe, column=columns, correct.vector=correct.list)
   return(corrected.dataframe)
  }
+CorrectDataframe(colEvent, foo, correct.list)
+foo <- c("Plot", "Collector", "Method", "Plant", 
+         "BeatingDuration", "PitFallSlice", 
+         "Whereabouts", "SamplingRound", "NoOfVials")
+
+correct.list
+
+corrected.dataframe <- dataframe{
+corrected.list <- sapply(correct.list, function(x){
+    as.character(x[x != c("")])
+})
+sapply(columns, function(x){
+    mapply(CorrectColumn, corrected.dataframe[, x], corrected.list)
+}, dataframe = corrected.dataframe)
+return(corrected.dataframe)
+}

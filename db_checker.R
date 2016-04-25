@@ -227,25 +227,6 @@ ListEmptyHDIM(colEvent, empty.columns)
 
 # =============================================================================
 
-UniqueEntries <- function(dataframe, column){
-  # Extracts all unique elements of a column within a dataframe.
-  # 
-  # Args:
-  #   dataframe: The name of the target dataframe.
-  #   column: The name of the column from which the values are to be extracted.
-  #
-  # Returns:
-  #   Vector of unique elements of the target column within the dataframe.
-  return(unique(c(unlist(dataframe[, column]))))
-}
-correct.plot <- UniqueEntries(siteInfo, "Plot")
-# Vector of correct plots from Site Info file; dissimilar to plots listed in
-# the google drive file "Collection Events".
-correct.method <- unique(c(unlist(colEvent[, "Method"]))) 
-# Vector of unvalidated correct method names
-
-# =============================================================================
-
 InvalidDateInd <- function(dataframe, date.column){
   # Extracts indices of invalid date entries in the date column of a dataframe.
   #
@@ -314,10 +295,10 @@ ListMisspelledHDIM <- function(mispelled.columns, correct.list){
 misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
                                  "BeatingDuration", "PitFallSlice", 
                                  "Whereabouts", "SamplingRound", "NoOfVials")]
-correct.plot <- c(UniqueEntries(siteInfo, "Plot"), "")
-correct.collector <- c(UniqueEntries(colEvent, "Collector"), "")
-correct.method <- c(UniqueEntries(colEvent, "Method"), "")
-correct.plant <- c(UniqueEntries(colEvent, "Plant"), "")
+correct.plot <- c(unique(siteInfo$Plot), "")
+correct.collector <- c(unique(colEvent$Collector), "")
+correct.method <- c(unique(colEvent$Method), "")
+correct.plant <- c(unique(colEvent$Plant), "")
 correct.beatingduration <- c(0:120, "")
 correct.pitfallslice <- c("Up", "Down", "A", "B", "C", "D", "E", "F", "Ground"
                           , "")
@@ -377,7 +358,6 @@ ListEmptyMethod <- function(method, contingent.list){
   #   contingent to collection method.
   return(mapply(colEventMethod, method, contingent.list))
 }
-UniqueEntries(colEvent, "Method")
 methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
             "Insectazooka", "soil extraction")
 beating.columns <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
@@ -541,29 +521,16 @@ CorrectColumn <- function(dataframe, column, correct.vector){
   #   column: Name of the target column.
   #   
   # Returns:
-  #   Defined dataframe column corrected for misspellings in the global environment.
+  #   Defined datarame column corrected for misspellings in the global environment.
   corrected.dataframe <- dataframe
-  corrected.vector <-   as.character(correct.where[correct.vector != c("")])
+  corrected.vector <-   as.character(correct.vector[correct.vector != c("")])
   sapply(corrected.vector, function(x) {
       m <- agrep(x, corrected.dataframe[, column])
-      corrected.dataframe[, column][m] <<- x
-  })
+      corrected.dataframe[, column][m] <- x
+    })
   return(corrected.dataframe[, column])
 }
 CorrectColumn(colEvent, "Whereabouts", correct.where)
-corrected.dataframe["Whereabouts"]
-HDIMmisspelled(corrected.dataframe, "Whereabouts", correct.where)
+
 # =============================================================================
-
-corrected.dataframe[, "Whereabouts"]
-corrected.where <- as.character(correct.where[correct.where != c("")])
-sapply(corrected.where, function(x) {
-    m <- agrep(x, corrected.dataframe[, "Whereabouts"])
-    corrected.dataframe[m, "Whereabouts"] <<- x
-})
-
-# matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
-# corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
-#                                                 c(0:length(corrected.dataframe[matches, column])), 
-#                                                 correct.vector[x])
 
