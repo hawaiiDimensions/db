@@ -5,15 +5,17 @@ Version: 1.0
 Date: 2016-03-20
 Author: Andy Rominger, Edward Huang
 Maintainer: Andy Rominger <ajrominger@gmail.com>
-Description: Tools to query, correct and summarize (including generating labels from) the Hawaii Dimensions online database
+Description: Tools to query, correct and summarize (including generating labels
+    from) the Hawaii Dimensions online database
 License: GPL-2
 URL: https://github.com/hawaiiDimensions/db
 BugReports: https://github.com/hawaiiDimensions/db/issues
 LazyLoad: yes
 LazyData: true
-Depends: 
+Depends:
     R (>= 2.10)
-Imports: 
+Imports:
     RCurl
 Suggests:
     testthat
+RoxygenNote: 5.0.1
