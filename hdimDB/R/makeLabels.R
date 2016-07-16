@@ -64,6 +64,9 @@ makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
              '\\end{document}')
     
     writeLines(out, paste(dir, '/', sheetName, '.tex', sep=''))
+    
+    ######### not working right yet!!!! ############
+    
     system(sprintf('%s %s/%s.tex', system('which pdflatex', intern=TRUE), dir, sheetName))
     system(sprintf('rm %s/%s.aux %s/%s.log', dir, sheetName, dir, sheetName))
 
