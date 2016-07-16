@@ -12,7 +12,12 @@ readGoogle <- function(u) {
 ## function to correct one column (assumes colEvent exists in parent environment)
 correctSyn <- function(syn) {
     thisCol <- gsub('verbatim', '', colnames(syn)[1])
-    colEvent[, thisCol] <<- syn[match(colEvent[, thisCol], syn[, 1]), 2]
+    rightName <- syn[match(colEvent[, thisCol], syn[, 1]), 2]
+    
+    cat(thisCol, 'possible problems:\n', which(is.na(rightName) & !(colEvent[, thisCol] %in% syn[, 2])) + 1, '\n\n')
+    
+    rightName[is.na(rightName)] <- colEvent[is.na(rightName), thisCol]
+    colEvent[, thisCol] <<- rightName
 }
 
 ## synonomy tables
