@@ -1,0 +1,1 @@
+dpois(5, 0.1, log=TRUE)
