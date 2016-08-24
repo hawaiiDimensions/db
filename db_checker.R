@@ -125,34 +125,6 @@ ListEmptyIndice(colEvent, empty.vector)
 
 # =============================================================================
 
-# 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
-#   
-# modfy functions to return HDIM number instead of row indices
-# modify empty_list function to return adjusted row indices
-# look at Google R Style Guide 
-# date.mispelling function -> library(stringr) 
-# str_split() can unpack date entries into a new dataframe for analysis
-# Use Jupyter notebook to initialize code and to introduce package to laymen
-# Comprehensive list of Plot names located in Siteinfo Google Drive file 
-# use source() to initialize all relevant function from a seperate script 
-# file (.R) 
-# output invalid entry information in a comprehensive list that can be 
-# returned with a wrapper function
-# 
-# =============================================================================
-#
-# 03.10.16 NOTES FROM MEETING WITH ROMINGER - HILGARD 305
-# Function to return list of all mispellings and empty entries by HDIM number 
-# Ways to source functions
-# list.files(file_location)
-# oldwd() < - setwd(new_directory)
-# files2load <- c(file1, file2, file3)
-# lapply(files2load, source)
-# source(), setwd(oldwd)
-# STOP 
-
-# =============================================================================
-
 HDIMempty <- function(dataframe, column){
   # Extracts HDIM numbers of empty entries within a target column.
   # 
@@ -356,7 +328,7 @@ ListEmptyMethod <- function(method, contingent.list){
   # Returns:
   #   A list of vectors corresponding to HDIM numbers of the empty entries 
   #   contingent to collection method.
-  return(mapply(colEventMethod, method, contingent.list))
+  return(mapply(colEventMethod, methodcol, contingent.list))
 }
 methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
             "Insectazooka", "soil extraction")
@@ -514,7 +486,7 @@ HDIMduplicated(colEvent, "HDIM")
 # =============================================================================
 
 CorrectColumn <- function(dataframe, column, correct.vector){
-  # Makes new dataframe of corrected misspellings within a dataframe column.
+  # Makes new dataframe of correctehttps://blog.ouseful.info/2014/12/12/seven-ways-of-running-ipython-notebooks/d misspellings within a dataframe column.
   #
   # Args:
   #   dataframe: Name of the target dataframe.
@@ -533,4 +505,10 @@ CorrectColumn <- function(dataframe, column, correct.vector){
 CorrectColumn(colEvent, "Whereabouts", correct.where)
 
 # =============================================================================
+
+## SUMMER 2016 WORKSPACE
+
+# =============================================================================
+
+install.packages("googlesheets")
 

@@ -59,3 +59,7 @@ sapply(columns, function(x){
 }, dataframe = corrected.dataframe)
 return(corrected.dataframe)
 }
+
+## "Method" (cor.method)
+cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", "leaf litter", "InsectaZooka", "soil extraction", "")
+cor.method
