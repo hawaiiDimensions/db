@@ -125,34 +125,6 @@ ListEmptyIndice(colEvent, empty.vector)
 
 # =============================================================================
 
-# 03.10.16 NOTES FROM MEETING WITH LIM - VLSB 5056
-#   
-# modfy functions to return HDIM number instead of row indices
-# modify empty_list function to return adjusted row indices
-# look at Google R Style Guide 
-# date.mispelling function -> library(stringr) 
-# str_split() can unpack date entries into a new dataframe for analysis
-# Use Jupyter notebook to initialize code and to introduce package to laymen
-# Comprehensive list of Plot names located in Siteinfo Google Drive file 
-# use source() to initialize all relevant function from a seperate script 
-# file (.R) 
-# output invalid entry information in a comprehensive list that can be 
-# returned with a wrapper function
-# 
-# =============================================================================
-#
-# 03.10.16 NOTES FROM MEETING WITH ROMINGER - HILGARD 305
-# Function to return list of all mispellings and empty entries by HDIM number 
-# Ways to source functions
-# list.files(file_location)
-# oldwd() < - setwd(new_directory)
-# files2load <- c(file1, file2, file3)
-# lapply(files2load, source)
-# source(), setwd(oldwd)
-# STOP 
-
-# =============================================================================
-
 HDIMempty <- function(dataframe, column){
   # Extracts HDIM numbers of empty entries within a target column.
   # 
@@ -227,25 +199,6 @@ ListEmptyHDIM(colEvent, empty.columns)
 
 # =============================================================================
 
-UniqueEntries <- function(dataframe, column){
-  # Extracts all unique elements of a column within a dataframe.
-  # 
-  # Args:
-  #   dataframe: The name of the target dataframe.
-  #   column: The name of the column from which the values are to be extracted.
-  #
-  # Returns:
-  #   Vector of unique elements of the target column within the dataframe.
-  return(unique(c(unlist(dataframe[, column]))))
-}
-correct.plot <- UniqueEntries(siteInfo, "Plot")
-# Vector of correct plots from Site Info file; dissimilar to plots listed in
-# the google drive file "Collection Events".
-correct.method <- unique(c(unlist(colEvent[, "Method"]))) 
-# Vector of unvalidated correct method names
-
-# =============================================================================
-
 InvalidDateInd <- function(dataframe, date.column){
   # Extracts indices of invalid date entries in the date column of a dataframe.
   #
@@ -314,10 +267,10 @@ ListMisspelledHDIM <- function(mispelled.columns, correct.list){
 misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
                                  "BeatingDuration", "PitFallSlice", 
                                  "Whereabouts", "SamplingRound", "NoOfVials")]
-correct.plot <- c(UniqueEntries(siteInfo, "Plot"), "")
-correct.collector <- c(UniqueEntries(colEvent, "Collector"), "")
-correct.method <- c(UniqueEntries(colEvent, "Method"), "")
-correct.plant <- c(UniqueEntries(colEvent, "Plant"), "")
+correct.plot <- c(unique(siteInfo$Plot), "")
+correct.collector <- c(unique(colEvent$Collector), "")
+correct.method <- c(unique(colEvent$Method), "")
+correct.plant <- c(unique(colEvent$Plant), "")
 correct.beatingduration <- c(0:120, "")
 correct.pitfallslice <- c("Up", "Down", "A", "B", "C", "D", "E", "F", "Ground"
                           , "")
@@ -375,9 +328,8 @@ ListEmptyMethod <- function(method, contingent.list){
   # Returns:
   #   A list of vectors corresponding to HDIM numbers of the empty entries 
   #   contingent to collection method.
-  return(mapply(colEventMethod, method, contingent.list))
+  return(mapply(colEventMethod, methodcol, contingent.list))
 }
-UniqueEntries(colEvent, "Method")
 methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
             "Insectazooka", "soil extraction")
 beating.columns <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
@@ -534,36 +486,29 @@ HDIMduplicated(colEvent, "HDIM")
 # =============================================================================
 
 CorrectColumn <- function(dataframe, column, correct.vector){
-  # Makes new dataframe of corrected misspellings within a dataframe column.
+  # Makes new dataframe of correctehttps://blog.ouseful.info/2014/12/12/seven-ways-of-running-ipython-notebooks/d misspellings within a dataframe column.
   #
   # Args:
   #   dataframe: Name of the target dataframe.
   #   column: Name of the target column.
   #   
   # Returns:
-  #   Defined dataframe column corrected for misspellings in the global environment.
+  #   Defined datarame column corrected for misspellings in the global environment.
   corrected.dataframe <- dataframe
-  corrected.vector <-   as.character(correct.where[correct.vector != c("")])
+  corrected.vector <-   as.character(correct.vector[correct.vector != c("")])
   sapply(corrected.vector, function(x) {
       m <- agrep(x, corrected.dataframe[, column])
-      corrected.dataframe[, column][m] <<- x
-  })
+      corrected.dataframe[, column][m] <- x
+    })
   return(corrected.dataframe[, column])
 }
 CorrectColumn(colEvent, "Whereabouts", correct.where)
-corrected.dataframe["Whereabouts"]
-HDIMmisspelled(corrected.dataframe, "Whereabouts", correct.where)
+
 # =============================================================================
 
-corrected.dataframe[, "Whereabouts"]
-corrected.where <- as.character(correct.where[correct.where != c("")])
-sapply(corrected.where, function(x) {
-    m <- agrep(x, corrected.dataframe[, "Whereabouts"])
-    corrected.dataframe[m, "Whereabouts"] <<- x
-})
+## SUMMER 2016 WORKSPACE
 
-# matches <- agrep(correct.vector[x], corrected.dataframe[, column], max.distance = 0.1)
-# corrected.dataframe[matches, column] <- replace(corrected.dataframe[matches, column], 
-#                                                 c(0:length(corrected.dataframe[matches, column])), 
-#                                                 correct.vector[x])
+# =============================================================================
+
+install.packages("googlesheets")
 
