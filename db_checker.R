@@ -328,7 +328,7 @@ ListEmptyMethod <- function(method, contingent.list){
   # Returns:
   #   A list of vectors corresponding to HDIM numbers of the empty entries 
   #   contingent to collection method.
-  return(mapply(colEventMethod, methodcol, contingent.list))
+  return(mapply(colEventMethod, method, contingent.list))
 }
 methods<- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
             "Insectazooka", "soil extraction")
@@ -414,6 +414,21 @@ str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list,
 
 # =============================================================================
 
+IndiceDuplicated <- function(dataframe, column){
+    # Extracts row indices of duplicate entries within a target column.
+    # 
+    # Args: 
+    #   dataframe: The name of the target dataframe.
+    #   column: The name of the target column.
+    # 
+    # Returns: 
+    #   Vector of indices of duplicated entries within a column.
+    return(which(duplicated(dataframe[, column])))
+}
+IndiceDuplicated(colEvent, "HDIM")
+
+# =============================================================================
+
 DiagnoseDimensions <- function(dataframe){
   # Customized for Dimensions in Biodiversity database 'colEvent'.
   # Thoroughly checks the Dimensions database for invalid and missing entries.
@@ -452,21 +467,6 @@ DiagnoseDimensions(colEvent)
 
 str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, methods, contingent.list))
 str(DiagnoseDimensions(colEvent))
-
-# =============================================================================
-
-IndiceDuplicated <- function(dataframe, column){
-  # Extracts row indices of duplicate entries within a target column.
-  # 
-  # Args: 
-  #   dataframe: The name of the target dataframe.
-  #   column: The name of the target column.
-  # 
-  # Returns: 
-  #   Vector of indices of duplicated entries within a column.
-  return(which(duplicated(dataframe[, column])))
-}
-IndiceDuplicated(colEvent, "HDIM")
 
 # =============================================================================
  
