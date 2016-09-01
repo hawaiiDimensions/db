@@ -8,7 +8,7 @@
 #' @param dir the directory in which to save the labels
 #' @param sheetName the file name to give the sheet of labels
 #' @param defaultYear the year to be given to labels with a missing year
-#' @repID the number of labels for each unique identifier (can be a single value or a vector of length equal to length of \code{hdim})
+#' @param repID the number of labels for each unique identifier (can be a single value or a vector of length equal to length of \code{hdim})
 #' 
 #' @return A data.frame of the google sheet
 #'
