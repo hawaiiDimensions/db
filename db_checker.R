@@ -2,8 +2,8 @@
 library(RCurl)
 
 # download packages to play around with dataframes
-install.packages("funModeling")
-install.packages("pryr")
+# install.packages("funModeling")
+# install.packages("pryr")
 
 # retrieve Collection Events from Dimensions Google drive as .csv
 colEvent <- getURL('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?gid=0&single=true&output=csv')
@@ -460,7 +460,9 @@ DiagnoseDimensions <- function(dataframe){
                      , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
                      , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
                      , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
-  results <- (list(duplicate.hdim, empty.list, empty.method, misspelled.list, invalid.time))
+  results <- (list(duplicated = duplicate.hdim, empty = empty.list, 
+                   emptyMethod = empty.method, misspelled = misspelled.list, 
+                   invalidTime = invalid.time))
   return(results)
 }  
 DiagnoseDimensions(colEvent)
