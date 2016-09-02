@@ -465,52 +465,52 @@ DiagnoseDimensions <- function(dataframe){
                    invalidTime = invalid.time))
   return(results)
 }  
-DiagnoseDimensions(colEvent)
-
-str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, methods, contingent.list))
-str(DiagnoseDimensions(colEvent))
-
-# =============================================================================
- 
-HDIMduplicated <- function(dataframe, column){
-  # Extracts HDIM indices of duplicate entries within a target column.
-  # 
-  # Args: 
-  #   dataframe: The name of the target dataframe.
-  #   column: The name of the target column.
-  # 
-  # Returns: 
-  #   Vector of HDIM numbers of duplicated entries within a column.
-  return(dataframe[which(duplicated(dataframe[, column])),]$HDIM)
-}
-HDIMduplicated(colEvent, "HDIM")
-
-# =============================================================================
-
-CorrectColumn <- function(dataframe, column, correct.vector){
-  # Makes new dataframe of correctehttps://blog.ouseful.info/2014/12/12/seven-ways-of-running-ipython-notebooks/d misspellings within a dataframe column.
-  #
-  # Args:
-  #   dataframe: Name of the target dataframe.
-  #   column: Name of the target column.
-  #   
-  # Returns:
-  #   Defined datarame column corrected for misspellings in the global environment.
-  corrected.dataframe <- dataframe
-  corrected.vector <-   as.character(correct.vector[correct.vector != c("")])
-  sapply(corrected.vector, function(x) {
-      m <- agrep(x, corrected.dataframe[, column])
-      corrected.dataframe[, column][m] <- x
-    })
-  return(corrected.dataframe[, column])
-}
-CorrectColumn(colEvent, "Whereabouts", correct.where)
-
-# =============================================================================
-
-## SUMMER 2016 WORKSPACE
-
-# =============================================================================
-
-install.packages("googlesheets")
-
+# DiagnoseDimensions(colEvent)
+# 
+# str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, methods, contingent.list))
+# str(DiagnoseDimensions(colEvent))
+# 
+# # =============================================================================
+#  
+# HDIMduplicated <- function(dataframe, column){
+#   # Extracts HDIM indices of duplicate entries within a target column.
+#   # 
+#   # Args: 
+#   #   dataframe: The name of the target dataframe.
+#   #   column: The name of the target column.
+#   # 
+#   # Returns: 
+#   #   Vector of HDIM numbers of duplicated entries within a column.
+#   return(dataframe[which(duplicated(dataframe[, column])),]$HDIM)
+# }
+# HDIMduplicated(colEvent, "HDIM")
+# 
+# # =============================================================================
+# 
+# CorrectColumn <- function(dataframe, column, correct.vector){
+#   # Makes new dataframe of correctehttps://blog.ouseful.info/2014/12/12/seven-ways-of-running-ipython-notebooks/d misspellings within a dataframe column.
+#   #
+#   # Args:
+#   #   dataframe: Name of the target dataframe.
+#   #   column: Name of the target column.
+#   #   
+#   # Returns:
+#   #   Defined datarame column corrected for misspellings in the global environment.
+#   corrected.dataframe <- dataframe
+#   corrected.vector <-   as.character(correct.vector[correct.vector != c("")])
+#   sapply(corrected.vector, function(x) {
+#       m <- agrep(x, corrected.dataframe[, column])
+#       corrected.dataframe[, column][m] <- x
+#     })
+#   return(corrected.dataframe[, column])
+# }
+# CorrectColumn(colEvent, "Whereabouts", correct.where)
+# 
+# # =============================================================================
+# 
+# ## SUMMER 2016 WORKSPACE
+# 
+# # =============================================================================
+# 
+# install.packages("googlesheets")
+# 
