@@ -2,7 +2,7 @@ library(reshape2)
 library(plyr)
 
 setwd('~/Dropbox/hawaiiDimensions/db')
-source('db_checker.R', verbose = FALSE)
+source('db_checker.R')
 
 ## run diagnostics
 check <- DiagnoseDimensions(colEvent)
