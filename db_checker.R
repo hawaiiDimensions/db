@@ -18,10 +18,10 @@ siteInfo[] <- lapply(siteInfo, as.character)
 siteInfo[is.na(siteInfo)] <- ""
 
 # diagnostic functions to keep in handy
-sapply(colEvent, class)
-str(colEvent)
-head(colEvent)
-db.status <- df_status(colEvent)
+# sapply(colEvent, class)
+# str(colEvent)
+# head(colEvent)
+# db.status <- df_status(colEvent)
 
 # create dataframes of columns with empty values in "Plot, Date, Collector,
 # Method, Whereabouts, SamplingRound, NoOfVials" return corrected indices of
@@ -60,7 +60,6 @@ IndiceEmpty <- function(dataframe, column) {
   #   dataframe: The name of the target dataframe.
   #   column: The name of the target column within the dataframe.
   #
-  # Returns:
   #   Vector of sorted indices of empty entries in a column. 
     return(which(dataframe[, column] == "") + 1)
 }
@@ -406,11 +405,11 @@ methods <- c("beating", "pitfall", "litter", "canopy malaise", "ground malaise",
 contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
                         canopy.malaise.columns, ground.malaise.columns,
                         Insectazooka.columns, soil.extraction.columns) 
-DiagnoseDb(colEvent, empty.columns, misspelled.columns, 
-           correct.list, methods, contingent.list)
-
-str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
-               methods, contingent.list))
+# DiagnoseDb(colEvent, empty.columns, misspelled.columns, 
+#            correct.list, methods, contingent.list)
+# 
+# str(DiagnoseDb(colEvent, empty.columns, misspelled.columns, correct.list, 
+#                methods, contingent.list))
 
 # =============================================================================
 
