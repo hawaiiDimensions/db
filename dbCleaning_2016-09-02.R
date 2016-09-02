@@ -18,4 +18,12 @@ write.csv(colEventCheck, file = 'dbCleaning_2016-09-02.csv', row.names = FALSE)
 
 
 ## evaluate possible missing things on db that doesn't need checking
+
 colEventGood <- colEventCheck[is.na(colEventCheck$check), ]
+colEventGood$Date <- as.Date(colEventGood$Date, '%m/%d/%Y')
+
+## round 2 starts June 1, 2016
+colEventGood$SamplingRound <- ifelse(colEventGood$Date >= as.Date('2015-06-01'), 2, 1)
+colEventGood[is.na(colEventGood$SamplingRound), c(1:3, 5)]
+
+bla <- colEventGood[as.numeric(colEventGood$HDIM) < 5860 & as.numeric(colEventGood$HDIM) > 5815, c(1:3, 5)]
