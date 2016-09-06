@@ -62,4 +62,10 @@ target[, 'pitfall'] <- 3
 ## missing
 ce1Mis <- ce1Sum - target
 ce2Mis <- ce2Sum - target
-ce2Mis
+
+## things for grace to look for
+graceToDo <- apply(ce2Mis, 1, function(x) paste(names(which(x < 0)), collapse = ', '))
+graceToDo <- paste(names(graceToDo), as.character(graceToDo), sep = ': ')
+graceToDo <- graceToDo[!grepl('waikamoi', graceToDo)]
+cat(paste(graceToDo, collapse = '\n'))
+
