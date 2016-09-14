@@ -4,6 +4,11 @@ library(plyr)
 setwd('~/Dropbox/hawaiiDimensions/db')
 source('db_checker.R')
 
+colEvent$Date <- as.Date(colEvent$Date, '%m/%d/%Y')
+
+## round 2 starts June 1, 2016
+colEvent$SamplingRound <- ifelse(colEvent$Date >= as.Date('2015-06-01'), 2, 1)
+
 ## run diagnostics
 check <- DiagnoseDimensions(colEvent)
 
@@ -17,19 +22,14 @@ colEventCheck$check[colEventCheck$HDIM %in% check$emptyMethod] <- 'empty method 
 
 ## order by what needs checking and write it out
 colEventCheck <- colEventCheck[order(colEventCheck$check, colEventCheck$HDIM), ]
-colEventCheck$check[colEventCheck$check == 'z'] <- NA
+colEventCheck$check[colEventCheck$check == 'z'] <- ''
 write.csv(colEventCheck, file = 'dbCleaning_2016-09-02.csv', row.names = FALSE)
-
 
 ## =================================================================
 ## evaluate possible missing things on db that doesn't need checking
 ## =================================================================
 
-colEventGood <- colEventCheck[is.na(colEventCheck$check), ]
-colEventGood$Date <- as.Date(colEventGood$Date, '%m/%d/%Y')
-
-## round 2 starts June 1, 2016
-colEventGood$SamplingRound <- ifelse(colEventGood$Date >= as.Date('2015-06-01'), 2, 1)
+colEventGood <- colEventCheck[colEventCheck$check == '', ]
 
 ## get number of events by plot, method, round
 ceSum <- ddply(colEventGood[grep('beat|malaise|leaf|pit', colEventGood$Method), ], 
@@ -63,4 +63,9 @@ target[, 'pitfall'] <- 3
 ce1Mis <- ce1Sum - target
 ce2Mis <- ce2Sum - target
 
+## things for grace to look for
+graceToDo <- apply(ce2Mis, 1, function(x) paste(names(which(x < 0)), collapse = ', '))
+graceToDo <- paste(names(graceToDo), as.character(graceToDo), sep = ': ')
+graceToDo <- graceToDo[!grepl('waikamoi', graceToDo)]
+cat(paste(graceToDo, collapse = '\n'))
 
