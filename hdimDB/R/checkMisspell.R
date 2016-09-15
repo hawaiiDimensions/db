@@ -18,8 +18,8 @@ db[is.na(db)] <- ""
 
 ## Helper functions
 .misColumn <- function(column, vector){
-  indice.misspelled <- (which(!colEvent[, column] %in% vector))
-  return(colEvent[indice.misspelled,]$HDIM)
+  indice.misspelled <- (which(!db[, column] %in% vector))
+  return(db[indice.misspelled,]$HDIM)
 }
 
 ##################################################################
