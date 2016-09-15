@@ -30,6 +30,7 @@ db[is.na(db)] <- ""
 
 #####################################################################
 ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
+## define inside functions
 #####################################################################
 
 ## beating (beat.vector)                   

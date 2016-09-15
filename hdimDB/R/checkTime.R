@@ -4,22 +4,30 @@
 #' 
 #' @details Time entries will be checked, based on column name, for correct date and hour:minute formatting.
 #' 
-#' @param None
+#' @param db The database for which time entries are to be checked
 #' 
 #' @return List of character vectors of HDIM numbers
+#' 
+#' @example 
+#' ## Load the Database
+#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+#' 
+#' ## check times
+#' checkTime(db)
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-## Load the Database
-db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
-                    itaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-db[is.na(db)] <- ""
+checkTime <- function(db){
+    return(.dateColumn(db))
+}
 
-.dateColumn <- function(){
-  dates <- (as.Date(db[, "Date"], format = "%m/%d/%Y" ))
-  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
-  return(db[dates.indices,]$HDIM)
+## hidden helper functions
+.dateColumn <- function(db){
+    db[is.na(db)] <- ""
+    dates <- (as.Date(db[, "Date"], format = "%m/%d/%Y" ))
+    dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+    return(db[dates.indices,]$HDIM)
 }
 
 ## Standin format checker function, please replace
@@ -30,16 +38,3 @@ db[is.na(db)] <- ""
   dates.vector <- c(empty.dates, dates.indices)
   return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
 }
-
-#####################################################
-## METHOD CONTINGENT TIME ENTRY CHECKER FUNCTION HERE
-#####################################################
-
-#######################################
-## DATEEND COLUMN CHECKER FUNCTION HERE
-#######################################
-
-checkTime <- function(){
-  return(.datecolumn())
-}
-
