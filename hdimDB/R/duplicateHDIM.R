@@ -1,16 +1,21 @@
-#' @title Checks Dimensions Database for errors
+#' @title Checks Dimensions Database for duplicate HDIM numbers
 #'  
-#' @description \code{dbChecker} runs through the online database and returns a list of HDIM numbers associated with specific errors
+#' @description \code{dupHDIM} runs through the online database and returns a vector of repeated HDIM numbers 
 #' 
-#' @details See example
+#' @details only valid when called on a Dimensions Database with a column "HDIM"
 #' 
 #' @param None
 #' 
-#' @return A multi-leveled list of HDIM numbers
-#' 
-#' @examples 
-#' dbChecker()
+#' @return character vector of duplicate HDIM numbers in the Dimensions Database
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
+
+dupHDIM <- function(){
+  db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
+                    itaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+  db[] <- lapply(db, as.character)
+  db[is.na(db)] <- ""
+  return(db[which(duplicated(db[, "HDIM"])),]$HDIM)
+}
