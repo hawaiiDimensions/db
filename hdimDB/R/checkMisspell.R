@@ -57,8 +57,11 @@ misspelled.columns <- c("Plot", "Collector", "Method", "Plant",
                  "BeatingDuration", "PitFallSlice",
                  "Whereabouts", "SamplingRound", "NoOfVials")
 
-checkEmpty <- function(){
-  misspell.list <- mapply(.misColumn, misspelled.columns, cor.list)
-  return(misspell.list)
+######################################################
+## METHOD CONTINGENT MISSPELLING CHECKER FUNCTION HERE
+######################################################
+
+checkMisspell <- function(){
+  return(mapply(.misColumn, misspelled.columns, cor.list))
 }
 

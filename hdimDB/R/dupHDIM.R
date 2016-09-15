@@ -11,10 +11,10 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
+db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
+                  itaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+db[is.na(db)] <- ""
 
 dupHDIM <- function(){
-  db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
-                    itaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-  db[is.na(db)] <- ""
   return(db[which(duplicated(db[, "HDIM"])),]$HDIM)
 }

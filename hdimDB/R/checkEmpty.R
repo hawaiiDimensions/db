@@ -59,8 +59,7 @@ methods <- c("beating", "pitfall", "leaf litter", "canopy malaise",
 
 
 checkEmpty <- function(){
-  empty.list <- list(mapply(.emptyColumn, empty.columns),
-                     mapply(.emptyContin, methods, contin.list))
-  return(empty.list)
+  return(list(mapply(.emptyColumn, empty.col),
+              mapply(.emptyContin, methods, contin.list)))
 }
 

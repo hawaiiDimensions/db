@@ -12,40 +12,104 @@
 #' @export
 #' 
 
+## Import Database
+db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
+                  itaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+db[is.na(db)] <- ""
 
+## dupHDIM
+dupHDIM <- function(){
+  return(db[which(duplicated(db[, "HDIM"])),]$HDIM)
+}
+
+## checkEmpty
+.emptyColumn <- function(column){
+  return(db[which(db[, column] == ""),]$HDIM)
+}
+
+.emptyContin <- function(method, vector){
+  method.ind <- which(db$Method == method)
+  method.vec <- apply(db[vector], 2, function(x) which(x == ""))
+  empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
+  return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
+}
+                
+beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
+gmal.vector <- c("DateEnd", "PitFallSlice")
+cmal.vector <- c("DateEnd", "PitFallSlice")
+leaf.vector <- c("PitFallSlice")
+pit.vector <- c("DateEnd", "PitFallSlice")
+zook.vector <- c("PitFallSlice")
+soil.vector <- c("PitFallSlice")  
+
+contin.list <- list(beat.vector, pit.vector, leaf.vector,
+                    cmal.vector, gmal.vector, zook.vector, 
+                    soil.vector)
+
+empty.col <- c("HDIM", "Plot", "Date", "Collector", "Method", 
+               "Whereabouts", "SamplingRound", "NoOfVials") 
+methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
+             "ground malaise","Insectazooka", "soil extraction") 
+
+checkEmpty <- function(){
+    return(list(mapply(.emptyColumn, empty.col),
+                mapply(.emptyContin, methods, contin.list)))
+}
+
+## checkMisspell
+.misColumn <- function(column, vector){
+    indice.misspelled <- (which(!db[, column] %in% vector))
+    return(db[indice.misspelled,]$HDIM)
+}
+
+cor.plot <- c(unique(colEvent$Plot), "")
+cor.collect <- c(unique(colEvent$Collector), "")
+cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", 
+                "leaf litter", "Insectazooka", "soil extraction", "")
+cor.plant <- c(unique(colEvent$Plant), "")
+cor.beat <- c(0:300, "")
+cor.pit <- c("up", "down", "A", "B", "C", "D", 
+             "E", "F", "ground", "")
+cor.where <- c("UHH", "Hilgard 220", "NEED TO FIND", "")
+cor.sample <- c(1:2, "")
+cor.vial <- c(1:3, "")
+
+cor.list <- list(cor.plot, cor.collect, cor.method, 
+                 cor.plant, cor.beat, cor.pit, 
+                 cor.where, cor.sample, cor.vial)
+
+misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
+                        "BeatingDuration", "PitFallSlice",
+                        "Whereabouts", "SamplingRound", "NoOfVials")
+
+checkMisspell <- function(){
+  return(mapply(.misColumn, misspelled.columns, cor.list))
+}
+
+#checkTime
+.dateColumn <- function(){
+    dates <- (as.Date(db[, "Date"], format = "%m/%d/%Y" ))
+    dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+    return(db[dates.indices,]$HDIM)
+}
+
+.dateContin <- function(date.column, date.format){
+    empty.dates <- which(db[, date.column] != "")
+    dates <- as.Date(db[, date.column], format = date.format )
+    dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+    dates.vector <- c(empty.dates, dates.indices)
+    return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
+}
+
+checkTime <- function(){
+    return(list(.dateColumn(), .dateContin("DateEnd", "%m/%d/%Y")
+                        , .dateContin("TimeBegin", "h:m")
+                        , .dateContin("TimeEnd", "h:m")))
+}
+
+###################
+## Database Checker
+###################
 dbChecker <- function(){
-    # Customized for Dimensions in Biodiversity database 'colEvent'.
-    # Thoroughly checks the Dimensions database for invalid and missing entries.
-    #
-    # Args;
-    #   dataframe: The name of the target dataframe; 'colEvent'.
-    #
-    # Returns:
-    #   List of vectors of HDIM numbers corresponding to invalid database entries.
-    duplicate.hdim <- IndiceDuplicated(dataframe, "HDIM")
-    empty.columns <- c("HDIM", "Plot", "Date", "Collector", "Method", 
-                       "Whereabouts", "SamplingRound", "NoOfVials")
-    misspelled.columns <- colEvent[c("Plot", "Collector", "Method", "Plant", 
-                                     "BeatingDuration", "PitFallSlice", 
-                                     "Whereabouts", "SamplingRound", "NoOfVials")]
-    correct.list <- list(correct.plot, correct.collector, correct.method, 
-                         correct.plant, correct.beatingduration, 
-                         correct.pitfallslice, correct.where, correct.samplerd,
-                         correct.vialno)
-    methods <- c("beating", "pitfall", "litter", "canopy malaise", 
-                 "ground malaise", "Insectazooka", "soil extraction")
-    contingent.list <- list(beating.columns, pitfall.columns, litter.columns,
-                            canopy.malaise.columns, ground.malaise.columns,
-                            Insectazooka.columns, soil.extraction.columns) 
-    empty.list <- ListEmptyHDIM(colEvent, empty.columns)
-    empty.method <- ListEmptyMethod(methods, contingent.list)
-    misspelled.list <- ListMisspelledHDIM(misspelled.columns, correct.list)
-    invalid.time <- list(InvalidDateHDIM(colEvent, "Date")
-                         , InvalidMethodDateHDIM(colEvent, "DateEnd", "%m/%d/%Y")
-                         , InvalidMethodDateHDIM(colEvent, "TimeBegin", "h:m")
-                         , InvalidMethodDateHDIM(colEvent, "TimeEnd", "h:m"))
-    results <- (list(duplicated = duplicate.hdim, empty = empty.list, 
-                     emptyMethod = empty.method, misspelled = misspelled.list, 
-                     invalidTime = invalid.time))
-    return(results)
+    return(list(dupHDIM(), checkEmpty(), checkMisspell(), checkTime))
 }  

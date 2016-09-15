@@ -17,9 +17,18 @@ db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoew
 db[is.na(db)] <- ""
 
 .dateColumn <- function(){
-    dates <- (as.Date(db[, "Date"], format = "%m/%d/%Y" ))
-    dates.indices <- which(is.na(as.character(dates)) == "TRUE")
-    return(db[dates.indices,]$HDIM)
+  dates <- (as.Date(db[, "Date"], format = "%m/%d/%Y" ))
+  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+  return(db[dates.indices,]$HDIM)
+}
+
+## Standin format checker function, please replace
+.dateContin <- function(date.column, date.format){
+  empty.dates <- which(db[, date.column] != "")
+  dates <- as.Date(db[, date.column], format = date.format )
+  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+  dates.vector <- c(empty.dates, dates.indices)
+  return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
 }
 
 #####################################################
@@ -30,7 +39,7 @@ db[is.na(db)] <- ""
 ## DATEEND COLUMN CHECKER FUNCTION HERE
 #######################################
 
-checkDate <- function(){
-    return(.datecolumn())
+checkTime <- function(){
+  return(.datecolumn())
 }
 
