@@ -2,11 +2,11 @@
 #'  
 #' @description \code{dupHDIM} runs through the online database and returns a vector of repeated HDIM numbers 
 #' 
-#' @details only valid when called on a Dimensions Database with a column "HDIM"
+#' @details Only valid when called on a Dimensions Database with a column "HDIM"
 #' 
 #' @param None
 #' 
-#' @return character vector of duplicate HDIM numbers in the Dimensions Database
+#' @return Character vector of duplicate HDIM numbers in the Dimensions Database
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
