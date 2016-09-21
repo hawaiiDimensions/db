@@ -6,16 +6,17 @@
 #' 
 #' @param None
 #' 
+#' @example 
+#' ## Load the Database
+#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+#' 
+#' ## check misspellings
+#' checkMisspell(db)
+#' 
 #' @return List of character vectors of HDIM numbers
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
-
-    ####################
-    ## Load the Database
-    ####################
-    ## db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-    ## db[is.na(db)] <- ""
 
 checkMisspell <- function(db){
     

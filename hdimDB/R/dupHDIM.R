@@ -6,16 +6,17 @@
 #' 
 #' @param None
 #' 
+#' @example 
+#' ## Load the Database
+#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+#' 
+#' ## check duplicate HDIM
+#' dupHDIM(db)
+#' 
 #' @return Character vector of duplicate HDIM numbers in the Dimensions Database
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
-
-####################
-## Load the Database
-####################
-## db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-## db[is.na(db)] <- ""
 
 dupHDIM <- function(db){
   return(db[which(duplicated(db[, "HDIM"])),]$HDIM)
