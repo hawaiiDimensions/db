@@ -18,15 +18,6 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-<<<<<<< HEAD
-=======
-####################
-## Load the Database
-####################
-## db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-## db[is.na(db)] <- ""
-
->>>>>>> 53226d4e935027ae24a7a1ce90612a23562f8c65
 checkEmpty <- function(db){
     
     #####################################################################
