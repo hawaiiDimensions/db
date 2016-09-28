@@ -52,9 +52,14 @@ checkEmpty <- function(db){
     ####################################
     ## IMPLEMENTING SYNONYM TABLE VALUES 
     ####################################
-    
-    # syn.methods <- readGoogle(methods.url)
-    # methods <- c(syn.table[, 1])
+  
+    # .synValues <- function(url){
+    #     return(c(readGoogle(url)[, 1]))
+    # }
+    # 
+    # methods <- .synValues(methods.url)
+
+    ###################################################################
     
     return(list(mapply(.emptyColumn, empty.col),
                 mapply(.emptyContin, methods, contin.list)))

@@ -60,7 +60,7 @@ checkMisspell <- function(db){
     ####################################
     
     # .synValues <- function(url){
-    #     return(c(readGoogle(methods.url)[, 1]))
+    #     return(c(readGoogle(url)[, 1]))
     # }
     #     ## "Plot" (cor.plot) 
     #     cor.plot <- .synValues(plot.url)
