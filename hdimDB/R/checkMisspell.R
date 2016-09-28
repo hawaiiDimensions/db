@@ -28,17 +28,17 @@ checkMisspell <- function(db){
     cor.plot <- c(unique(colEvent$Plot), "")
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.collect <- c(unique(colEvent$Collector), "")
-    ## "Method" (cor.method)
+    ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", 
                     "leaf litter", "Insectazooka", "soil extraction", "")
     ## "Plant" (cor.plant) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.plant <- c(unique(colEvent$Plant), "")
     ## "BeatingDuration" (cor.beat)
     cor.beat <- c(0:300, "")
-    ## "PitFallSlice" (cor.pit)
+    ## "PitFallSlice" (cor.pit) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.pit <- c("up", "down", "A", "B", "C", "D", 
                  "E", "F", "ground", "")
-    ## "Whereabouts" (cor.where)
+    ## "Whereabouts" (cor.where)(IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.where <- c("UHH", "Hilgard 220", "NEED TO FIND", "")
     ## "SamplingRound" (cor.sample)
     cor.sample <- c(1:2, "")
@@ -55,12 +55,42 @@ checkMisspell <- function(db){
                             "BeatingDuration", "PitFallSlice",
                             "Whereabouts", "SamplingRound", "NoOfVials")
     
+    ####################################
+    ## IMPLEMENTING SYNONYM TABLE VALUES 
+    ####################################
+    
+    # .synValues <- function(url){
+    #     return(c(readGoogle(methods.url)[, 1]))
+    # }
+    #     ## "Plot" (cor.plot) 
+    #     cor.plot <- .synValues(plot.url)
+    #
+    #     ## "Collector" (cor.collect)
+    #     cor.collect <- .synValues(collect.url)
+    #
+    #     ## "Method" (cor.method)
+    #     cor.method <- .synValues(methods.url)
+    #
+    #     ## "Plant" (cor.plant) 
+    #     cor.plant <- .synValues(plant.url)
+    #
+    #     ## "PitFallSlice" (cor.pit)
+    #     cor.pit <- .synValues(pit.url)
+    #
+    #     ## "Whereabouts" (cor.where)
+    #     cor.where <- .synValues(where.url)
+    # 
+    #
+    
+    
+    ###################################################################
+    
     return(mapply(.misColumn, misspelled.columns, cor.list))
 }
 
 ## Helper function
 .misColumn <- function(column, vector){
-  indice.misspelled <- (which(!db[, column] %in% vector))
-  return(db[indice.misspelled,]$HDIM)
+    indice.misspelled <- (which(!db[, column] %in% vector))
+    return(db[indice.misspelled,]$HDIM)
 }
 
