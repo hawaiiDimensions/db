@@ -428,7 +428,7 @@ IndiceDuplicated(colEvent, "HDIM")
 
 # =============================================================================
 
-DiagnoseDimensions <- function(dataframe){
+DiagnoseDimensions <- function(){
   # Customized for Dimensions in Biodiversity database 'colEvent'.
   # Thoroughly checks the Dimensions database for invalid and missing entries.
   #

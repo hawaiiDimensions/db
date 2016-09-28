@@ -22,7 +22,6 @@ checkEmpty <- function(db){
     
     #####################################################################
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
-    ## define inside functions
     #####################################################################
     
     ## beating (beat.vector)                   
@@ -48,7 +47,14 @@ checkEmpty <- function(db){
     empty.col <- c("HDIM", "Plot", "Date", "Collector", "Method", 
                    "Whereabouts", "SamplingRound", "NoOfVials") 
     methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
-                 "ground malaise","Insectazooka", "soil extraction") 
+                 "ground malaise", "Insectazooka", "soil extraction") 
+    
+    ####################################
+    ## IMPLEMENTING SYNONYM TABLE VALUES 
+    ####################################
+    
+    # syn.methods <- readGoogle(methods.url)
+    # methods <- c(syn.table[, 1])
     
     return(list(mapply(.emptyColumn, empty.col),
                 mapply(.emptyContin, methods, contin.list)))
