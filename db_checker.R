@@ -513,3 +513,14 @@ DiagnoseDimensions <- function(){
 # 
 # install.packages("googlesheets")
 # 
+######################
+## FALL 2016 WORKSPACE 
+######################
+
+## SYNONYM TABLES
+
+# helper function
+.synValues <- function(url){
+     return(c(readGoogle(url)[, 1]))
+}
+
