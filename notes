@@ -59,3 +59,21 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## FUNCTION TO REPAIR INVALID DATE ENTRIES IN DATABASE
 ## function to repair invalid contingent factor entries by method in database
 
+## 09.28.16
+## Sourced values from synonym tables.
+
+## 09.29.16 ROMINGER
+##
+## PACKAGE INITIALIZED
+## > devtools::install_github('hawaiiDimensions/db/hdimDB/')
+## > library(hdimDB)
+##
+## Github Issues
+## - mispellings
+## - time
+## - examples not working
+## 
+## Create fake database for @example roxygen tag
+##
+## Shiny app for dbChecker visualization
+
