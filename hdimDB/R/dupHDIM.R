@@ -4,7 +4,7 @@
 #' 
 #' @details Only valid when called on a Dimensions Database with a column "HDIM"
 #' 
-#' @param None
+#' @param db the database to be checked
 #' 
 #' @example 
 #' ## Load the Database

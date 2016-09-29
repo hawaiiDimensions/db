@@ -34,7 +34,7 @@ checkTime <- function(db){
 .dateContin <- function(date.column, date.format){
   empty.dates <- which(db[, date.column] != "")
   dates <- as.Date(db[, date.column], format = date.format )
-  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+  dates.indices <- which(is.na(as.character(dates)))
   dates.vector <- c(empty.dates, dates.indices)
   return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
 }

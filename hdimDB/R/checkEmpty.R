@@ -4,7 +4,7 @@
 #' 
 #' @details Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.
 #' 
-#' @param None
+#' @param db the database to be checked
 #' 
 #' @example 
 #' ## Load the Database
@@ -19,6 +19,7 @@
 #' @export
 
 checkEmpty <- function(db){
+    db[is.na(db)] <- ""
     
     #####################################################################
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES

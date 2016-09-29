@@ -16,7 +16,6 @@
 
 dbChecker <- function(url){
     db <- readGoogle(url)
-##  db[is.na(db)] <- "" Might be necessary for function to run correctly
     return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
                 wrongTime = checkTime(db)))
 } 

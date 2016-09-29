@@ -4,7 +4,7 @@
 #' 
 #' @details Existing entries are compared against approved entries as listed in the synonym tables
 #' 
-#' @param None
+#' @param db the database to be checked
 #' 
 #' @example 
 #' ## Load the Database
@@ -19,6 +19,7 @@
 #' @export
 
 checkMisspell <- function(db){
+    db[is.na(db)] <- ""
     
     ##################################################################
     ## Vectors of Approved Entries - CORRECT WITH SYNONYM TABLE VALUES
