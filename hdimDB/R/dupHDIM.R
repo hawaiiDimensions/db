@@ -4,14 +4,14 @@
 #' 
 #' @details Only valid when called on a Dimensions Database with a column "HDIM"
 #' 
-#' @param None
+#' @param db the database to be checked
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check duplicate HDIM
-#' dupHDIM(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check duplicate HDIM
+# dupHDIM(db)
 #' 
 #' @return Character vector of duplicate HDIM numbers in the Dimensions Database
 #'

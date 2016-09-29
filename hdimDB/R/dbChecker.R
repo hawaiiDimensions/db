@@ -6,8 +6,8 @@
 #' 
 #' @param url The url where the goodle drive database lives
 #' 
-#' @example 
-#' dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# @example 
+# dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 #' 
 #' @return A multi-leveled list of HDIM numbers
 #'
@@ -16,7 +16,6 @@
 
 dbChecker <- function(url){
     db <- readGoogle(url)
-##  db[is.na(db)] <- "" Might be necessary for function to run correctly
     return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
                 wrongTime = checkTime(db)))
 } 

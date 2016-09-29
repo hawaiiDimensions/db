@@ -4,14 +4,14 @@
 #' 
 #' @details Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.
 #' 
-#' @param None
+#' @param db the database to be checked
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check empty entries
-#' checkEmpty(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check empty entries
+# checkEmpty(db)
 #' 
 #' @return List of character vectors of HDIM numbers
 #'
@@ -19,6 +19,7 @@
 #' @export
 
 checkEmpty <- function(db){
+    db[is.na(db)] <- ""
     
     #####################################################################
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES

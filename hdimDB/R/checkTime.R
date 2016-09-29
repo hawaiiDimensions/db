@@ -8,12 +8,12 @@
 #' 
 #' @return List of character vectors of HDIM numbers
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check times
-#' checkTime(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check times
+# checkTime(db)
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
@@ -34,7 +34,7 @@ checkTime <- function(db){
 .dateContin <- function(date.column, date.format){
   empty.dates <- which(db[, date.column] != "")
   dates <- as.Date(db[, date.column], format = date.format )
-  dates.indices <- which(is.na(as.character(dates)) == "TRUE")
+  dates.indices <- which(is.na(as.character(dates)))
   dates.vector <- c(empty.dates, dates.indices)
   return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
 }
