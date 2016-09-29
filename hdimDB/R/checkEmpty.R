@@ -6,12 +6,12 @@
 #' 
 #' @param db the database to be checked
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check empty entries
-#' checkEmpty(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check empty entries
+# checkEmpty(db)
 #' 
 #' @return List of character vectors of HDIM numbers
 #'

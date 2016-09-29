@@ -8,12 +8,12 @@
 #' 
 #' @return List of character vectors of HDIM numbers
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check times
-#' checkTime(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check times
+# checkTime(db)
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export

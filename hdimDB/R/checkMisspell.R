@@ -6,12 +6,12 @@
 #' 
 #' @param db the database to be checked
 #' 
-#' @example 
-#' ## Load the Database
-#' db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-#' 
-#' ## check misspellings
-#' checkMisspell(db)
+# @example 
+# ## Load the Database
+# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# 
+# ## check misspellings
+# checkMisspell(db)
 #' 
 #' @return List of character vectors of HDIM numbers
 #'
@@ -26,14 +26,14 @@ checkMisspell <- function(db){
     ##################################################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.plot <- c(unique(colEvent$Plot), "")
+    cor.plot <- c(unique(db$Plot), "")
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.collect <- c(unique(colEvent$Collector), "")
+    cor.collect <- c(unique(db$Collector), "")
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", 
                     "leaf litter", "Insectazooka", "soil extraction", "")
     ## "Plant" (cor.plant) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.plant <- c(unique(colEvent$Plant), "")
+    cor.plant <- c(unique(db$Plant), "")
     ## "BeatingDuration" (cor.beat)
     cor.beat <- c(0:300, "")
     ## "PitFallSlice" (cor.pit) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)

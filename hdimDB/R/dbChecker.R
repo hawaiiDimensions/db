@@ -6,8 +6,8 @@
 #' 
 #' @param url The url where the goodle drive database lives
 #' 
-#' @example 
-#' dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# @example 
+# dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 #' 
 #' @return A multi-leveled list of HDIM numbers
 #'
