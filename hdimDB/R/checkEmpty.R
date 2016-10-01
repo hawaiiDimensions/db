@@ -62,19 +62,18 @@ checkEmpty <- function(db){
 
     ###################################################################
     
-    return(list(mapply(.emptyColumn, empty.col),
-                mapply(.emptyContin, methods, contin.list)))
+    return(list(mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
+            mapply(.emptyContin, methods, contin.list, MoreArgs=list(db))))
 }
 
 ## Helper functions
-.emptyColumn <- function(column){
+.emptyColumn <- function(column, db){
     return(db[which(db[, column] == ""),]$HDIM)
 }
 
-.emptyContin <- function(method, vector){
+.emptyContin <- function(method, vector, db){
     method.ind <- which(db$Method == method)
     method.vec <- apply(db[vector], 2, function(x) which(x == ""))
     empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
 }
-

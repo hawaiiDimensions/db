@@ -52,7 +52,7 @@ checkMisspell <- function(db){
     ## Vector of the different column names, excluding columns not being checked for misspellings
     misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
                             "BeatingDuration", "PitFallSlice",
-                            "Whereabouts", "SamplingRound", "NoOfVials")
+                            "Whereabouts", "SamplingRound")
     
     ####################################
     ## IMPLEMENTING SYNONYM TABLE VALUES 
@@ -84,11 +84,11 @@ checkMisspell <- function(db){
     
     ###################################################################
     
-    return(mapply(.misColumn, misspelled.columns, cor.list))
+    return(mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db)))
 }
 
 ## Helper function
-.misColumn <- function(column, vector){
+.misColumn <- function(column, vector, db){
     indice.misspelled <- (which(!db[, column] %in% vector))
     return(db[indice.misspelled,]$HDIM)
 }
