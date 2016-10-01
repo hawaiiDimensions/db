@@ -43,13 +43,11 @@ checkMisspell <- function(db){
     cor.where <- c("UHH", "Hilgard 220", "NEED TO FIND", "")
     ## "SamplingRound" (cor.sample)
     cor.sample <- c(1:2, "")
-    ## "NoOfVials" (cor.vial)
-    cor.vial <- c(1:3, "")
     
     ## List of the vectors of possible valid entries to columns being checked for misspellings
     cor.list <- list(cor.plot, cor.collect, cor.method, 
                      cor.plant, cor.beat, cor.pit, 
-                     cor.where, cor.sample, cor.vial)
+                     cor.where, cor.sample)
     
     ## Vector of the different column names, excluding columns not being checked for misspellings
     misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
