@@ -31,7 +31,7 @@ checkMisspell <- function(db){
     cor.collect <- c(unique(db$Collector), "")
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", 
-                    "leaf litter", "Insectazooka", "soil extraction", "")
+                    "leaf litter", "InsectaZooka", "soil extraction", "")
     ## "Plant" (cor.plant) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.plant <- c(unique(db$Plant), "")
     ## "BeatingDuration" (cor.beat)
