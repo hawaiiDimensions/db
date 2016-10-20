@@ -26,7 +26,7 @@ checkMisspell <- function(db){
     ##################################################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.plot <- c(unique(db$Plot))
+    cor.plot <- c(unique(db$Plot), "")
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.collect <- c(unique(db$Collector), "")
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
