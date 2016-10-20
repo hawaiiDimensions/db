@@ -26,7 +26,7 @@ checkMisspell <- function(db){
     ##################################################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    # cor.plot <- c(unique(db$Plot), "")
+    cor.plot <- c(unique(db$Plot))
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.collect <- c(unique(db$Collector), "")
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
@@ -62,22 +62,23 @@ checkMisspell <- function(db){
         return(readGoogle(url)[, 2])
     }
     #     ## "Plot" (cor.plot) 
-          cor.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
+    #     
+    #     TEST CASE:
+    #     cor.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
     #     ## "Collector" (cor.collect)
-    #     cor.collect <- .synValues('https://docs.google.com/spreadsheets/d/1_KGLPEcOneLvcRR8--CjEVeKTPDXJkI7YqwSTM2BVJc/edit#gid=0')
+    #     cor.collect <- .synValues(url)
     #
     #     ## "Method" (cor.method)
-    #     cor.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/edit#gid=0')
+    #     cor.method <- .synValues(url)
     #
     #     ## "Plant" (cor.plant) 
-    #     cor.plant <- .synValues(https://docs.google.com/spreadsheets/d/1SxbSt_SRiycfaihkOg-m4tz-nrtZNKtqJDE2OmG700Q/edit#gid=0)
+    #     cor.plant <- .synValues(url)
     #
     #     ## "PitFallSlice" (cor.pit)
-    #     cor.pit <- .synValues(https://docs.google.com/spreadsheets/d/19eHQCQLKN_At10iUDmXYX2w1FA7EomHK9jZbq7lOSYg/edit#gid=0)
+    #     cor.pit <- .synValues(url)
     #
     #     ## "Whereabouts" (cor.where)
-    #     cor.where <- .synValues(https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw2o9t6Vt_Q06IVQo0GLf5YUb4-M/edit#gid=0)
-    # 
+    #     cor.where <- .synValues(url)
     #
     
     
