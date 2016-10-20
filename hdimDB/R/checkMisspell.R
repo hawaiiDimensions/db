@@ -26,7 +26,7 @@ checkMisspell <- function(db){
     ##################################################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.plot <- c(unique(db$Plot), "")
+    # cor.plot <- c(unique(db$Plot), "")
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.collect <- c(unique(db$Collector), "")
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
@@ -58,26 +58,25 @@ checkMisspell <- function(db){
     ## IMPLEMENTING SYNONYM TABLE VALUES 
     ####################################
     
-    # .synValues <- function(url){
-    #     return(c(readGoogle(url)[, 1]))
-    # }
+    .synValues <- function(url){
+        return(readGoogle(url)[, 2])
+    }
     #     ## "Plot" (cor.plot) 
-    #     cor.plot <- .synValues(plot.url)
-    #
+          cor.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
     #     ## "Collector" (cor.collect)
-    #     cor.collect <- .synValues(collect.url)
+    #     cor.collect <- .synValues('https://docs.google.com/spreadsheets/d/1_KGLPEcOneLvcRR8--CjEVeKTPDXJkI7YqwSTM2BVJc/edit#gid=0')
     #
     #     ## "Method" (cor.method)
-    #     cor.method <- .synValues(methods.url)
+    #     cor.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/edit#gid=0')
     #
     #     ## "Plant" (cor.plant) 
-    #     cor.plant <- .synValues(plant.url)
+    #     cor.plant <- .synValues(https://docs.google.com/spreadsheets/d/1SxbSt_SRiycfaihkOg-m4tz-nrtZNKtqJDE2OmG700Q/edit#gid=0)
     #
     #     ## "PitFallSlice" (cor.pit)
-    #     cor.pit <- .synValues(pit.url)
+    #     cor.pit <- .synValues(https://docs.google.com/spreadsheets/d/19eHQCQLKN_At10iUDmXYX2w1FA7EomHK9jZbq7lOSYg/edit#gid=0)
     #
     #     ## "Whereabouts" (cor.where)
-    #     cor.where <- .synValues(where.url)
+    #     cor.where <- .synValues(https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw2o9t6Vt_Q06IVQo0GLf5YUb4-M/edit#gid=0)
     # 
     #
     
