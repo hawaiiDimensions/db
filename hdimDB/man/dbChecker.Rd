@@ -7,7 +7,7 @@
 dbChecker(url)
 }
 \arguments{
-\item{url}{The url where the goodle drive database lives}
+\item{url}{The url where the google drive database lives}
 }
 \value{
 A multi-leveled list of HDIM numbers
