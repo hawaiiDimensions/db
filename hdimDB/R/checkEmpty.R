@@ -62,8 +62,8 @@ checkEmpty <- function(db){
 
     ###################################################################
     
-    return(list(columns = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
-                contingencies = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db))))
+    return(list(column = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
+                contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db))))
 }
 
 ## Helper functions

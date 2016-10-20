@@ -65,15 +65,22 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 09.29.16 ROMINGER
 ##
 ## PACKAGE INITIALIZED
-## > devtools::install_github('hawaiiDimensions/db/hdimDB/')
+## > devtools::install_github('hawaiiDimensions/db/hdimDB')
 ## > library(hdimDB)
 ##
-## Github Issues
+## Github Issues - LISTED
 ## - mispellings
 ## - time
 ## - examples not working
 ## 
-## Create fake database for @example roxygen tag
+## Create fake database for @example roxygen tag - COMPLETE
 ##
 ## Shiny app for dbChecker visualization
+
+## 09.30.16 PERSONAL NOTES
+## 
+## Fixed error with arguments in mapply call
+##
+
+
 
