@@ -6,15 +6,14 @@ library(hdimDB)
 ## Load database and scan for errors
 db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-####################################
+##########################
 
-############################################
-## Fake database 
+########################
+## FAKE DATABASE TEST ## 
 # db <- read.csv("fake_data.csv", as.is=TRUE)
 # test.results <- list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db),wrongTime = checkTime(db))
 # test.results
-############################################
-checkMisspell(db)
+########################
 
 system.file("examples", package="shiny")
 
@@ -30,20 +29,18 @@ runExample("09_upload") # file upload wizard
 runExample("10_download") # file download wizard
 runExample("11_timer") # an automated timer
 
-str(errors)
-db[errors$duplicatedHDIM, ]
-?checkboxGroupInput
-str(errors)
-install.packages('DT')
-library('DT')
-foo <- db$HDIM == errors
+#####################
+## ROMINGER SCRIPT ##
+#####################
+## turn nested list structure into a single vector of all the HDIMs with errors
+errors <- unlist(errors)
 
-########################
-## script to 
-foobar <- rapply(errors, function(x)db[db$HDIM %in% x, ])
-########################
+## extract the error type (which is stored as the name of each element in the vector)
+## use gsub to remove the sequential numbers from the names 
+## (e.g. turn 'duplicatedHDIM123' into 'duplicatedHDIM')
+errType <- gsub('[[:digit:]]', '', names(errors))
+names(errors) <- NULL
 
-head(foobar)
-class(foobar)
-length(foobar)
-length(errors)
+## now we have all the error HDIMs and what type of error is associated with them
+head(data.frame(errors, errType))
+########################
