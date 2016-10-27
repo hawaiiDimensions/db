@@ -1,6 +1,1 @@
-HDIM,Plot,Date,Collector,Method,Plant,BeatingDuration,TimeBegin,TimeEnd,DateEnd,CanopyMalaiseHeight..ft.,PitFallSlice,Whereabouts,SamplingRound,NoOfVials,Comments,ERROR
-4520,hippnet_13,12/8/2015,M. Stark,beating,Cheirodendron,19,09:35,10:00,,,,Hilgard 220,1,,,empty value
-4445,alili_14,7/20/2015,R. Gillespie,beating,Ilex anomala,10,11:00,,,,,Hilgard 220,2,1,,empty contingency
-9024,kokee_21,8/20/2015,"AR, MS, BC, LW",pitfail,,,,,8/27/2015,,B,UHH,2,1,,misspelled value
-8081,kamakou_07,17/7/2015,"B. Cote, B. Cole",canopy malaise,,,,,7/14/2015,,up,Hilgard 220,2,1,,invalid date
-9024,kohalaYng_10,9/18/2014,"C. Ewing, T. Fezza, A. DeMarco",InsectaZooka,,,,,,,A,UHH,1,1,,duplicate hdim
+HDIM,Plot,Date,Collector,Method,Plant,BeatingDuration,TimeBegin,TimeEnd,DateEnd,CanopyMalaiseHeight..ft.,PitFallSlice,Whereabouts,SamplingRound,NoOfVials,Comments,ERROR4520,hippnet_13,12/8/15,,beating,Cheirodendron,19,9:35,10:00,,,,Hilgard 220,1,,,empty value4445,alili_14,7/20/15,R. Gillespie,beating,Ilex anomala,10,11:00,,,,,Hilgard 220,2,1,,empty contingency9024,kokee_21,8/20/15,"AR, MS, BC, LW",pitfail,,,,,8/27/15,,B,UHH,2,1,,misspelled value8081,kamakou_07,17/7/2015,"B. Cote, B. Cole",canopy malaise,,,,,7/14/15,,up,Hilgard 220,2,1,,invalid date9024,kohalaYng_10,9/18/14,"C. Ewing, T. Fezza, A. DeMarco",InsectaZooka,,,,,,,A,UHH,1,1,,duplicate hdim

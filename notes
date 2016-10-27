@@ -99,9 +99,12 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##    b. Check if name matches with any of the known collector names
 ##    c. Check if name could be a misformatted collector name if no match
 ## 3. Unit Tests
-##    a. hdimDB -> tests -> testthat
+##    a. hdimDB -> tests -> testthat - NOTED
 ##    b. Save fake.data as a dataframe in the binary R structure - DONE
-##    c. rename fake.data as test.data - DONE
+##    c. Rename fake.data as test.data - DONE
+##    d. New testthat files for dupHDIM and checkMisspell
+##    e. Rewrite unit test for checkTime
+## 
 ## 
 ##    NOTE: camelCase vs. snake_case
 ## 
