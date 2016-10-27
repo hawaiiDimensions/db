@@ -46,7 +46,7 @@ checkEmpty <- function(db){
     
     ## Compiling vectors of column names and contingent column names
     empty.col <- c("HDIM", "Plot", "Date", "Collector", "Method", 
-                   "Whereabouts", "SamplingRound", "NoOfVials") 
+                   "Whereabouts", "SamplingRound") 
     methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
                  "ground malaise", "Insectazooka", "soil extraction") 
     
