@@ -56,5 +56,7 @@ cor.plot
 ## synonym extraction
 syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
 syn.plot 
+syn.foo <- .synValues('https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw2o9t6Vt_Q06IVQo0GLf5YUb4-M/pub?output=csv')
+syn.foo
 #########################
 errors

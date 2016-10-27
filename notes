@@ -81,6 +81,12 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 
 ## Fixed error with arguments in mapply call
 ##
-
-
-
+## 10.20.16 ROMINGER
+## Don't use rapply for Shiny error compilation Andy will 
+## push over script (compile_errors.R) to test.scripts folder - DONE
+## Add workspace to test.scripts - DONE
+## Write unit tests - STANDBY
+## Add synonym values to checkMisspell - DONE
+## To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
+## change tag to: 'pub?output=csv' - NOTED
+## Work on Shiny App
