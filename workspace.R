@@ -44,3 +44,17 @@ names(errors) <- NULL
 ## now we have all the error HDIMs and what type of error is associated with them
 head(data.frame(errors, errType))
 ########################
+## checkMisspell
+########################
+## Original stand-in correction vector
+cor.plot <- c(unique(db$Plot), "")
+cor.plot
+## helper function to extract synonym values
+.synValues <- function(url){
+    return(unique(readGoogle(url)[, 2]))
+}
+## synonym extraction
+syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
+syn.plot 
+#########################
+errors

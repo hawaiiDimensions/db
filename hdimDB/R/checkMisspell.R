@@ -22,13 +22,15 @@ checkMisspell <- function(db){
     db[is.na(db)] <- ""
     
     ##################################################################
-    ## Vectors of Approved Entries - CORRECT WITH SYNONYM TABLE VALUES
+    ## Vectors of Approved Entries - UPDATE WITH SYNONYM TABLE VALUES
     ##################################################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
-    cor.plot <- c(unique(db$Plot), "")
+    ## cor.plot <- c(unique(db$Plot), "")
+    
     ## "Collector" (cor.collect) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.collect <- c(unique(db$Collector), "")
+    
     ## "Method" (cor.method) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     cor.method <- c("canopy malaise", "ground malaise", "beating", "pitfall", "canopy clipping", 
                     "leaf litter", "InsectaZooka", "soil extraction", "")
@@ -45,7 +47,7 @@ checkMisspell <- function(db){
     cor.sample <- c(1:2, "")
     
     ## List of the vectors of possible valid entries to columns being checked for misspellings
-    cor.list <- list(cor.plot, cor.collect, cor.method, 
+    cor.list <- list(syn.plot, cor.collect, cor.method, 
                      cor.plant, cor.beat, cor.pit, 
                      cor.where, cor.sample)
     
@@ -59,12 +61,11 @@ checkMisspell <- function(db){
     ####################################
     
     .synValues <- function(url){
-        return(readGoogle(url)[, 2])
+        return(unique(readGoogle(url)[, 2]))
     }
     #     ## "Plot" (cor.plot) 
+    syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
     #     
-    #     TEST CASE:
-    #     cor.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
     #     ## "Collector" (cor.collect)
     #     cor.collect <- .synValues(url)
     #
