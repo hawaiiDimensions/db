@@ -82,11 +82,26 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## Fixed error with arguments in mapply call
 ##
 ## 10.20.16 ROMINGER
-## Don't use rapply for Shiny error compilation Andy will 
-## push over script (compile_errors.R) to test.scripts folder - DONE
-## Add workspace to test.scripts - DONE
-## Write unit tests - STANDBY
-## Add synonym values to checkMisspell - DONE
-## To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
-## change tag to: 'pub?output=csv' - NOTED
-## Work on Shiny App
+## 1. Work on Shiny App 
+##    a. Don't use rapply for Shiny error compilation Andy will 
+##       push over script (compile_errors.R) to test.scripts folder - DONE
+## 2. Add workspace to test.scripts - DONE
+## 3. Write unit tests - STANDBY
+## 4. Add synonym values to checkMisspell - DONE
+##    a. To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
+##       change tag to: 'pub?output=csv' - NOTED
+
+## 10.25.16 ROMINGER
+## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
+##    exacty 420 seconds.
+## 2. Check collector names in proper format with regex - ANDY WILL ASSEMBLE SYNONYM TABLE
+##    a. Format: "Capitalized initial". "Capitalized surname"
+##    b. Check if name matches with any of the known collector names
+##    c. Check if name could be a misformatted collector name if no match
+## 3. Unit Tests
+##    a. hdimDB -> tests -> testthat
+##    b. Save fake.data as a dataframe in the binary R structure - DONE
+##    c. rename fake.data as test.data - DONE
+## 
+##    NOTE: camelCase vs. snake_case
+## 
