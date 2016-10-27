@@ -21,9 +21,9 @@
 checkMisspell <- function(db){
     db[is.na(db)] <- ""
     
-    ##################################################################
-    ## Vectors of Approved Entries - UPDATE WITH SYNONYM TABLE VALUES
-    ##################################################################
+    ####################################
+    ## Non-Synonym Correction Vectors ##
+    ####################################
     
     ## "Plot" (cor.plot) (IGNORE, MUST UPDATE FROM SYNONYM TABLES)
     ## cor.plot <- c(unique(db$Plot), "")
@@ -52,21 +52,9 @@ checkMisspell <- function(db){
     ## "SamplingRound" (cor.sample)
     cor.sample <- c(1:2, "")
     
-    ## List of the vectors of possible valid entries to columns being checked for misspellings
-    ## 'syn' prefix indicates calues sourced from synonym tables.
-    ## 'cor' prefix indicates stand-in values.
-    cor.list <- list(syn.plot, syn.collect, syn.method, 
-                     syn.plant, cor.beat, syn.pit, 
-                     syn.where, cor.sample)
-    
-    ## Vector of the different column names, excluding columns not being checked for misspellings
-    misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
-                            "BeatingDuration", "PitFallSlice",
-                            "Whereabouts", "SamplingRound")
-    
-    ############################################
-    ## IMPLEMENTATION OF SYNONYM TABLE VALUES ##
-    ############################################
+    ########################################
+    ## Synonym Sourced Correction Vectors ##
+    ########################################
     
     .synValues <- function(url){
         return(unique(readGoogle(url)[, 2]))
@@ -90,6 +78,18 @@ checkMisspell <- function(db){
     ## "Whereabouts" (cor.where)
     syn.where <- .synValues('https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw2o9t6Vt_Q06IVQo0GLf5YUb4-M/pub?output=csv')
     ###################################################################
+    
+    ## List of the vectors of possible valid entries to columns being checked for misspellings
+    ## 'syn' prefix indicates calues sourced from synonym tables.
+    ## 'cor' prefix indicates stand-in values.
+    cor.list <- list(syn.plot, syn.collect, syn.method, 
+                     syn.plant, cor.beat, syn.pit, 
+                     syn.where, cor.sample)
+    
+    ## Vector of the different column names, excluding columns not being checked for misspellings
+    misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
+                            "BeatingDuration", "PitFallSlice",
+                            "Whereabouts", "SamplingRound")
     
     return(mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db)))
 }

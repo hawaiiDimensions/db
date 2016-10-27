@@ -60,3 +60,4 @@ syn.foo <- .synValues('https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw
 syn.foo
 #########################
 errors
+checkMisspell(db)
