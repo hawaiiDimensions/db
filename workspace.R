@@ -11,9 +11,9 @@ db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaA
 errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 ########################
 ## FAKE DATABASE TEST ## 
-fake.db <- read.csv("fake_data.csv", as.is=TRUE)
-test.results <- list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db),wrongTime = checkTime(db))
-test.results
+# fake.db <- read.csv("fake_data.csv", as.is=TRUE)
+# test.results <- list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db),wrongTime = checkTime(db))
+# test.results
 ########################
 
 
