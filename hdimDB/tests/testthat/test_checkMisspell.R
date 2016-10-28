@@ -1,15 +1,12 @@
-context('test functionality of check empty')
+context('test functionality of misspelling checker')
 
 ## load test data
 data('testData')
 
 ## use the checker function
-check <- checkEmpty(testData)
+check <- checkMisspell(testData)
 
-test_that('checkEmpty finds missing entries', {
-    expect_equal(check$column$Collector, 4520)
+test_that('checkMisspell finds misspelled entries', {
+    expect_equal(check$Method, 9024)
 })
 
-test_that('checkEmpty finds missing contingencies', {
-    expect_equal(check$contingency$beating, 4445)
-})

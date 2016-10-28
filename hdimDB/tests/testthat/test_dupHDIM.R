@@ -6,6 +6,6 @@ data('testData')
 ## use the checker function
 check <- dupHDIM(testData)
 
-test_that('checkTime finds duplicate HDIM numbers', {
+test_that('dupHDIM finds duplicate HDIM numbers', {
     expect_equal(check, 9024)
 })
