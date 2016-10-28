@@ -1,8 +1,11 @@
-context('time checker function')
+context('test functionality of time checking function')
 
-## make a test database with wrong date
-testdb <- data.frame(HDIM = 5000, Date = 'vi/3/2015')
+## load test data
+data('testData')
+
+## use the checker function
+check <- checkTime(testData)
 
 test_that('checkTime finds problem time entries', {
-    expect_equal(checkTime(testdb), 5000)
+    expect_equal(check, 8081)
 })
