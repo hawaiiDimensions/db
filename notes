@@ -92,19 +92,25 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##       change tag to: 'pub?output=csv' - NOTED
 
 ## 10.25.16 ROMINGER
+##
 ## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
 ##    exacty 420 seconds.
+##
 ## 2. Check collector names in proper format with regex - ANDY WILL ASSEMBLE SYNONYM TABLE
 ##    a. Format: "Capitalized initial". "Capitalized surname"
 ##    b. Check if name matches with any of the known collector names
 ##    c. Check if name could be a misformatted collector name if no match
+##
 ## 3. Unit Tests
 ##    a. hdimDB -> tests -> testthat - NOTED
 ##    b. Save fake.data as a dataframe in the binary R structure - DONE
 ##    c. Rename fake.data as test.data - DONE
-##    d. New testthat files for dupHDIM and checkMisspell
-##    e. Rewrite unit test for checkTime
-## 
-## 
-##    NOTE: camelCase vs. snake_case
-## 
+##    d. New testthat files for dupHDIM and checkMisspell 
+##    e. Rewrite unit test for checkTime to run on fakeData - DONE
+##
+## 4. Shiny
+##    a. Use Andy's implementation (located in workspace)
+##    
+## Appendix: camelCase vs. snake_case
+
+
