@@ -5,7 +5,7 @@
 ## Install and load hdimDB
 devtools::install_github('hawaiiDimensions/db/hdimDB')
 library(hdimDB)
-########################
+####################################
 ## Load database and scan for errors
 db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
@@ -13,11 +13,12 @@ errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewi
 ## FAKE DATABASE TEST ## 
 # fake.db <- read.csv("fake_data.csv", as.is=TRUE)
 # test.results <- list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db),wrongTime = checkTime(db))
-# test.results
 ###############
 ## UNIT TEST ##
 # install.packages('testthat')
 # library(testthat)
+
+
 ##########################
 ## SHINY IMPLEMENTATION ##
 ##########################
@@ -51,6 +52,14 @@ names(errors) <- NULL
 
 ## now we have all the error HDIMs and what type of error is associated with them
 head(data.frame(errors, errType))
-
 #####################
+errKey <- data.frame(errors, errType)
+
+errBase <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+
+errBase$errTag <- ""
+for (hdim in errKey$errors){
+    if (errBase$HDIM == hdim)
+        errBase$errTag[hdim]  <- paste(errBase$errTag[hdim], errKey$errType[hdim]) 
+}
 
