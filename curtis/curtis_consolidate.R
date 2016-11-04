@@ -54,8 +54,8 @@ if(!any(cleanDate == as.Date('0000/1/1'))) {
 ## if all HDIM accounted for, write it back out along with original version of db
 
 if(all(dbCombo$HDIM %in% dbClean$HDIM)) {
-    write.csv(dbClean, file = sprintf('db_consolidated_%s.csv', Sys.Date()), row.names = FALSE)
-    write.csv(db, file = sprintf('db_origVersion_%s.csv', Sys.Date()), row.names = FALSE)
+    write.csv(dbClean, file = sprintf('db_consolidated_%s.csv', Sys.Date()), row.names = FALSE, na = '')
+    write.csv(db, file = sprintf('db_origVersion_%s.csv', Sys.Date()), row.names = FALSE, na = '')
 }
 
 
