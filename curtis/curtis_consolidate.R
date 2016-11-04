@@ -23,10 +23,44 @@ write.csv(dbCombo[dbCombo$HDIM %in% dupHDIM, ],
           file = 'curtis/curtis_consolidate_dup.csv', row.names = FALSE, na = '')
 
 
-## read back in corrected duplicates and check that all HDIMs are still there
+## read back in corrected duplicates and combine with non-duplicates
 dupCheck <- read.csv('curtis/curtis_consolidate_dupCheck.csv', as.is = TRUE)
+dbClean <- rbind(dupCheck, dbCombo[dbCombo$HDIM %in% unqHDIM, -which(names(dbCombo) == 'source')])
 
-dbClean <- rbind()
+
+## clean up date
+
+dbClean$Date[dbClean$HDIM %in% c(7121, 7124)] <- '6/17/2015'
+dbClean$Date[dbClean$HDIM == 9002] <- '8/19/2015'
+
+yr <- gsub('.*/|.*-', '', dbClean$Date)
+
+cleanDate <- rep(as.Date('0000/1/1'), nrow(dbClean))
+cleanDate[grep('-', dbClean$Date)] <- as.Date(dbClean$Date[grep('-', dbClean$Date)], '%d-%b-%y')
+cleanDate[grepl('/', dbClean$Date) & nchar(yr) == 2] <- 
+    as.Date(dbClean$Date[grepl('/', dbClean$Date) & nchar(yr) == 2], '%m/%d/%y')
+cleanDate[grepl('/', dbClean$Date) & nchar(yr) == 4] <- 
+    as.Date(dbClean$Date[grepl('/', dbClean$Date) & nchar(yr) == 4], '%m/%d/%Y')
+
+if(!any(cleanDate == as.Date('0000/1/1'))) {
+    dbClean$Date <- cleanDate
+    
+    badYear <- as.character(dbClean$Date[dbClean$Date < as.Date('2014-1-1')])
+    substring(badYear, 1, 4) <- as.character(as.numeric(substring(badYear, 1, 4)) + 4)
+    dbClean$Date[dbClean$Date < as.Date('2014-1-1')] <- as.Date(badYear)
+}
+
+
+## if all HDIM accounted for, write it back out along with original version of db
+
+if(all(dbCombo$HDIM %in% dbClean$HDIM)) {
+    write.csv(dbClean, file = sprintf('db_consolidated_%s.csv', Sys.Date()), row.names = FALSE)
+    write.csv(db, file = sprintf('db_origVersion_%s.csv', Sys.Date()), row.names = FALSE)
+}
+
+
+
+
 
 
 ## get plot synonyms
