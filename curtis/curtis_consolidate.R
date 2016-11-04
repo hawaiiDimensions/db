@@ -20,7 +20,13 @@ dupHDIM <- dbCombo$HDIM[duplicated(dbCombo$HDIM)]
 unqHDIM <- dbCombo$HDIM[!duplicated(dbCombo$HDIM)]
 
 write.csv(dbCombo[dbCombo$HDIM %in% dupHDIM, ], 
-          file = 'curtis/curtis_consolidate.csv', row.names = FALSE, na = '')
+          file = 'curtis/curtis_consolidate_dup.csv', row.names = FALSE, na = '')
+
+
+## read back in corrected duplicates and check that all HDIMs are still there
+dupCheck <- read.csv('curtis/curtis_consolidate_dupCheck.csv', as.is = TRUE)
+
+dbClean <- rbind()
 
 
 ## get plot synonyms
