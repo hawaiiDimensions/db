@@ -19,7 +19,48 @@ errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewi
 # library(testthat)
 ##########################
 ## AUTOMATED CORRECTION ##
+library(RecordLinkage)
 
+# closestMatch <- function(string, stringVector){
+#     distance <- levenshteinSim(string, stringVector)
+#     stringVector[distance == max(distance)]
+# }
+# closestMatch("kohala", syn.plot)
+
+correctMispell <- function(db){
+    ## Returns new columns of corrected entries in the
+    ## database based on Levinshtein distance
+    
+    ## Vectors of correct spelling to match against
+    syn.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/pub?output=csv')
+    syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
+    
+    ## Initial creation of database columns for suggested corrections
+    db$corMethod <- db$Method
+    db$corPlot <- db$Plot
+    
+    ## List of synonym vectors and columns to be checked
+    syn.list <- list(syn.method, syn.plot)
+    ver.columns <- list("corMethod", "corPlot")
+    
+    ## Wrapper
+    mapply(ver.columns, syn.list, MoreArgs=list(db))
+    return(head(db))
+}
+
+.corColumn <- function(db, column, syn.vector){
+    for (string in column){
+        distance <- levenshteinSim(string, syn.vector)
+        for (match in syn.vector[distance == max(distance)]){
+            paste(db[string, column], match)
+        }
+    }
+    return(head(db))
+}
+
+.corColumn(db, "corPlot", syn.plot)
+head(db)
+correctMispell(db)
 
 
 
@@ -42,8 +83,8 @@ runExample("09_upload") # file upload wizard
 runExample("10_download") # file download wizard
 runExample("11_timer") # an automated timer
 
-##################
-## ROMINGER SCRIPT 
+############################
+## ROMINGER SCRIPT FOR SHINY
 
 ## turn nested list structure into a single vector of all the HDIMs with errors
 errors <- unlist(errors)
@@ -56,64 +97,19 @@ names(errors) <- NULL
 
 ## now we have all the error HDIMs and what type of error is associated with them
 head(data.frame(errors, errType))
-#####################
-
+############################
+## Dataframe of errors and their type
 errKey <- data.frame(errors, errType)
+## Copy over db 
 errBase <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 
-# errBase$errTag <- ""
-# for (hdim in errKey$errors){
-#     if (errBase$HDIM == hdim)
-#         errBase$errTag[hdim]  <- paste(errBase$errTag[hdim], errKey$errType[hdim]) 
-# }
-
+## Consolidate errKey by HDIM
 errSumm <- tapply(errKey$errType, errKey$errors, paste, collapse=',')
 errSumm <- data.frame(HDIM = names(errSumm), errMessage = as.character(errSumm))
-head(errSumm)
 
+## Create new column in errBase with error tags from errSumm
 errBase$errTag <- as.character(errSumm$errMessage[match(errBase$HDIM, errSumm$HDIM)])
 errBase$errTag[is.na(errBase$errTag)] <- ''
-write.csv(errBase, '/Users/EdwardH/Desktop/errBase.csv')
 head(errBase)
-#######################
-library(RecordLinkage)
 
-# closestMatch <- function(string, stringVector){
-#     distance <- levenshteinSim(string, stringVector)
-#     stringVector[distance == max(distance)]
-# }
-# closestMatch("kohala", syn.plot)
 
-correctMispell <- function(db){
-    ## Returns new columns of corrected entries in the
-    ## database based on REGEX matching
-    
-    ## Vectors of correct spelling to match against
-    syn.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/pub?output=csv')
-    syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
-   
-    ## Initial creation of database columns for suggested corrections
-    db$corMethod <- db$Method
-    db$corPlot <- db$Plot
-    
-    ## List of synonym vectors and columns to be checked
-    syn.list <- list(syn.method, syn.plot)
-    ver.columns <- list("corMethod", "corPlot")
-    
-    mapply(.corColumn, ver.columns, syn.list, MoreArgs=list(db))
-    return(head(db))
-}
-
-.corColumn <- function(db, column, syn.vector){
-    for (string in column){
-        distance <- levenshteinSim(string, syn.vector)
-        for (match in syn.vector[distance == max(distance)]){
-            paste(db[string, column], match)
-        }
-    }
-    return(db[column])
-}
-
-.corColumn(db, "corPlot", syn.plot)
-head(db)
-correctMispell(db)
