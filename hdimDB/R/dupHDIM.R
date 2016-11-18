@@ -19,5 +19,6 @@
 #' @export
 
 dupHDIM <- function(db){
-  return(db[which(duplicated(db[, "HDIM"])),]$HDIM)
+  out <- db[which(duplicated(db[, "HDIM"])),]$HDIM
+  return(extractErr(out, "dupHDIM"))
 }

@@ -91,7 +91,8 @@ checkMisspell <- function(db){
                             "BeatingDuration", "PitFallSlice",
                             "Whereabouts", "SamplingRound")
     
-    return(mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db)))
+    out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
+    return(extractErr(out, "misspelled"))
 }
 
 ## Helper function
