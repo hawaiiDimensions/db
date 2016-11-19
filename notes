@@ -129,6 +129,13 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##    d. Combine pitfall contingency columms with method using paste()
 ## 
 ## Appendix: Look at curtis_consolidate, Line 26 and on, for examples on regex expressions - NOT FOUND
-
-
+##
+## 11.18.16 ROMINGER
+##  1. Ultimately checkDB to output dataframe with HDIM, errTag, suggested correction columns
+##      a. Generic misspelling function(column) #find synonym table by itself
+##      c. Change list() in checkDB to rBind() - DONE
+##      d. Have helper functions output two-column dataframe first - DONE
+##      e. Implement assignCorr with Generic function
+##  2. Do the damn Shiny implementation
+##
 

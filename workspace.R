@@ -21,11 +21,11 @@ errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewi
 ## AUTOMATED CORRECTION ##
 library(RecordLinkage)
 
-# closestMatch <- function(string, stringVector){
-#     distance <- levenshteinSim(string, stringVector)
-#     stringVector[distance == max(distance)]
-# }
-# closestMatch("kohala", syn.plot)
+closestMatch <- function(string, stringVector){
+    distance <- levenshteinSim(string, stringVector)
+    stringVector[distance == max(distance)]
+}
+closestMatch("kohala", syn.plot)
 
 correctMispell <- function(db){
     ## Returns new columns of corrected entries in the
@@ -44,7 +44,7 @@ correctMispell <- function(db){
     ver.columns <- list("corMethod", "corPlot")
     
     ## Wrapper
-    mapply(ver.columns, syn.list, MoreArgs=list(db))
+    mapply(.corColumn, ver.columns, syn.list, MoreArgs=db)
     return(head(db))
 }
 
@@ -55,7 +55,7 @@ correctMispell <- function(db){
             paste(db[string, column], match)
         }
     }
-    return(head(db))
+    return(column)
 }
 
 .corColumn(db, "corPlot", syn.plot)
