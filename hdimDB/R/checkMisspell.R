@@ -92,7 +92,7 @@ checkMisspell <- function(db){
                             "Whereabouts", "SamplingRound")
     
     out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
-    return(extractErr(out, "misspelled"))
+    return(.extractErr(out, "misspelled"))
 }
 
 ## Helper function
