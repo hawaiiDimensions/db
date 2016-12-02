@@ -11,10 +11,9 @@
 #' @author Andy Rominger <ajrominger@@gmail.com>
 #' @export
 
-## db
 colEventsURL <- 'https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv'
 
-## Synonym Tables
+# synonym tables
 synPlotURL <- 'https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv'
 synCollectURL <- 'https://docs.google.com/spreadsheets/d/1_KGLPEcOneLvcRR8--CjEVeKTPDXJkI7YqwSTM2BVJc/pub?output=csv'
 synMethodURL <- 'https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/pub?output=csv'
