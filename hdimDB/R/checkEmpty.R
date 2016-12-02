@@ -64,7 +64,7 @@ checkEmpty <- function(db){
     
     out <- list(column = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
                 contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db)))
-    return(.extractErr(out, "empty"))
+    return(.extractErr(db, out, "empty"))
 }
 
 ## Helper functions
