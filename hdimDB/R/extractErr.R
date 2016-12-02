@@ -1,5 +1,5 @@
 ## Assigns a given error type string to an HDIM number as a dataframe.
-.extractErr <- function(errHDIM, errTag){
+.extractErr <- function(db, errHDIM, errTag){
     errHDIM <- unlist(errHDIM)
     if (is.null(names(errHDIM))){
         errMessage <- errTag
@@ -8,9 +8,12 @@
         names(errHDIM) <- NULL
         errMessage <- paste(errTag, errType, sep = ".")
     }
-    return(data.frame(errHDIM, errMessage))
+    errColumn <- gsub('.*\\.', '', errMessage) 
+    verbatim <- mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){db[db$HDIM == hdim, col]})
+    return(data.frame(errHDIM, errMessage, verbatim))
 }
 
+## Input is output of .extractErr
 .assignCorr <- function(errOut){
     errTag <- gsub('\\..*', '', errOut$errMessage)[1]
     if (errTag == "dupHDIM"){
@@ -20,10 +23,24 @@
         corr <- NA
     }
     if (errTag == "misspelled"){
-        corr <- 
+        corr <- NA
+       # corr <- .closestMatch()
     }
     if (errTag == "time"){
         corr <- NA
     }
     return(data.frame(err.Out, corr))
+}
+
+.closestMatch <- function(verbatim, column){
+# .closestMatch <- function(verbatim, synVector){
+    if(column == '...') { ## fill this in
+        synVector <- NULL
+    }
+    distance <- levenshteinSim(verbatim, synVector)
+    corr <- synVector[distance == max(distance)]
+    if (length(corr) > 1){
+        corr <- paste(corr, collapse = ';')
+    }
+    return(corr)
 }

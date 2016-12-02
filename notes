@@ -62,7 +62,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 09.28.16
 ## Sourced values from synonym tables.
 
-## 09.29.16 ROMINGER
+## 09.29.16 ROMINGER - HILGARD 305
 ##
 ## PACKAGE INITIALIZED
 ## > devtools::install_github('hawaiiDimensions/db/hdimDB')
@@ -81,7 +81,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 
 ## Fixed error with arguments in mapply call
 ##
-## 10.20.16 ROMINGER
+## 10.20.16 ROMINGER - HILGARD 305
 ## 1. Work on Shiny App 
 ##    a. Don't use rapply for Shiny error compilation Andy will 
 ##       push over script (compile_errors.R) to test.scripts folder - DONE
@@ -91,7 +91,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##    a. To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
 ##       change tag to: 'pub?output=csv' - NOTED
 
-## 10.25.16 ROMINGER
+## 10.25.16 ROMINGER - HILGARD 305
 ##
 ## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
 ##    exacty 420 seconds.
@@ -113,7 +113,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##    
 ## Appendix: camelCase vs. snake_case
 
-## 11.03.16 ROMINGER
+## 11.03.16 ROMINGER - HILGARD 305
 ##
 ## 1. Function to automate correction of plot names - DONE
 ##    a. Look at Andy's progress
@@ -130,12 +130,20 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 
 ## Appendix: Look at curtis_consolidate, Line 26 and on, for examples on regex expressions - NOT FOUND
 ##
-## 11.18.16 ROMINGER
-##  1. Ultimately checkDB to output dataframe with HDIM, errTag, suggested correction columns
+## 11.18.16 ROMINGER - HILGARD 305
+##
+##  1. Ultimately change checkDb to output dataframe with HDIM, errTag, current value, suggested correction columns
 ##      a. Generic misspelling function(column) #find synonym table by itself
 ##      c. Change list() in checkDB to rBind() - DONE
 ##      d. Have helper functions output two-column dataframe first - DONE
 ##      e. Implement assignCorr with Generic function
+##
 ##  2. Do the damn Shiny implementation
+##
+## 12.02.16 ROMINGER - HILGARD 305
+##
+##  1. Implement generic regex checker
+##  2. Store synonym table urls in the package
+##
 ##
 

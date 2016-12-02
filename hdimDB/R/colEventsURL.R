@@ -12,3 +12,5 @@
 #' @export
 
 colEventsURL <- 'https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv'
+
+## ADD SYNONYM TABLES URLS HERE
