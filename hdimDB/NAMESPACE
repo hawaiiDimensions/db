@@ -3,6 +3,7 @@
 export(checkEmpty)
 export(checkMisspell)
 export(checkTime)
+export(colEventsURL)
 export(dbChecker)
 export(dupHDIM)
 export(makeLabels)
