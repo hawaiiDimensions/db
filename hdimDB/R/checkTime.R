@@ -20,7 +20,7 @@
 
 checkTime <- function(db){
     out <- (.dateColumn(db))
-    return(.extractErr(out, "time.Date"))
+    return(.extractErr(db, out, "time.Date"))
 }
 
 ## hidden helper functions
