@@ -1,5 +1,5 @@
 ## Assigns a given error type string to an HDIM number as a dataframe.
-.extractErr <- function(db, errHDIM, errTag){
+.extractErr <- function(db, errHDIM, errTag){ # NOT WORKING
     errHDIM <- unlist(errHDIM)
     if (is.null(names(errHDIM))){
         errMessage <- errTag
@@ -10,8 +10,9 @@
     }
     errColumn <- gsub('.*\\.', '', errMessage) 
     verbatim <- mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){db[db$HDIM == hdim, col]})
-    return(data.frame(errHDIM, errMessage, verbatim))
+    return(data.frame(errHDIM, errMessage, verbatim = verbatim))
 }
+
 
 ## Input is output of .extractErr
 .assignCorr <- function(errOut){
