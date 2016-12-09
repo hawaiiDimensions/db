@@ -12,10 +12,9 @@
             errMessage <- paste(errTag, errType, sep = ".")
         }
         errColumn <- gsub('.*\\.', '', errMessage) 
-        verbatim <- try(mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){
+        verbatim <- mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){
             paste(unique(db[db$HDIM == hdim, col]), collapse = ';')
-        }))
-        if(class(verbatim) == 'try-error') browser()
+        })
         return(data.frame(errHDIM, errMessage, verbatim = verbatim))
     }
 }
