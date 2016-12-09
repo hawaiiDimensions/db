@@ -18,7 +18,7 @@
 ## Input is output of .extractErr
 .assignCorr <- function(extractOut){
     errTag <- gsub('\\..*', '', extractOut$errMessage)[1]
-    browser()
+    
     if (errTag == "dupHDIM"){
         corr <- NA
     }
