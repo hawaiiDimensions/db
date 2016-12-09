@@ -15,8 +15,9 @@
 #' @export
 
 dbChecker <- function(db){
-    return(rbind(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
-                wrongTime = checkTime(db)))
-#     return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
-#                 wrongTime = checkTime(db)))
+    duplicatedHDIM <-dupHDIM(db)
+    empty <- checkEmpty(db)
+    misspelled <- checkMisspell(db)
+    wrongTime <- checkTime(db)
+    return(rbind(duplicatedHDIM, empty, misspelled, wrongTime))
 } 
