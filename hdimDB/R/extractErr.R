@@ -20,7 +20,7 @@
         corr <- NA
     }
     if (errTag == "misspelled"){
-        corr <- 
+        corr <- NA
     }
     if (errTag == "time"){
         corr <- NA
