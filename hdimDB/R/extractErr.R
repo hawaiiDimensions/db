@@ -15,7 +15,6 @@
     return(data.frame(errHDIM, errMessage, verbatim = verbatim))
 }
 
-
 ## Input is output of .extractErr
 .assignCorr <- function(errOut){
     errTag <- gsub('\\..*', '', errOut$errMessage)[1]

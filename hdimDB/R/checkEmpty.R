@@ -25,26 +25,26 @@ checkEmpty <- function(db){
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
     #####################################################################
     
-    ## beating (beat.vector)                   
+    # beating (beat.vector)                   
     beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
-    ## ground malaise (gmal.vector)
+    # ground malaise (gmal.vector)
     gmal.vector <- c("DateEnd", "PitFallSlice")
-    ## canopy malaise (cmal.vector)
+    # canopy malaise (cmal.vector)
     cmal.vector <- c("DateEnd", "PitFallSlice")
-    ## leaf litter (leaf.vector)
+    # leaf litter (leaf.vector)
     leaf.vector <- c("PitFallSlice")
-    ## pitfall trap (pit.vector)
+    # pitfall trap (pit.vector)
     pit.vector <- c("DateEnd", "PitFallSlice")
-    ## InsectaZooka (zook.vector)
+    # InsectaZooka (zook.vector)
     zook.vector <- c("PitFallSlice")
-    ## soil extraction (soil.vector)
+    # soil extraction (soil.vector)
     soil.vector <- c("PitFallSlice")  
-    ## canopy clipping has no contingent columns, does not need to be checked
+    # canopy clipping has no contingent columns, does not need to be checked.
     contin.list <- list(beat.vector, pit.vector, leaf.vector,
                         cmal.vector, gmal.vector, zook.vector, 
                         soil.vector)
     
-    ## Compiling vectors of column names and contingent column names
+    # Compiled vectors of column names and contingent column names.
     empty.col <- c("HDIM", "Plot", "Date", "Collector", "Method", 
                    "Whereabouts", "SamplingRound") 
     methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
@@ -54,11 +54,7 @@ checkEmpty <- function(db){
     ## IMPLEMENTING SYNONYM TABLE VALUES 
     ####################################
   
-    # .synValues <- function(url){
-    #     return(c(readGoogle(url)[, 1]))
-    # }
-    # 
-    # methods <- .synValues(methods.url)
+    # syn.method <- .synValues(synMethodURL)
 
     ###################################################################
     
@@ -67,7 +63,7 @@ checkEmpty <- function(db){
     return(.extractErr(db, out, "empty"))
 }
 
-## Helper functions
+## Hidden functions
 .emptyColumn <- function(column, db){
     return(db[which(db[, column] == ""),]$HDIM)
 }
