@@ -22,10 +22,7 @@ checkMisspell <- function(db){
     db[is.na(db)] <- ""
     
     ## Non-Synonym Correction Vectors ##
-    
-    # 'BeatingDuration'
-    cor.beat <- c(0:300, "")
-    # 'SamplingRound'
+
     cor.sample <- c(1:2, "")
     
     ## Synonym Sourced Correction Vectors ##
@@ -49,17 +46,16 @@ checkMisspell <- function(db){
     # 'syn-' synonym values.
     # 'cor-' stand-in values.
     cor.list <- list(syn.plot, syn.collect, syn.method, 
-                     syn.plant, cor.beat, syn.pit, 
-                     syn.where, cor.sample)
+                     syn.plant, syn.pit, syn.where, cor.sample)
     
     # Vector of the different column names of columns checked 
     # for misspellings.
-    misspelled.columns <- c("Plot", "Collector", "Method", "Plant", 
-                            "BeatingDuration", "PitFallSlice",
-                            "Whereabouts", "SamplingRound")
+    misspelled.columns <- c('Plot', 'Collector', 'Method', 'Plant', 
+                            'PitFallSlice', 'Whereabouts', 'SamplingRound')
     
     out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
-    return(.extractErr(db, out, "misspelled"))
+    extractOut <- .extractErr(db, out, "misspelled")
+    return(.assignCorr(extractOut))
 }
 
 ## Hidden functions
