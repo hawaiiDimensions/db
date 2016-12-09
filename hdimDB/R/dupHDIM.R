@@ -20,5 +20,6 @@
 
 dupHDIM <- function(db){
   out <- db[which(duplicated(db[, "HDIM"])),]$HDIM
-  return(.extractErr(db, out, "dup.HDIM"))
+  extractOut <- .extractErr(db, out, "dup.HDIM")
+  return(.assignCorr(extractOut))
 }
