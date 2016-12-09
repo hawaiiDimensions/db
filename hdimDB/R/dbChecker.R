@@ -14,11 +14,9 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-dbChecker <- function(url){
-    db <- readGoogle(url)
-    ## 4-column dataframe return statement
-#     return(rBind(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
-#                 wrongTime = checkTime(db)))
-    return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
+dbChecker <- function(db){
+    return(rbind(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
                 wrongTime = checkTime(db)))
+#     return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
+#                 wrongTime = checkTime(db)))
 } 
