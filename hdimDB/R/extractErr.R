@@ -1,5 +1,5 @@
 ## Assigns a given error type string to an HDIM number as a dataframe.
-.extractErr <- function(db, errHDIM, errTag){ # NOT WORKING
+.extractErr <- function(db, errHDIM, errTag){ 
     errHDIM <- unlist(errHDIM)
     if (is.null(names(errHDIM))){
         errMessage <- errTag
@@ -16,8 +16,9 @@
 }
 
 ## Input is output of .extractErr
-.assignCorr <- function(errOut){
-    errTag <- gsub('\\..*', '', errOut$errMessage)[1]
+.assignCorr <- function(extractOut){
+    errTag <- gsub('\\..*', '', extractOut$errMessage)[1]
+    browser()
     if (errTag == "dupHDIM"){
         corr <- NA
     }
@@ -25,20 +26,21 @@
         corr <- NA
     }
     if (errTag == "misspelled"){
-        corr <- NA
-       # corr <- .closestMatch()
+        errColumn <- gsub('.*\\.', '', extractOut$errMessage)
+        corr <- mapply(verbatim = extractOut$verbatim, column = errColumn, .closestMatch)
     }
     if (errTag == "time"){
         corr <- NA
     }
-    return(data.frame(err.Out, corr))
+    return(data.frame(extractOut, corr))
 }
 
 .closestMatch <- function(verbatim, column){
 # .closestMatch <- function(verbatim, synVector){
-    if(column == '...') { ## fill this in
-        synVector <- NULL
-    }
+#     if(column == '...') { ## fill this in
+#         synVector <- NULL
+#     }
+    synVector <- switch(column)
     distance <- RecordLinkage::levenshteinSim(verbatim, synVector)
     corr <- synVector[distance == max(distance)]
     if (length(corr) > 1){
