@@ -40,7 +40,7 @@
     if(column == '...') { ## fill this in
         synVector <- NULL
     }
-    distance <- levenshteinSim(verbatim, synVector)
+    distance <- RecordLinkage::levenshteinSim(verbatim, synVector)
     corr <- synVector[distance == max(distance)]
     if (length(corr) > 1){
         corr <- paste(corr, collapse = ';')
