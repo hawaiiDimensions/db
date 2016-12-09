@@ -16,7 +16,7 @@
 
 dbChecker <- function(url){
     db <- readGoogle(url)
-    ## 4-column dataframe return expression
+    ## 4-column dataframe return statement
 #     return(rBind(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
 #                 wrongTime = checkTime(db)))
     return(list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db), 
