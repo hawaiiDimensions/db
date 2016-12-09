@@ -9,7 +9,9 @@
         errMessage <- paste(errTag, errType, sep = ".")
     }
     errColumn <- gsub('.*\\.', '', errMessage) 
-    verbatim <- mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){db[db$HDIM == hdim, col]})
+    verbatim <- mapply(hdim = errHDIM, col = errColumn, FUN = function(hdim, col){
+        paste(unique(db[db$HDIM == hdim, col]), collapse = ';')
+    })
     return(data.frame(errHDIM, errMessage, verbatim = verbatim))
 }
 
