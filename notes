@@ -62,7 +62,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 09.28.16
 ## Sourced values from synonym tables.
 
-## 09.29.16 ROMINGER
+## 09.29.16 ROMINGER - HILGARD 305
 ##
 ## PACKAGE INITIALIZED
 ## > devtools::install_github('hawaiiDimensions/db/hdimDB')
@@ -81,61 +81,66 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 
 ## Fixed error with arguments in mapply call
 ##
-## 10.20.16 ROMINGER
+## 10.20.16 ROMINGER - HILGARD 305
 ## 1. Work on Shiny App 
-##    a. Don't use rapply for Shiny error compilation Andy will 
-##       push over script (compile_errors.R) to test.scripts folder - DONE
+##     a. Don't use rapply for Shiny error compilation Andy will 
+##        push over script (compile_errors.R) to test.scripts folder - DONE
 ## 2. Add workspace to test.scripts - DONE
 ## 3. Write unit tests - STANDBY
 ## 4. Add synonym values to checkMisspell - DONE
-##    a. To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
-##       change tag to: 'pub?output=csv' - NOTED
+##     a. To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
+##        change tag to: 'pub?output=csv' - NOTED
 
-## 10.25.16 ROMINGER
+## 10.25.16 ROMINGER - HILGARD 305
 ##
 ## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
 ##    exacty 420 seconds.
 ##
 ## 2. Check collector names in proper format with regex - ANDY WILL ASSEMBLE SYNONYM TABLE
-##    a. Format: "Capitalized initial". "Capitalized surname"
-##    b. Check if name matches with any of the known collector names
-##    c. Check if name could be a misformatted collector name if no match
+##     a. Format: "Capitalized initial". "Capitalized surname"
+##     b. Check if name matches with any of the known collector names
+##     c. Check if name could be a misformatted collector name if no match
 ##
 ## 3. Unit Tests
-##    a. hdimDB -> tests -> testthat - NOTED
-##    b. Save fake.data as a dataframe in the binary R structure - DONE
-##    c. Rename fake.data as test.data - DONE
-##    d. New testthat files for dupHDIM and checkMisspell - DONE
-##    e. Rewrite unit test for checkTime to run on fakeData - DONE
-##
+##     a. hdimDB -> tests -> testthat - NOTED
+##     b. Save fake.data as a dataframe in the binary R structure - DONE
+##     c. Rename fake.data as test.data - DONE
+##     d. New testthat files for dupHDIM and checkMisspell - DONE
+##     e. Rewrite unit test for checkTime to run on fakeData - DONE
 ## 4. Shiny
-##    a. Use Andy's implementation (located in workspace) 
+##     a. Use Andy's implementation (located in workspace) 
 ##    
 ## Appendix: camelCase vs. snake_case
 
-## 11.03.16 ROMINGER
+## 11.03.16 ROMINGER - HILGARD 305
 ##
 ## 1. Function to automate correction of plot names - DONE
-##    a. Look at Andy's progress
-##    b. Look at regex matching functions (e.g. is "x" in the cell value)
-##
+##     a. Look at Andy's progress
+##     b. Look at regex matching functions (e.g. is "x" in the cell value)
 ## 2. Autocorrecting method names - DONE
-##    a. Look at regex matching functions
-##
+##     a. Look at regex matching functions
 ## 3. Generate wide-format reference dataframe tracking method metadata - WRITTEN WITH ROMINGER 
-##    a. dbcleaning_2016-09-02.R in hawaiiDimensions/Db
-##    b. Plot names as rownames
-##    c. Method names as columnnames
-##    d. Combine pitfall contingency columms with method using paste()
+##     a. dbcleaning_2016-09-02.R in hawaiiDimensions/Db
+##     b. Plot names as rownames
+##     c. Method names as columnnames
+##     d. Combine pitfall contingency columms with method using paste()
 ## 
 ## Appendix: Look at curtis_consolidate, Line 26 and on, for examples on regex expressions - NOT FOUND
 ##
-## 11.18.16 ROMINGER
-##  1. Ultimately checkDB to output dataframe with HDIM, errTag, suggested correction columns
+## 11.18.16 ROMINGER - HILGARD 305
+##
+##  1. Ultimately change checkDb to output dataframe with HDIM, errTag, current value, suggested correction columns
 ##      a. Generic misspelling function(column) #find synonym table by itself
 ##      c. Change list() in checkDB to rBind() - DONE
 ##      d. Have helper functions output two-column dataframe first - DONE
 ##      e. Implement assignCorr with Generic function
 ##  2. Do the damn Shiny implementation
+##
+## 12.02.16 ROMINGER - HILGARD 305
+##
+##  1. Implement generic regex checker
+##      a. "if" clauses in assignCorr
+##      b. fix extractCorr
+##  2. Store synonym table urls in the package - FIX THIS
 ##
 

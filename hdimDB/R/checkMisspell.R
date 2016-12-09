@@ -62,21 +62,27 @@ checkMisspell <- function(db){
     
     ## "Plot" (cor.plot) 
     syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
+    # syn.plot <- .synValues(synPlotURL)
     
     ## "Collector" (cor.collect)
     syn.collect <- .synValues('https://docs.google.com/spreadsheets/d/1_KGLPEcOneLvcRR8--CjEVeKTPDXJkI7YqwSTM2BVJc/pub?output=csv')
+    # syn.collect <- .synValues(synCollectURL)
     
     ## "Method" (cor.method)
     syn.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/pub?output=csv')
+    # syn.method <- .synValues(synMethodURL)
 
     ## "Plant" (cor.plant) 
     syn.plant <- .synValues('https://docs.google.com/spreadsheets/d/1SxbSt_SRiycfaihkOg-m4tz-nrtZNKtqJDE2OmG700Q/pub?output=csv')
+    # syn.plant <- .synValues(synPlantURL)
     
     ## "PitFallSlice" (cor.pit)
     syn.pit <- .synValues('https://docs.google.com/spreadsheets/d/19eHQCQLKN_At10iUDmXYX2w1FA7EomHK9jZbq7lOSYg/pub?output=csv')
+    # syn.pit <- .synValues(synPitURL)
 
     ## "Whereabouts" (cor.where)
     syn.where <- .synValues('https://docs.google.com/spreadsheets/d/1sKJpNgcghZySIGQiw2o9t6Vt_Q06IVQo0GLf5YUb4-M/pub?output=csv')
+    # syn.where <- .synValues(synWhereURL)
     ###################################################################
     
     ## List of the vectors of possible valid entries to columns being checked for misspellings
@@ -92,7 +98,7 @@ checkMisspell <- function(db){
                             "Whereabouts", "SamplingRound")
     
     out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
-    return(.extractErr(out, "misspelled"))
+    return(.extractErr(db, out, "misspelled"))
 }
 
 ## Helper function

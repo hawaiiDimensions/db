@@ -7,8 +7,8 @@ devtools::install_github('hawaiiDimensions/db/hdimDB')
 library(hdimDB)
 ####################################
 ## Load database and scan for errors
-db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-errors <- dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+db <- readGoogle(colEventsURL)
+errors <- dbChecker(colEventsURL)
 ########################
 ## FAKE DATABASE TEST ## 
 # fake.db <- read.csv("fake_data.csv", as.is=TRUE)
@@ -23,9 +23,13 @@ library(RecordLinkage)
 
 closestMatch <- function(string, stringVector){
     distance <- levenshteinSim(string, stringVector)
-    stringVector[distance == max(distance)]
+    suggestion <- stringVector[distance == max(distance)]
+    if (length(suggestion) > 1){
+        suggestion <- paste(suggestion, collapse = ';')
+    }
+    return(suggestion)
 }
-closestMatch("kohala", syn.plot)
+closestMatch("kohala_08", syn.plot)
 
 correctMispell <- function(db){
     ## Returns new columns of corrected entries in the
@@ -61,7 +65,6 @@ correctMispell <- function(db){
 .corColumn(db, "corPlot", syn.plot)
 head(db)
 correctMispell(db)
-
 
 
 ##########################
