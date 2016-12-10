@@ -93,8 +93,8 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 
 ## 10.25.16 ROMINGER - HILGARD 305
 ##
-## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
-##    exacty 420 seconds.
+## 1. Sum of beating durations for all samples in any given site in a sampling 
+##    round should be exactly 420 seconds.
 ##
 ## 2. Check collector names in proper format with regex - DONE # with levenstein
 ##     a. Format: "Capitalized initial". "Capitalized surname"
