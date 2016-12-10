@@ -4,10 +4,10 @@
 \alias{dbChecker}
 \title{Checks Dimensions Database for errors}
 \usage{
-dbChecker(url)
+dbChecker(db)
 }
 \arguments{
-\item{url}{The url where the google drive database lives}
+\item{db}{The database to be checked}
 }
 \value{
 A multi-leveled list of HDIM numbers
