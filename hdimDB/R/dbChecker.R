@@ -4,7 +4,7 @@
 #' 
 #' @details Developed specifically for the Dimensions in Biodiversity Evolab Database.
 #' 
-#' @param url The url where the google drive database lives
+#' @param db The database to be checked
 #' 
 # @example 
 # dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
