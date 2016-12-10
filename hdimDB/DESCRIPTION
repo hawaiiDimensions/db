@@ -15,7 +15,8 @@ LazyData: true
 Depends:
     R (>= 2.10)
 Imports:
-    RCurl
+    RCurl,
+    RecordLinkage
 Suggests:
     testthat
 RoxygenNote: 5.0.1
