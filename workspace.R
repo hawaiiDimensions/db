@@ -31,37 +31,6 @@ closestMatch <- function(string, stringVector){
 }
 closestMatch("kohala_08", syn.plot)
 
-correctMispell <- function(db){
-    ## Returns new columns of corrected entries in the
-    ## database based on Levinshtein distance
-    
-    ## Vectors of correct spelling to match against
-    syn.method <- .synValues('https://docs.google.com/spreadsheets/d/1MIXM5OzUtWUj4w_9dzf51Z1aRNV2mTCLUNgVBvkZYuE/pub?output=csv')
-    syn.plot <- .synValues('https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv')
-    
-    ## Initial creation of database columns for suggested corrections
-    db$corMethod <- db$Method
-    db$corPlot <- db$Plot
-    
-    ## List of synonym vectors and columns to be checked
-    syn.list <- list(syn.method, syn.plot)
-    ver.columns <- list("corMethod", "corPlot")
-    
-    ## Wrapper
-    mapply(.corColumn, ver.columns, syn.list, MoreArgs=db)
-    return(head(db))
-}
-
-.corColumn <- function(db, column, syn.vector){
-    for (string in column){
-        distance <- levenshteinSim(string, syn.vector)
-        for (match in syn.vector[distance == max(distance)]){
-            paste(db[string, column], match)
-        }
-    }
-    return(column)
-}
-
 .corColumn(db, "corPlot", syn.plot)
 head(db)
 correctMispell(db)
@@ -114,5 +83,4 @@ errSumm <- data.frame(HDIM = names(errSumm), errMessage = as.character(errSumm))
 errBase$errTag <- as.character(errSumm$errMessage[match(errBase$HDIM, errSumm$HDIM)])
 errBase$errTag[is.na(errBase$errTag)] <- ''
 head(errBase)
-
 
