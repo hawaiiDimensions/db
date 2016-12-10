@@ -1,40 +1,22 @@
-####################
-## hdimDB PACKAGE ##
-####################
-
-## Install and load hdimDB
-devtools::install_github('hawaiiDimensions/db/hdimDB')
-library(hdimDB)
+#######################
+## R PACKAGE: hdimDB ##
+#######################
+devtools::install_github('hawaiiDimensions/db/hdimDB') # installation script
+library(hdimDB) # Loading script
 ####################################
-## Load database and scan for errors
+## Load database and diagnose errors
 db <- readGoogle(colEventsURL)
-errors <- dbChecker(colEventsURL)
+errOut <- dbChecker(db)
+## Plotting errortypes
+tags <- as.character(errOut$errMessage) # converting factor vectors to characters
+errPlot <- barplot(table(tags), names.arg = unique(tags), 
+                   horiz = TRUE, las = 1, cex.names = 0.4, border = NA, 
+                   main = 'ColEvents Database Error Distribution', 
+                   sub = 'Huang, E.G., 2016. Evolab')
 ########################
 ## FAKE DATABASE TEST ## 
-# fake.db <- read.csv("fake_data.csv", as.is=TRUE)
-# test.results <- list(duplicatedHDIM = dupHDIM(db), empty = checkEmpty(db), misspell = checkMisspell(db),wrongTime = checkTime(db))
-###############
-## UNIT TEST ##
-# install.packages('testthat')
-# library(testthat)
-##########################
-## AUTOMATED CORRECTION ##
-library(RecordLinkage)
-
-closestMatch <- function(string, stringVector){
-    distance <- levenshteinSim(string, stringVector)
-    suggestion <- stringVector[distance == max(distance)]
-    if (length(suggestion) > 1){
-        suggestion <- paste(suggestion, collapse = ';')
-    }
-    return(suggestion)
-}
-closestMatch("kohala_08", syn.plot)
-
-.corColumn(db, "corPlot", syn.plot)
-head(db)
-correctMispell(db)
-
+# fakeData <- read.csv("fake_data.csv", as.is=TRUE)
+# results <- dbChecker(fakeData)
 
 ##########################
 ## SHINY IMPLEMENTATION ##
@@ -73,7 +55,7 @@ head(data.frame(errors, errType))
 ## Dataframe of errors and their type
 errKey <- data.frame(errors, errType)
 ## Copy over db 
-errBase <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+errBase <- readGoogle(colEventsURL)
 
 ## Consolidate errKey by HDIM
 errSumm <- tapply(errKey$errType, errKey$errors, paste, collapse=',')
