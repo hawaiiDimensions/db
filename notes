@@ -56,7 +56,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## https://cgrlucb.wikispaces.com/16S+Amplicon+Sequencing+Data+Analysis+Workshop?responseToken=08be8900eac6b4a4c470840e35e7e9d5a
 
 ## 04.20.16 PERSONAL NOTES
-## FUNCTION TO REPAIR INVALID DATE ENTRIES IN DATABASE
+## FUNCTION TO REPAIR INVALID DATE ENTRIES IN DATABASE - DONE
 ## function to repair invalid contingent factor entries by method in database
 
 ## 09.28.16
@@ -78,7 +78,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## Shiny app for dbChecker visualization
 
 ## 09.30.16 PERSONAL NOTES
-## 
+##
 ## Fixed error with arguments in mapply call
 ##
 ## 10.20.16 ROMINGER - HILGARD 305
@@ -86,17 +86,17 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##     a. Don't use rapply for Shiny error compilation Andy will 
 ##        push over script (compile_errors.R) to test.scripts folder - DONE
 ## 2. Add workspace to test.scripts - DONE
-## 3. Write unit tests - STANDBY
+## 3. Write unit tests - DONE
 ## 4. Add synonym values to checkMisspell - DONE
 ##     a. To retrieve synonym urls, GoogleSheets -> File -> Publish to web -> url
-##        change tag to: 'pub?output=csv' - NOTED
+##        change tag to: 'pub?output=csv' 
 
 ## 10.25.16 ROMINGER - HILGARD 305
 ##
 ## 1. Sum of beating durations for all samples in any given site in a sampling round should be 
 ##    exacty 420 seconds.
 ##
-## 2. Check collector names in proper format with regex - ANDY WILL ASSEMBLE SYNONYM TABLE
+## 2. Check collector names in proper format with regex - DONE # with levenstein
 ##     a. Format: "Capitalized initial". "Capitalized surname"
 ##     b. Check if name matches with any of the known collector names
 ##     c. Check if name could be a misformatted collector name if no match
@@ -126,21 +126,34 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##     d. Combine pitfall contingency columms with method using paste()
 ## 
 ## Appendix: Look at curtis_consolidate, Line 26 and on, for examples on regex expressions - NOT FOUND
-##
+
 ## 11.18.16 ROMINGER - HILGARD 305
 ##
-##  1. Ultimately change checkDb to output dataframe with HDIM, errTag, current value, suggested correction columns
-##      a. Generic misspelling function(column) #find synonym table by itself
+##  1. Ultimately change checkDb to output dataframe with HDIM, errTag, current 
+##     value, suggested correction columns - DONE
+##      a. Generic misspelling function(column) #find synonym table by itself - DONE
 ##      c. Change list() in checkDB to rBind() - DONE
 ##      d. Have helper functions output two-column dataframe first - DONE
-##      e. Implement assignCorr with Generic function
+##      e. Implement assignCorr with Generic function - DONE
 ##  2. Do the damn Shiny implementation
-##
+
 ## 12.02.16 ROMINGER - HILGARD 305
 ##
-##  1. Implement generic regex checker
-##      a. "if" clauses in assignCorr
-##      b. fix extractCorr
-##  2. Store synonym table urls in the package - FIX THIS
-##
+##  1. Implement generic regex checker - DONE
+##      a. "if" clauses in assignCorr - DONE
+##      b. fix extractCorr - DONE
+##  2. Store synonym table urls in the package - DONE
 
+## 12.09.16 ROMINGER - HILGARD 305
+## 
+##  1. Regex instead of Levenstein Distance in closestMatch
+##  2. Rewrite unit tests to reflect new output
+##  3. Shiny App
+##  4. Fix time function
+##  5. Make checkEmpty check that places that should be empty are empty
+##  6. Make readme.md for the package
+##  7. MakeLabel implementation
+##  8. 420 sec BeatingDuration parameter implementation
+##
+## TARGET: Darwin Core implementation, Kokua implementation 
+## NOTE: synonym vectors do not include '' and mark empty entries as misspelled
