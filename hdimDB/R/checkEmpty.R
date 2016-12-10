@@ -21,25 +21,16 @@
 checkEmpty <- function(db){
     db[is.na(db)] <- ""
     
-    #####################################################################
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
-    #####################################################################
-    
-    # beating (beat.vector)                   
-    beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd")
-    # ground malaise (gmal.vector)
-    gmal.vector <- c("DateEnd", "PitFallSlice")
-    # canopy malaise (cmal.vector)
-    cmal.vector <- c("DateEnd", "PitFallSlice")
-    # leaf litter (leaf.vector)
-    leaf.vector <- c("PitFallSlice")
-    # pitfall trap (pit.vector)
-    pit.vector <- c("DateEnd", "PitFallSlice")
-    # InsectaZooka (zook.vector)
-    zook.vector <- c("PitFallSlice")
-    # soil extraction (soil.vector)
-    soil.vector <- c("PitFallSlice")  
+    beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd") # beating
+    gmal.vector <- c("DateEnd", "PitFallSlice") # ground malaise 
+    cmal.vector <- c("DateEnd", "PitFallSlice") # canopy malaise 
+    leaf.vector <- c("PitFallSlice") # leaf litter
+    pit.vector <- c("DateEnd", "PitFallSlice") # pitfall trap
+    zook.vector <- c("PitFallSlice") # InsectaZooka
+    soil.vector <- c("PitFallSlice") # soil extraction
     # canopy clipping has no contingent columns, does not need to be checked.
+    
     contin.list <- list(beat.vector, pit.vector, leaf.vector,
                         cmal.vector, gmal.vector, zook.vector, 
                         soil.vector)
@@ -50,13 +41,8 @@ checkEmpty <- function(db){
     methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
                  "ground malaise", "Insectazooka", "soil extraction") 
     
-    ####################################
-    ## IMPLEMENTING SYNONYM TABLE VALUES 
-    ####################################
-  
+    ## Synonym Table Implementation
     # syn.method <- .synValues(synMethodURL)
-
-    ###################################################################
     
     out <- list(column = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
                 contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db)))
