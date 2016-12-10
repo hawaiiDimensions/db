@@ -10,7 +10,7 @@
 
 colEventsURL <- 'https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv'
 
-# synonym tables
+## Synonym Tables ##
 #' @export
 #' @rdname hdimURL
 synPlotURL <- 'https://docs.google.com/spreadsheets/d/1Q8rFjF4n828ZVRTl7KkCQao5G0Emtwmm88MLZSoHcbA/pub?output=csv'
