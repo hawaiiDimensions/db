@@ -19,10 +19,10 @@
 #' @export
 
 checkMisspell <- function(db){
-    db[is.na(db)] <- ""
+    db[is.na(db)] <- ''
     
     ## Non-Synonym Correction Vectors - 'cor.'
-    cor.sample <- c(1:2, "") # 'SamplingRound'
+    cor.sample <- c(1:2, '') # 'SamplingRound'
     
     ## Synonym Sourced Correction Vectors - 'syn.'
     syn.plot <- .synValues(synPlotURL) # 'Plot'
@@ -44,7 +44,7 @@ checkMisspell <- function(db){
                             'PitFallSlice', 'Whereabouts', 'SamplingRound')
     
     out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
-    extractOut <- .extractErr(db, out, "misspelled")
+    extractOut <- .extractErr(db, out, 'misspelled')
     return(.assignCorr(extractOut))
 }
 

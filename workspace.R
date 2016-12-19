@@ -6,17 +6,29 @@ library(hdimDB) # Loading script
 ####################################
 ## Load database and diagnose errors
 db <- readGoogle(colEventsURL)
-errOut <- dbChecker(db)
+errOut <- dbChecker(db) # 12.09.16 runtime = 22.04574 mins
 ## Plotting errortypes
-tags <- as.character(errOut$errMessage) # converting factor vectors to characters
+tags <- as.character(errOut$errMessage) # convert factors to characters
+mar.default <- c(5,4,4,2) + 0.1
+par(mar = mar.default + c(0, 4, 0, 0)) 
 errPlot <- barplot(table(tags), names.arg = unique(tags), 
                    horiz = TRUE, las = 1, cex.names = 0.4, border = NA, 
-                   main = 'ColEvents Database Error Distribution', 
-                   sub = 'Huang, E.G., 2016. Evolab')
+                   main = 'Types of ColEvents Database Errors') 
+                   # sub = 'Huang, E.G., 2016. UC Berkeley')
 ########################
 ## FAKE DATABASE TEST ## 
 # fakeData <- read.csv("fake_data.csv", as.is=TRUE)
 # results <- dbChecker(fakeData)
+############################
+## 420 BEATINGDURATION CHECK 
+checkBduration <- (db){
+    cluster <- db
+    out <- 
+    extractOut <- .extractErr(db, out, "durationlength")
+    return(.assignCorr(extractOut))
+}
+
+
 
 ##########################
 ## SHINY IMPLEMENTATION ##
