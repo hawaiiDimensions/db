@@ -19,16 +19,16 @@
 #' @export
 
 checkEmpty <- function(db){
-    db[is.na(db)] <- ""
+    db[is.na(db)] <- ''
     
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
-    beat.vector <- c("Plant", "BeatingDuration", "TimeBegin", "TimeEnd") # beating
-    gmal.vector <- c("DateEnd", "PitFallSlice") # ground malaise 
-    cmal.vector <- c("DateEnd", "PitFallSlice") # canopy malaise 
-    leaf.vector <- c("PitFallSlice") # leaf litter
-    pit.vector <- c("DateEnd", "PitFallSlice") # pitfall trap
-    zook.vector <- c("PitFallSlice") # InsectaZooka
-    soil.vector <- c("PitFallSlice") # soil extraction
+    beat.vector <- c('Plant', 'BeatingDuration', 'TimeBegin', 'TimeEnd') # beating
+    gmal.vector <- c('DateEnd', 'PitFallSlice') # ground malaise 
+    cmal.vector <- c('DateEnd', 'PitFallSlice') # canopy malaise 
+    leaf.vector <- c('PitFallSlice') # leaf litter
+    pit.vector <- c('DateEnd', 'PitFallSlice') # pitfall trap
+    zook.vector <- c('PitFallSlice') # InsectaZooka
+    soil.vector <- c('PitFallSlice') # soil extraction
     # canopy clipping has no contingent columns, does not need to be checked.
     
     contin.list <- list(beat.vector, pit.vector, leaf.vector,
@@ -36,28 +36,28 @@ checkEmpty <- function(db){
                         soil.vector)
     
     # Compiled vectors of column names and contingent column names.
-    empty.col <- c("HDIM", "Plot", "Date", "Collector", "Method", 
-                   "Whereabouts", "SamplingRound") 
-    methods <- c("beating", "pitfall", "leaf litter", "canopy malaise", 
-                 "ground malaise", "Insectazooka", "soil extraction") 
+    empty.col <- c('HDIM', 'Plot', 'Date', 'Collector', 'Method', 
+                   'Whereabouts', 'SamplingRound') 
+    methods <- c('beating', 'pitfall', 'leaf litter', 'canopy malaise', 
+                 'ground malaise', 'Insectazooka', 'soil extraction') 
     
     ## Synonym Table Implementation
     # syn.method <- .synValues(synMethodURL)
     
     out <- list(column = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
                 contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db)))
-    extractOut <- .extractErr(db, out, "empty")
+    extractOut <- .extractErr(db, out, 'empty')
     return(.assignCorr(extractOut))
 }
 
 ## Hidden functions
 .emptyColumn <- function(column, db){
-    return(db[which(db[, column] == ""),]$HDIM)
+    return(db[which(db[, column] == ''),]$HDIM)
 }
 
 .emptyContin <- function(method, vector, db){
     method.ind <- which(db$Method == method)
-    method.vec <- apply(db[vector], 2, function(x) which(x == ""))
+    method.vec <- apply(db[vector], 2, function(x) which(x == ''))
     empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
 }
