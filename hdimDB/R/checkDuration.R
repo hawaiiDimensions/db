@@ -19,14 +19,14 @@
 #' @export
 
 checkDuration <- function(db){
-    plots <- .synValues(synPlotURL)
-    out <- list()
-    for (p in plots){
-        site <- db[db$Plot == p & db$Method == 'beating', 'BeatingDuration']
-        if (length(site) == 0){
+    plots <- .synValues(synPlotURL) # plot names
+    out <- list() # initialized list
+    for (site in plots){
+        values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
+        if (length(values) == 0){
             # no relevant rows found
-        } else if (Reduce('+', as.numeric(site)) != 420){
-            out <- list(out, list(db[site, ]$HDIM))
+        } else if (Reduce('+', as.numeric(values)) != 420){
+            out <- list(out, list(db[values, ]$HDIM))
         }
     } 
     extractOut <- .extractErr(db, out, 'beatduration')
