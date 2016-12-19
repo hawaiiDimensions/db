@@ -1,10 +1,10 @@
 ## Assigns a given error type string to an HDIM number as a dataframe.
 .extractErr <- function(db, errHDIM, errTag){ 
     errHDIM <- unlist(errHDIM)
-    if (length(errHDIM) == 0){
-        return(data.frame(errHDIM = NA, errMessage = NA, verbatim = NA))
+    if (length(errHDIM) == 0){ # NA result if no errors found
+        return(data.frame(errHDIM = NA, errMessage = NA, verbatim = NA)) 
     } else {
-        if (is.null(names(errHDIM))){
+        if (is.null(names(errHDIM))){ 
             errMessage <- errTag
         } else {
             errType <- gsub('[[:digit:]]', '', names(errHDIM))
@@ -25,18 +25,21 @@
         corr <- NA
     } else {
         errTag <- gsub('\\..*', '', extractOut$errMessage)[1]
-        if (errTag == "dupHDIM"){
+        if (errTag == 'dupHDIM'){
             corr <- NA
         }
-        if (errTag == "empty"){
+        if (errTag == 'empty'){
             corr <- NA
         }
-        if (errTag == "misspelled"){
+        if (errTag == 'misspelled'){
             errColumn <- gsub('.*\\.', '', extractOut$errMessage)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .closestMatch)
         }
-        if (errTag == "time"){
+        if (errTag == 'time'){
             corr <- NA
+        }
+        if (errTag == 'beatduration'){
+            corr <- 420
         }
     } 
     return(data.frame(extractOut, corr))
