@@ -50,6 +50,8 @@ checkMisspell <- function(db){
 
 ## Hidden functions
 .misColumn <- function(column, vector, db){ 
+    # vector <- c(vector, '') # add empty string to synonym vector to avoid 
+    #                           redundantly tagging empty entries as misspellings
     indice.misspelled <- (which(!db[, column] %in% vector))
     return(db[indice.misspelled, ]$HDIM)
 }
