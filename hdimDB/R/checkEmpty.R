@@ -58,6 +58,9 @@ checkEmpty <- function(db){
 .emptyContin <- function(method, vector, db){
     method.ind <- which(db$Method == method)
     method.vec <- apply(db[vector], 2, function(x) which(x == ''))
-    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE)))
+    # contingencies <- c('Plant', 'BeatingDuration', 'TimeBegin', 'TimeEnd', 'DateEnd', 'PitFallSlice') # all possible contingent columns
+    # empty.columns <- setdiff(contingencies, vector) # all contingency columns that are supposed to be empty
+    # nonempty <- apply(db[empty.columns], 2, function(x) which(x != '')) # finds indices of invalid filled contingent entries
+    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE))) # needs to be modified
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
 }
