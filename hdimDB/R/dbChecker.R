@@ -19,5 +19,6 @@ dbChecker <- function(db){
     empty <- checkEmpty(db)
     misspelled <- checkMisspell(db)
     wrongTime <- checkTime(db)
-    return(rbind(duplicatedHDIM, empty, misspelled, wrongTime))
+    wrongDuration <- checkDuration(db)
+    return(rbind(duplicatedHDIM, empty, misspelled, wrongTime, wrongDuration))
 } 
