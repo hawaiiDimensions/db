@@ -13,7 +13,7 @@
 # ## check BeatingDuration entries
 # checkDuration(db)
 #' 
-#' @return List of character vectors of HDIM numbers
+#' @return Four-column dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
