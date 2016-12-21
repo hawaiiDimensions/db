@@ -13,7 +13,7 @@
 # ## check BeatingDuration entries
 # checkDuration(db)
 #' 
-#' @return Four-column dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
+#' @return Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
