@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for errors
 #'  
-#' @description \code{dbChecker} runs through the online database and returns a list of HDIM numbers associated with specific errors
+#' @description \code{dbChecker} runs through the online database and returns a dataframe associated with specific errors
 #' 
 #' @details Developed specifically for the Dimensions in Biodiversity Evolab Database.
 #' 

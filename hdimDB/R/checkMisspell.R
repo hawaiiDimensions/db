@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for misspelled empty entries
 #'  
-#' @description \code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to misspelled entries in the database
+#' @description \code{checkMisspell} runs through the online database and returns a dataframe corresponding to misspelled entries in the database
 #' 
 #' @details Existing entries are compared against approved entries as listed in the synonym tables
 #' 

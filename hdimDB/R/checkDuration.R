@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for invalid BeatingDuration values
 #'  
-#' @description \code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to invalid beating duration entries in the database
+#' @description \code{checkDuration} runs through the online database and returns a dataframe corresponding to invalid beating duration entries in the database
 #' 
 #' @details The sum of all values in the BeatingDuration column for any given plot should equal 420.
 #' 
@@ -13,7 +13,7 @@
 # ## check BeatingDuration entries
 # checkDuration(db)
 #' 
-#' @return Dataframe with HDIM identifier, beating duration error type, verbatim entry, and suggested correction.
+#' @return Dataframe with HDIM identifier, beating duration error tag, verbatim entry, and suggested correction.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export

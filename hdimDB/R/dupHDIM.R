@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for duplicate HDIM numbers
 #'  
-#' @description \code{dupHDIM} runs through the online database and returns a vector of repeated HDIM numbers 
+#' @description \code{dupHDIM} runs through the online database and returns a dataframe of repeated HDIM numbers 
 #' 
 #' @details Only valid when called on a Dimensions Database with a column "HDIM"
 #' 

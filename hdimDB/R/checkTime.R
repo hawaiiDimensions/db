@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for invalid time entries
 #'  
-#' @description \code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to invalid time entries in the database
+#' @description \code{checkTime} runs through the online database and returns a dataframe corresponding to invalid time entries in the database
 #' 
 #' @details Time entries will be checked, based on column name, for correct date and hour:minute formatting.
 #' 

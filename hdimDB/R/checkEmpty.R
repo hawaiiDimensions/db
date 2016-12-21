@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for invalid empty entries
 #'  
-#' @description \code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to invalid empty entries in the database
+#' @description \code{checkEmpty} runs through the online database and returns a dataframe corresponding to invalid empty entries in the database
 #' 
 #' @details Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.
 #' 
