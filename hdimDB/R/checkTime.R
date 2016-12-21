@@ -6,7 +6,7 @@
 #' 
 #' @param db The database for which time entries are to be checked
 #' 
-#' @return List of character vectors of HDIM numbers
+#' @return Dataframe with HDIM identifier, invalid time error tag, verbatim entry, and suggested correction.
 #' 
 # @example 
 # ## Load the Database

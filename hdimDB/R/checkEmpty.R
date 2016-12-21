@@ -13,7 +13,7 @@
 # ## check empty entries
 # checkEmpty(db)
 #' 
-#' @return List of character vectors of HDIM numbers
+#' @return Dataframe with HDIM identifier and empy entry error tag.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export

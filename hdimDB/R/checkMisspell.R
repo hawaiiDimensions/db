@@ -13,7 +13,7 @@
 # ## check misspellings
 # checkMisspell(db)
 #' 
-#' @return List of character vectors of HDIM numbers
+#' @return Dataframe with HDIM identifier, misspelling error tag, verbatim entry, and suggested correction.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export

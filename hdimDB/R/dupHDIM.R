@@ -13,7 +13,7 @@
 # ## check duplicate HDIM
 # dupHDIM(db)
 #' 
-#' @return Character vector of duplicate HDIM numbers in the Dimensions Database
+#' @return Dataframe with HDIM identifier and duplicate HDIM error tag.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export

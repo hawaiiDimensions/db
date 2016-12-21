@@ -9,7 +9,7 @@
 # @example 
 # dbChecker('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
 #' 
-#' @return A multi-leveled list of HDIM numbers
+#' @return Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
