@@ -38,7 +38,7 @@
         if (errTag == 'time'){
             corr <- NA
         }
-        if (errTag == 'beatduration'){
+        if (errTag == 'beatduration'){ 
             corr <- 420
         }
     } 
