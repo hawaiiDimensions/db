@@ -2,35 +2,65 @@
 library(shiny)
 library(hdimDB)
 
+## CURRENT VERSION ## 
 fluidPage(
-    title = 'HDIM Collection Events Database',
+    titlePanel('Hawaii Dimensions Collection Events Database'),
         mainPanel(
             tabsetPanel(
                 id = 'dataset',
-                tabPanel('db', DT::dataTableOutput('mytable1')),
-                tabPanel('errors', DT::dataTableOutput('mytable2'))
+                tabPanel('db', DT::dataTableOutput('table1')),
+                tabPanel('errors', DT::dataTableOutput('table2'))
             )
         )
     )
 
+## STAGED UPDATE ##
+# db2 <- db[1:1000, ]
 
 # fluidPage(
-#     title = 'Examples of DataTables',
-#     sidebarLayout(
-#         sidebarPanel(
-#             conditionalPanel(
-#                 'input.dataset === "diamonds"',
-#                 checkboxGroupInput('show_vars', 'Columns in diamonds to show:',
-#                                    names(diamonds), selected = names(diamonds))
-#             )
+#     titlePanel("Hawaii Dimensions Collection Events Database"),
+#     
+#     # Create a new Row in the UI for selectInputs
+#     fluidRow(
+#         column(2,
+#                selectInput("HDIM",
+#                            "HDIM Identifier:",
+#                            c("All",
+#                              unique(as.character(db2$HDIM))))
 #         ),
-#         mainPanel(
-#             tabsetPanel(
-#                 id = 'dataset',
-#                 tabPanel('diamonds', DT::dataTableOutput('mytable1')),
-#                 tabPanel('mtcars', DT::dataTableOutput('mytable2')),
-#                 tabPanel('iris', DT::dataTableOutput('mytable3'))
-#             )
+#         column(2,
+#                selectInput("Plot",
+#                            "Plot Name:",
+#                            c("All",
+#                              unique(as.character(db2$Plot))))
+#         ),
+#         column(2,
+#                selectInput("Date",
+#                            "Collection Date:",
+#                            c("All",
+#                              unique(as.character(db2$Date))))
+#         ),
+#         column(2,
+#                selectInput("Collector",
+#                            "Collector:",
+#                            c("All",
+#                              unique(as.character(db2$Collector))))
+#         ),
+#         column(2,
+#                selectInput("Whereabouts",
+#                            "Sample Location",
+#                            c("All",
+#                              unique(as.character(db2$Whereabouts))))
+#         ),
+#         column(2,
+#                selectInput("SamplingRound",
+#                            "Collection Round",
+#                            c("All",
+#                              unique(as.character(db2$SamplingRound))))
 #         )
+#     ),
+#     # Create a new row for the table.
+#     fluidRow(
+#         DT::dataTableOutput("table")
 #     )
 # )
