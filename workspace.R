@@ -19,15 +19,19 @@ errPlot <- barplot(table(tags), names.arg = unique(tags),
 ## FAKE DATABASE TEST ## 
 # fakeData <- read.csv("fake_data.csv", as.is=TRUE)
 # results <- dbChecker(fakeData)
-############################
-## 420 BEATINGDURATION CHECK 
-checkBduration <- (db){
-    cluster <- db
-    out <- 
-    extractOut <- .extractErr(db, out, "durationlength")
-    return(.assignCorr(extractOut))
-}
 
+## checkEmpty modification to locate incorrect non-empty entries ##
+
+# Make checkEmpty screen the unused contingency columns for filled entries
+foo <- function(method, vector, db){
+    method.ind <- which(db$Method == method)
+    method.vec <- apply(db[vector], 2, function(x) which(x == ''))
+    # contingencies <- c('Plant', 'BeatingDuration', 'TimeBegin','TimeEnd', 'DateEnd', 'PitFallSlice') # all possible contingent columns
+    # empty.columns <- setdiff(contingencies, vector) # all contingency columns that are supposed to be empty
+    # nonempty <- apply(db[empty.columns], 2, function(x) which(x != '')) # finds indices of invalid filled contingent entries
+    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE))) # needs to be modified
+    return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
+}
 
 
 ##########################
@@ -49,32 +53,8 @@ runExample("09_upload") # file upload wizard
 runExample("10_download") # file download wizard
 runExample("11_timer") # an automated timer
 
-############################
-## ROMINGER SCRIPT FOR SHINY
-
-## turn nested list structure into a single vector of all the HDIMs with errors
-errors <- unlist(errors)
-
-## extract the error type (which is stored as the name of each element in the vector)
-## use gsub to remove the sequential numbers from the names 
-## (e.g. turn 'duplicatedHDIM123' into 'duplicatedHDIM')
-errType <- gsub('[[:digit:]]', '', names(errors))
-names(errors) <- NULL
-
-## now we have all the error HDIMs and what type of error is associated with them
-head(data.frame(errors, errType))
-############################
-## Dataframe of errors and their type
-errKey <- data.frame(errors, errType)
-## Copy over db 
-errBase <- readGoogle(colEventsURL)
-
-## Consolidate errKey by HDIM
-errSumm <- tapply(errKey$errType, errKey$errors, paste, collapse=',')
-errSumm <- data.frame(HDIM = names(errSumm), errMessage = as.character(errSumm))
-
-## Create new column in errBase with error tags from errSumm
-errBase$errTag <- as.character(errSumm$errMessage[match(errBase$HDIM, errSumm$HDIM)])
-errBase$errTag[is.na(errBase$errTag)] <- ''
-head(errBase)
-
+## DEPLOYMENT ##
+# install.packages('rsconnect') # shiny.io
+library(rsconnect)
+# rsconnect::setAccountInfo(name='edwardhuang', token='BC78E54A24F464E0C7E125EDC1FAC215', secret='OfD5Ks58EnClYHcrn3vtdHjqqRod2X4kwdZsXzTu')
+rsconnect::deployApp('/Users/EdwardH/Dropbox/hawaiiDimensions/db/hdimShiny') # deploy
