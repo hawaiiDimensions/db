@@ -1,13 +1,13 @@
-#######################
-## R PACKAGE: hdimDB ##
-#######################
+###################
+## KOKUA: hdimDB ##
+###################
 devtools::install_github('hawaiiDimensions/db/hdimDB') # installation script
-library(hdimDB) # Loading script
-####################################
-## Load database and diagnose errors
-db <- readGoogle(colEventsURL)
-errOut <- dbChecker(db) # 12.09.16 runtime = 22.04574 mins
-## Plotting errortypes
+library(hdimDB) # load package
+##############################
+db <- readGoogle(colEventsURL) # load database
+errOut <- dbChecker(db) # diagnose errors - 12.09.16 runtime -> 22.04574 mins
+
+## Plotting errTags ##
 tags <- as.character(errOut$errMessage) # convert factors to characters
 mar.default <- c(5,4,4,2) + 0.1
 par(mar = mar.default + c(0, 4, 0, 0)) 
@@ -15,12 +15,13 @@ errPlot <- barplot(table(tags), names.arg = unique(tags),
                    horiz = TRUE, las = 1, cex.names = 0.4, border = NA, 
                    main = 'Types of ColEvents Database Errors') 
                    # sub = 'Huang, E.G., 2016. UC Berkeley')
-########################
-## FAKE DATABASE TEST ## 
-# fakeData <- read.csv("fake_data.csv", as.is=TRUE)
-# results <- dbChecker(fakeData)
 
-## checkEmpty modification to locate incorrect non-empty entries ##
+## hdimDB Testing ## 
+fakeData <- read.csv("fake_data.csv", as.is=TRUE) # load fake dataset
+dbChecker(fakeData) # run checker
+
+
+## checkEmpty Update ##
 
 # Make checkEmpty screen the unused contingency columns for filled entries
 foo <- function(method, vector, db){
@@ -34,9 +35,9 @@ foo <- function(method, vector, db){
 }
 
 
-##########################
-## SHINY IMPLEMENTATION ##
-##########################
+###############
+## hdimShiny ##
+###############
 
 ## example apps
 system.file("examples", package="shiny")
@@ -53,8 +54,12 @@ runExample("09_upload") # file upload wizard
 runExample("10_download") # file download wizard
 runExample("11_timer") # an automated timer
 
-## DEPLOYMENT ##
+## SHINY.IO DEPLOYMENT ##
 # install.packages('rsconnect') # shiny.io
 library(rsconnect)
 # rsconnect::setAccountInfo(name='edwardhuang', token='BC78E54A24F464E0C7E125EDC1FAC215', secret='OfD5Ks58EnClYHcrn3vtdHjqqRod2X4kwdZsXzTu')
 rsconnect::deployApp('/Users/EdwardH/Dropbox/hawaiiDimensions/db/hdimShiny') # deploy
+# App URL: https://edwardhuang.shinyapps.io/hdimshiny/
+
+
+
