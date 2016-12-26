@@ -1,4 +1,4 @@
-## dimensions_shiny server.R
+## hawaii_dimensions_shiny server.R
 library(shiny)
 library(hdimDB)
 
