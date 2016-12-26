@@ -146,14 +146,18 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 
 ## 12.09.16 ROMINGER - HILGARD 305
 ## 
-##  1. Regex instead of Levenstein Distance in closestMatch
-##  2. Rewrite unit tests to reflect new output
-##  3. Shiny App
-##  4. Fix time function
-##  5. Make checkEmpty check that places that should be empty are empty
-##  6. Make readme.md for the package
-##  7. MakeLabel implementation
-##  8. 420 sec BeatingDuration parameter implementation
+##  1. Regex instead of Levenstein Distance in closestMatch 
+##  2. Rewrite unit tests to reflect new output 
+##  3. Shiny App - DEPLOYED
+##  4. Fix time function 
+##  5. Make checkEmpty check that places that should be empty are empty - PROG
+##  6. Make readme.md for the package in Markdown
+##  7. MakeLabel implementation 
+##  8. 420 sec BeatingDuration parameter implementation - DONE
+##     a. Add extractErr clause for checkDuration verbatim 
+##     b. Add assignCorr clause - DONE
+##     c. Add dbChecker clause - DONE
+#3  9. Modify roxygen tags - DONE
 ##
 ## TARGET: Darwin Core implementation, Kokua implementation 
 ## NOTE: synonym vectors do not include '' and mark empty entries as misspelled
