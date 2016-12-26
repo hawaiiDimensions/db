@@ -1,4 +1,4 @@
-## dimensions_shiny ui.R
+## hawaii_dimensions_shiny ui.R
 library(shiny)
 library(hdimDB)
 
@@ -6,6 +6,7 @@ library(hdimDB)
 fluidPage(
     titlePanel('Hawaii Dimensions Collection Events Database'),
         mainPanel(
+            p("Version 0.0 - UC Berkeley 2016"),
             tabsetPanel(
                 id = 'dataset',
                 tabPanel('db', DT::dataTableOutput('table1')),
