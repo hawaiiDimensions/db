@@ -62,3 +62,26 @@
     }
     return(corr)
 }
+
+.regexMatch <- function(verbatim, column){ # regular expression version of .closestMatch
+    synVector <- switch(column,
+                        'Plot' = .synValues(synPlotURL),
+                        'Collector' = .synValues(synCollectURL),
+                        'Method' = .synValues(synMethodURL),
+                        'Plant' = .synValues(synPlantURL),
+                        'PitFallSlice' = .synValues(synPitURL),
+                        'Whereabouts' = .synValues(synWhereURL),
+                        'SamplingRound' = c(1:2))
+    synVector <- synVector[synVector != '']
+    corr <- grep(verbatim, synVector, ignore.case=TRUE, value = TRUE) # specific search
+    if (length(corr) == 0){ # if no match
+        corr <- grep(gsub('_[[:digit:]]', '', verbatim), synVector, ignore.case=TRUE, value = TRUE) # general search
+        if (length(corr) == 0){ # if still no match
+            corr <- NA # give up 
+        }
+    }
+    if (length(corr) > 1){ # if multiple matches
+        corr <- paste(corr, collapse = ';')
+    }
+    return(corr)
+}
