@@ -34,6 +34,31 @@ foo <- function(method, vector, db){
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
 }
 
+## assignCorr Update ##
+
+# Regex instead of Levenshtein
+.regexMatch <- function(verbatim, column){
+    synVector <- switch(column,
+                        'Plot' = .synValues(synPlotURL),
+                        'Collector' = .synValues(synCollectURL),
+                        'Method' = .synValues(synMethodURL),
+                        'Plant' = .synValues(synPlantURL),
+                        'PitFallSlice' = .synValues(synPitURL),
+                        'Whereabouts' = .synValues(synWhereURL),
+                        'SamplingRound' = c(1:2))
+    synVector <- synVector[synVector != '']
+    corr <- grep(verbatim, synVector, ignore.case=TRUE, value = TRUE) # specific search
+    if (length(corr) == 0){ # if no match
+        corr <- grep(gsub('_[[:digit:]]', '', verbatim), synVector, ignore.case=TRUE, value = TRUE) # general search
+        if (length(corr) == 0){ # if still no match
+            corr <- NA # give up 
+        }
+    }
+    if (length(corr) > 1){ # if multiple matches
+        corr <- paste(corr, collapse = ';')
+    }
+return(corr)
+}
 
 ###############
 ## hdimShiny ##
@@ -60,6 +85,5 @@ library(rsconnect)
 # rsconnect::setAccountInfo(name='edwardhuang', token='BC78E54A24F464E0C7E125EDC1FAC215', secret='OfD5Ks58EnClYHcrn3vtdHjqqRod2X4kwdZsXzTu')
 rsconnect::deployApp('/Users/EdwardH/Dropbox/hawaiiDimensions/db/hdimShiny') # deploy
 # App URL: https://edwardhuang.shinyapps.io/hdimshiny/
-
 
 
