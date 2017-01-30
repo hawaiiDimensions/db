@@ -10,10 +10,10 @@ checkTime(db)
 \item{db}{The database for which time entries are to be checked}
 }
 \value{
-List of character vectors of HDIM numbers
+Dataframe with HDIM identifier, invalid time error tag, verbatim entry, and suggested correction.
 }
 \description{
-\code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to invalid time entries in the database
+\code{checkTime} runs through the online database and returns a dataframe corresponding to invalid time entries in the database
 }
 \details{
 Time entries will be checked, based on column name, for correct date and hour:minute formatting.
