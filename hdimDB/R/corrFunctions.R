@@ -34,6 +34,7 @@
         if (errTag == 'misspelled'){
             errColumn <- gsub('.*\\.', '', extractOut$errMessage)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .closestMatch)
+            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .regexMatch) # regex update
         }
         if (errTag == 'time'){
             corr <- NA
@@ -63,7 +64,7 @@
     return(corr)
 }
 
-.regexMatch <- function(verbatim, column){ # regular expression version of .closestMatch
+.regexMatch <- function(verbatim, column){
     synVector <- switch(column,
                         'Plot' = .synValues(synPlotURL),
                         'Collector' = .synValues(synCollectURL),
@@ -83,5 +84,5 @@
     if (length(corr) > 1){ # if multiple matches
         corr <- paste(corr, collapse = ';')
     }
-    return(corr)
+return(corr)
 }
