@@ -10,10 +10,10 @@ dupHDIM(db)
 \item{db}{the database to be checked}
 }
 \value{
-Character vector of duplicate HDIM numbers in the Dimensions Database
+Dataframe with HDIM identifier and duplicate HDIM error tag.
 }
 \description{
-\code{dupHDIM} runs through the online database and returns a vector of repeated HDIM numbers
+\code{dupHDIM} runs through the online database and returns a dataframe of repeated HDIM numbers
 }
 \details{
 Only valid when called on a Dimensions Database with a column "HDIM"

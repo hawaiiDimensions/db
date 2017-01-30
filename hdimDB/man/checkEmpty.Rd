@@ -10,10 +10,10 @@ checkEmpty(db)
 \item{db}{the database to be checked}
 }
 \value{
-List of character vectors of HDIM numbers
+Dataframe with HDIM identifier and empy entry error tag.
 }
 \description{
-\code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to invalid empty entries in the database
+\code{checkEmpty} runs through the online database and returns a dataframe corresponding to invalid empty entries in the database
 }
 \details{
 Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.

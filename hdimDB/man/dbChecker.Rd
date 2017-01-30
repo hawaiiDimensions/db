@@ -10,10 +10,10 @@ dbChecker(db)
 \item{db}{The database to be checked}
 }
 \value{
-A multi-leveled list of HDIM numbers
+Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 }
 \description{
-\code{dbChecker} runs through the online database and returns a list of HDIM numbers associated with specific errors
+\code{dbChecker} runs through the online database and returns a dataframe associated with specific errors
 }
 \details{
 Developed specifically for the Dimensions in Biodiversity Evolab Database.

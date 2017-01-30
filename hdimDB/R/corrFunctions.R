@@ -84,5 +84,5 @@
     if (length(corr) > 1){ # if multiple matches
         corr <- paste(corr, collapse = ';')
     }
-return(corr)
+    return(corr)
 }

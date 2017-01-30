@@ -10,10 +10,10 @@ checkMisspell(db)
 \item{db}{the database to be checked}
 }
 \value{
-List of character vectors of HDIM numbers
+Dataframe with HDIM identifier, misspelling error tag, verbatim entry, and suggested correction.
 }
 \description{
-\code{checkEmpty} runs through the online database and returns a list of HDIM numbers corresponding to misspelled entries in the database
+\code{checkMisspell} runs through the online database and returns a dataframe corresponding to misspelled entries in the database
 }
 \details{
 Existing entries are compared against approved entries as listed in the synonym tables
