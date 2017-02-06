@@ -36,29 +36,26 @@ foo <- function(method, vector, db){
 
 ## assignCorr Update ##
 
-# Regex instead of Levenshtein
-.regexMatch <- function(verbatim, column){
-    synVector <- switch(column,
-                        'Plot' = .synValues(synPlotURL),
-                        'Collector' = .synValues(synCollectURL),
-                        'Method' = .synValues(synMethodURL),
-                        'Plant' = .synValues(synPlantURL),
-                        'PitFallSlice' = .synValues(synPitURL),
-                        'Whereabouts' = .synValues(synWhereURL),
+# Index instead of regular expressions or Levenshtein
+.indexMatch <- function(verbatim, column){
+    synFrame <- switch(column,
+                        'Plot' = readGoogle(synPlotURL),
+                        'Collector' = readGoogle(synCollectURL),
+                        'Method' = readGoogle(synMethodURL),
+                        'Plant' = readGoogle(synPlantURL),
+                        'PitFallSlice' = readGoogle(synPitURL),
+                        'Whereabouts' = readGoogle(synWhereURL),
                         'SamplingRound' = c(1:2))
-    synVector <- synVector[synVector != '']
-    corr <- grep(verbatim, synVector, ignore.case=TRUE, value = TRUE) # specific search
-    if (length(corr) == 0){ # if no match
-        corr <- grep(gsub('_[[:digit:]]', '', verbatim), synVector, ignore.case=TRUE, value = TRUE) # general search
-        if (length(corr) == 0){ # if still no match
-            corr <- NA # give up 
-        }
-    }
+    corr <- synFrame[synFrame[1] == verbatim, ][[2]]
     if (length(corr) > 1){ # if multiple matches
         corr <- paste(corr, collapse = ';')
     }
-return(corr)
+    return(corr)
 }
+
+.indexMatch('AR, BC', 'Collector')
+.closestMatch('AR, BC', 'Collector')
+
 
 ###############
 ## hdimShiny ##

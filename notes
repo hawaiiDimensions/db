@@ -162,18 +162,23 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## TARGET: Darwin Core implementation, Kokua implementation 
 ## NOTE: synonym vectors do not include '' and mark empty entries as misspelled
 
-## 01.30.17 ROMINGER - NEW MEXICO / HILGARD 305
-##
-## 1. Modify .regexMatch to .indexMatch, match verbatim to synVector[1], return synVector[2]
+## 01.30.17 ROMINGER - NEW MEXICO X HILGARD 305
+## 
+## 1. Modify .regexMatch to .indexMatch, match verbatim to synVector[1], return synVector[2] 
 ## 2. Allow users to add values to synonym tables in Shiny App
 ##   a. Think about allowing Shiny app to directly edit the database
 ##   b. Look into package for reading and writing directly to Google Docs
 ##   c. Have app push and commit change to Github or save to somewhere with timestamp of previous version
 ##   d. Look into Google's options for version control
-##   e. Andy will learn Shiny
-## 3. Check in with Henry and the Sorters
-##   a. See the latest output of checkDb
-## 4. beatDuration 420 update
+##   e. Andy will learn Shiny - OK
+## 3. Check in with Henrik and the Sorters - DONE
+##   a. See the latest output of checkDb - TRIVIAL
+## 4. checkDuration 420 update 
 ##   a. First aggregate plots using verbatim and samplingRd
 ##   b. Look into pplyr (ddply) and aggregate functions
-##   c. 
+## 5. Use blueJeans to have meetings - DONE
+## 6. Look up and send Andy a link to Wrangle - DONE
+## 7. Test update to checkEmpty 
+## 8. Rewrite tests
+
+
