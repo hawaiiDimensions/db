@@ -33,7 +33,8 @@
         }
         if (errTag == 'misspelled'){
             errColumn <- gsub('.*\\.', '', extractOut$errMessage)
-            corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .closestMatch)
+            corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .closestMatch) # levenshtein
+            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .indexMatch) # index update
             # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .regexMatch) # regex update
         }
         if (errTag == 'time'){
@@ -64,7 +65,23 @@
     return(corr)
 }
 
-.regexMatch <- function(verbatim, column){
+.indexMatch <- function(verbatim, column){
+    synFrame <- switch(column,
+                       'Plot' = readGoogle(synPlotURL),
+                       'Collector' = readGoogle(synCollectURL),
+                       'Method' = readGoogle(synMethodURL),
+                       'Plant' = readGoogle(synPlantURL),
+                       'PitFallSlice' = readGoogle(synPitURL),
+                       'Whereabouts' = readGoogle(synWhereURL),
+                       'SamplingRound' = c(1:2))
+    corr <- synFrame[synFrame[1] == verbatim, ][[2]]
+    if (length(corr) > 1){ # if multiple matches
+        corr <- paste(corr, collapse = ';')
+    }
+    return(corr)
+}
+
+.regexMatch <- function(verbatim, column){ # in development
     synVector <- switch(column,
                         'Plot' = .synValues(synPlotURL),
                         'Collector' = .synValues(synCollectURL),
@@ -74,9 +91,9 @@
                         'Whereabouts' = .synValues(synWhereURL),
                         'SamplingRound' = c(1:2))
     synVector <- synVector[synVector != '']
-    corr <- grep(verbatim, synVector, ignore.case=TRUE, value = TRUE) # specific search
+    corr <- grep(verbatim, synVector, ignore.case=TRUE, value=TRUE) # specific search
     if (length(corr) == 0){ # if no match
-        corr <- grep(gsub('_[[:digit:]]', '', verbatim), synVector, ignore.case=TRUE, value = TRUE) # general search
+        corr <- grep(gsub('_[[:digit:]]', '', verbatim), synVector, ignore.case=TRUE, value=TRUE) # general search
         if (length(corr) == 0){ # if still no match
             corr <- NA # give up 
         }
