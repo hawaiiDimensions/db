@@ -49,7 +49,9 @@
     return(data.frame(extractOut, corr))
 }
 
-.closestMatch <- function(verbatim, column){
+## AUTOCORRECTION METHOD FUNCTIONS ##
+
+.closestMatch <- function(verbatim, column){ # levenshtein distance
     synVector <- switch(column,
                         'Plot' = .synValues(synPlotURL),
                         'Collector' = .synValues(synCollectURL),
@@ -67,7 +69,7 @@
     return(corr)
 }
 
-.indexMatch <- function(verbatim, column){
+.indexMatch <- function(verbatim, column){ # synonym table indexing
     synFrame <- switch(column,
                        'Plot' = readGoogle(synPlotURL),
                        'Collector' = readGoogle(synCollectURL),
@@ -83,7 +85,7 @@
     return(corr)
 }
 
-.regexMatch <- function(verbatim, column){ # in development
+.regexMatch <- function(verbatim, column){ # in development; regular expression matching
     synVector <- switch(column,
                         'Plot' = .synValues(synPlotURL),
                         'Collector' = .synValues(synCollectURL),
@@ -104,4 +106,10 @@
         corr <- paste(corr, collapse = ';')
     }
     return(corr)
+}
+
+## AUTOCORRECTION FUNCTION SCRIPTS END ## 
+
+.synValues <- function(url){ # synonym vlaue extraction
+    return(unique(readGoogle(url)[, 2]))
 }
