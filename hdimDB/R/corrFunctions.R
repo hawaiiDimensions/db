@@ -20,7 +20,7 @@
 }
 
 ## Input is output of .extractErr
-.assignCorr <- function(extractOut){
+.assignCorr <- function(extractOut, match=index){
     if (any(is.na(extractOut$errHDIM))){
         corr <- NA
     } else {
@@ -33,9 +33,11 @@
         }
         if (errTag == 'misspelled'){
             errColumn <- gsub('.*\\.', '', extractOut$errMessage)
-            corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .closestMatch) # levenshtein
-            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .indexMatch) # index update
-            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, .regexMatch) # regex update
+            method <- switch(match, 
+                           levenshtein = .closestMatch,
+                           index = .indexMatch,
+                           regex = .regexMatch)
+            corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
         }
         if (errTag == 'time'){
             corr <- NA
