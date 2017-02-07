@@ -55,7 +55,3 @@ checkMisspell <- function(db){
     indice.misspelled <- (which(!db[, column] %in% vector))
     return(db[indice.misspelled, ]$HDIM)
 }
-
-.synValues <- function(url){ 
-    return(unique(readGoogle(url)[, 2]))
-}
