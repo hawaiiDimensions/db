@@ -5,7 +5,7 @@ library(hdimDB)
 ## 
 db <- readGoogle(colEventsURL)
 db2 <- db[1:1000, ]
-errors <- dbChecker(db2)
+errors <- checkDb(db2)
 
 ## CURRENT VERSION ## 
 function(input, output) {
