@@ -45,7 +45,7 @@ checkMisspell <- function(db){
     
     out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
     extractOut <- .extractErr(db, out, 'misspelled')
-    return(.assignCorr(extractOut, match=index))
+    return(.assignCorr(extractOut, match = 'levenshtein'))
 }
 
 ## Hidden functions
