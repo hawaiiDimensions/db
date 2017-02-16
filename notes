@@ -4,30 +4,30 @@
 ## look at Google R Style Guide (https://google.github.io/styleguide/Rguide.xml) - COMPLETE
 ## library(stringr) - NOTED
 ## str_split() can unpack date entries into a new dataframe for analysis - NOTED
-## Use Jupyter notebook to initialize code and to introduce package to laymen
+## Use Jupyter notebook to initialize code and to introduce package to laymen - EXPLORED
 ## Comprehensive list of Plot names located in Siteinfo Google Drive file - COMPLETE
-## use source() to initialize all relevant functions from a seperate script file (.R) 
+## use source() to initialize all relevant functions from a seperate script file (.R) - IRRELEVANT
 ## output invalid entry information in a comprehensive list that can be returned with a wrapper function - COMPLETE
 
 ## 03.10.16 ROMINGER - HILGARD 305
 ## Function to return list of all mispellings and empty entries by HDIM number - COMPLETE
-## Ways to source functions
-## list.files(file_location)
-## oldwd() < - setwd(new_directory)
-## files2load <- c(file1, file2, file3)
-## lapply(files2load, source)
-## source(), setwd(oldwd)
+## Ways to source functions - COMPLETE
+##  a. list.files(file_location) 
+##  b. oldwd() < - setwd(new_directory)
+##  c. files2load <- c(file1, file2, file3)
+##  d. lapply(files2load, source)
+##  e. source(), setwd(oldwd)
 
 ## PERSONAL NOTES MARCH
-## Look into contstructing a Shiny app with the database information
-## To import google sheets as a .csv, use the url suffix "pub?gid=0&single=true&output=csv"
+## Look into contstructing a Shiny app with the database information - DONE
+## To import google sheets as a .csv, use the url suffix "pub?gid=0&single=true&output=csv" - NOTED
 https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?gid=0&single=true&output=csv
 
 ## 03.29.16 ROMINGER - HILGARD 305
 ## Write a wrapper function for diagnose db for colEvent - COMPLETE
-## Develop package with the written functions 
+## Develop package with the written functions - DONE
 ## Write functions that do automated corrections that creates new corrected dataframe and with also notes for what 
-## was corrected.
+## was corrected. - DONE
 ## Check for duplicated HDIM numbers - COMPLETE
 ## Integrate photos with the database and site 
 ## Possible project: Shiny app of ecological data integrated with geographic data
@@ -41,12 +41,12 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 
 ## 04.11.16 ROMINGER - WELLMAN 220
 ## Integrate list of correct database entries into a spreadsheet file (.csv) to be referenced in the 
-## database checker package functions.
+## database checker package functions. - DONE
 ## For the automatic database correction function, use the apply family of functions (sapply) instead of 
-## a for loop.
+## a for loop. - DONE
 ## The lava tubes on the Big Island were briefly surveyed back in the 60s and 70s - many of the arthropod
 ## species within have been desginated as endangered species, which may make securing permits for future 
-## expeditions problematic. 
+## expeditions problematic. - NOTED
 
 ## 04.19.16 MOTHUR_16S WORKSHOP - KOSHLAND 238
 ## New version of mothur just came out last week
@@ -56,15 +56,15 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## https://cgrlucb.wikispaces.com/16S+Amplicon+Sequencing+Data+Analysis+Workshop?responseToken=08be8900eac6b4a4c470840e35e7e9d5a
 
 ## 04.20.16 PERSONAL NOTES
-## FUNCTION TO REPAIR INVALID DATE ENTRIES IN DATABASE - DONE
-## function to repair invalid contingent factor entries by method in database
+## Function to repair invalid date entries in database
+## Function to repair invalid contingent factor entries by method in database
 
 ## 09.28.16
 ## Sourced values from synonym tables.
 
 ## 09.29.16 ROMINGER - HILGARD 305
 ##
-## PACKAGE INITIALIZED
+## hdimDB PACKAGE INITIALIZED
 ## > devtools::install_github('hawaiiDimensions/db/hdimDB')
 ## > library(hdimDB)
 ##
@@ -74,15 +74,14 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## - examples not working
 ## 
 ## Create fake database for @example roxygen tag - COMPLETE
-##
-## Shiny app for dbChecker visualization
+## Shiny app for dbChecker visualization - Done
 
 ## 09.30.16 PERSONAL NOTES
 ##
-## Fixed error with arguments in mapply call
+## Fixed error with arguments in mapply call - IRRELEVANT
 ##
 ## 10.20.16 ROMINGER - HILGARD 305
-## 1. Work on Shiny App 
+## 1. Work on Shiny App - DONE
 ##     a. Don't use rapply for Shiny error compilation Andy will 
 ##        push over script (compile_errors.R) to test.scripts folder - DONE
 ## 2. Add workspace to test.scripts - DONE
@@ -108,7 +107,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##     d. New testthat files for dupHDIM and checkMisspell - DONE
 ##     e. Rewrite unit test for checkTime to run on fakeData - DONE
 ## 4. Shiny
-##     a. Use Andy's implementation (located in workspace) 
+##     a. Use Andy's implementation (located in workspace) - IRRELEVANT
 ##    
 ## Appendix: camelCase vs. snake_case
 
@@ -135,7 +134,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##      c. Change list() in checkDB to rBind() - DONE
 ##      d. Have helper functions output two-column dataframe first - DONE
 ##      e. Implement assignCorr with Generic function - DONE
-##  2. Do the damn Shiny implementation
+##  2. Do the damn Shiny implementation - DONE
 
 ## 12.02.16 ROMINGER - HILGARD 305
 ##
@@ -164,16 +163,16 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 
 ## 01.30.17 ROMINGER - NEW MEXICO X HILGARD 305
 ## 
-## 1. Modify .regexMatch to .indexMatch, match verbatim to synVector[1], return synVector[2] 
-## 2. Allow users to add values to synonym tables in Shiny App
-##   a. Think about allowing Shiny app to directly edit the database
-##   b. Look into package for reading and writing directly to Google Docs
+## 1. Modify .regexMatch to .indexMatch, match verbatim to synVector[1], return synVector[2] - DONE
+## 2. Allow users to add values to synonym tables in Shiny App 
+##   a. Think about allowing Shiny app to directly edit the database 
+##   b. Look into package for reading and writing directly to Google Docs 
 ##   c. Have app push and commit change to Github or save to somewhere with timestamp of previous version
-##   d. Look into Google's options for version control
-##   e. Andy will learn Shiny - OK
-## 3. Check in with Henrik and the Sorters - DONE
+##   d. Look into Google's options for version control 
+##   e. Andy will learn Shiny - OK 
+## 3. Check in with Henrik and the Sorters - SCHEDULED
 ##   a. See the latest output of checkDb - TRIVIAL
-## 4. checkDuration 420 update 
+## 4. checkDuration 420 update  
 ##   a. First aggregate plots using verbatim and samplingRd
 ##   b. Look into pplyr (ddply) and aggregate functions
 ## 5. Use blueJeans to have meetings - DONE
@@ -181,4 +180,18 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 7. Test update to checkEmpty 
 ## 8. Rewrite tests
 
+## 02.06.17 ROMINGER - NEW MEXICO X 1910 OXFORD
+## 1. Maybe add switch function to assignCorr - DONE
+## 2. Rewrite unit tests
+##   a. `test_that('checkEmpty finds missing entries', {    expect_equal(check$errMessage, 'Collector')})`
+## 3. Rewrite Makelabels with Markdown 
 
+## 02.07.17 HUANG 
+## 1. Debug indexMatch
+## 2. Allow user to specify regex, index, or leven in checkDb - DONE
+## 3. Rename dbChecker to checkDb - DONE
+## 4. Move .synValues - DONE
+
+## 02.16.17 HUANG
+## 1. Because .extractErr and .assignCorr tracks the error by HDIM, verbatim values
+##    are aggregated in the case od duplicate HDIMs and may interfer with the autocorrection process

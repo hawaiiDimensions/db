@@ -7,7 +7,7 @@ fluidPage(
     titlePanel('Hawaii Dimensions Collection Events Database'),
         mainPanel(
             p("Version 0.0 - UC Berkeley ESPM 2016"),
-            p("Author - Edward G. Huang"),
+            p("Developed by Edward G. Huang"),
             tabsetPanel(
                 id = 'dataset',
                 tabPanel('db', DT::dataTableOutput('table1')),
