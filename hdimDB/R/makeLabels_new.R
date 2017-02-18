@@ -25,7 +25,7 @@ makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
     
     ## subset database to only desired HDIM numbers
     badHDIM <- hdim[!(hdim %in% db$HDIM)]
-    
+
     if(length(repID) == 1) {
         repID <- rep(repID, length(hdim))
     }
