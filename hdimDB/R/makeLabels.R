@@ -165,4 +165,4 @@ fakelabels <- function(hdims, numLabels) {
 # return html file
 # embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
 
-x <- fakelabels(5000:5001, numLabels = 2:3)
+fakelabels(5000:5001, numLabels = 2:3)
