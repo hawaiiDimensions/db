@@ -43,9 +43,9 @@ checkMisspell <- function(db){
     misspelled.columns <- c('Plot', 'Collector', 'Method', 'Plant', 
                             'PitFallSlice', 'Whereabouts', 'SamplingRound')
     
-    out <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
-    extractOut <- .extractErr(db, out, 'misspelled')
-    return(.assignCorr(extractOut, match = 'levenshtein'))
+    errHDIM <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
+    extractOut <- .extractErr(db, errHDIM, 'misspelled')
+    return(.assignCorr(extractOut))
 }
 
 ## Hidden functions
