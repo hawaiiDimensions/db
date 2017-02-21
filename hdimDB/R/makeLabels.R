@@ -160,8 +160,12 @@ fakelabels <- function(hdims, numLabels) {
     writeLines(mkdownLabels, con = tempLabels)
     
     # rmarkdown::render \ render table to html: http://stackoverflow.com/questions/28507693/call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
+<<<<<<< HEAD
     rmarkdown::render(tempLabels)
     
+=======
+    rmarkdown::render(tempLabels, output_dir = getwd(), output_file = 'labels.html')
+>>>>>>> 40f54c9e9af8e6d5c2defd41d344555ff31e2cbd
 }
 # return html file
 # embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
