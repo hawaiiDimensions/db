@@ -156,11 +156,13 @@ fakelabels <- function(hdims, numLabels) {
     
     # knitr::kable \ to make matrix markdown table: http://stackoverflow.com/questions/15488350/programmatically-creating-markdown-tables-in-r-with-knitr
     mkdownLabels <- knitr::kable(labelMatrix, format = "markdown", col.names = rep('', ncol)) # convert to Rmd file
-    browser()
+    tempLabels <- file.path(tempdir(), 'mkdownLabels.Rmd')
+    writeLines(mkdownLabels, con = tempLabels)
+    
     # rmarkdown::render \ render table to html: http://stackoverflow.com/questions/28507693/call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
-    return(rmarkdown::render(mkdownLabels))
+    rmarkdown::render(tempLabels)
 }
 # return html file
 # embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
 
-fakelabels(5000:5001, numLabels = 2:3)
+x <- fakelabels(5000:5001, numLabels = 2:3)
