@@ -31,6 +31,6 @@ checkDuration <- function(db) {
     } 
     errHDIM <- unlist(errHDIM)
     extractOut <- .extractErr(db, errHDIM, 'beatduration')
-    return(.assignCorr(extractOut))
+    return(.assignCorr(extractOut, durationDb = db))
 }
 
