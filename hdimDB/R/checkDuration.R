@@ -18,18 +18,19 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-checkDuration <- function(db){
+checkDuration <- function(db) {
     plots <- .synValues(synPlotURL) # plot names
-    out <- list() # initialized list
-    for (site in plots){
+    errHDIM <- c() # initialized list
+    for (site in plots) {
         values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
-        if (length(values) == 0){
+        if (length(values) == 0) {
             # no relevant rows found
-        } else if (Reduce('+', as.numeric(values)) != 420){
-            out <- list(out, list(db[values, ]$HDIM))
+        } else if (Reduce('+', as.numeric(values)) != 420) {
+            errHDIM <- c(errHDIM, list(db[values, ]$HDIM))
         }
     } 
-    extractOut <- .extractErr(db, out, 'beatduration')
+    errHDIM <- unlist(errHDIM)
+    extractOut <- .extractErr(db, errHDIM, 'beatduration')
     return(.assignCorr(extractOut))
 }
 
