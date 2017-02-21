@@ -133,15 +133,33 @@ makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
 ## fakeLabels Implementation ##
 
 fakelabels <- function(hdims, numLabels) {
-    labelMatrix <- matrix(nrow = 24, ncol = 6) # initialize matrix
-    for (hdim in hdims) for (i in numLabels) {
-            labelMatrix.append(makeOneLabel(hdim))
+    ## desired number of rows and columns
+    nrow <- 24
+    ncol <- 6
+    
+    ## replicate all hdims by number of desired labels
+    allHDIM <- rep(hdims, numLabels)
+    
+    ## figure out how to pack it into a matrix
+    if(length(allHDIM) < nrow * ncol) {
+        allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
+    } else if(length(allHDIM) > nrow * ncol) {
+        addRow <- ceiling((length(allHDIM) - nrow * ncol) / (nrow * ncol))
+        nrow <- nrow + nrow*addRow
+        if(length(allHDIM) < nrow * ncol) {
+            allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
+        }
     }
+    
+    ## make the matrix
+    labelMatrix <- matrix(allHDIM, nrow = nrow, ncol = ncol, byrow = TRUE)
+    
     # knitr::kable \ to make matrix markdown table: http://stackoverflow.com/questions/15488350/programmatically-creating-markdown-tables-in-r-with-knitr
     mkdownLabels <- knitr::kable(labelMatrix, format = "markdown") # convert to Rmd file
     # rmarkdown::render \ render table to html: http://stackoverflow.com/questions/28507693/call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
     return(rmarkdown::render(mkdownLabels))
-    }
-    # return html file
-    # embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
-    
+}
+# return html file
+# embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
+
+fakelabels(5000:5001, numLabels = 2:3)
