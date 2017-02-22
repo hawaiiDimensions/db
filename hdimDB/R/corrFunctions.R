@@ -125,6 +125,6 @@
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
-.synValues <- function(url){ # synonym value extraction
+.synValues <- function(url) { # synonym value extraction
     return(unique(readGoogle(url)[, 2]))
 }
