@@ -38,7 +38,7 @@
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
-            corr <- lapply(corr, function(x) ifelse(length(x) == 0, NA, x))
+            corr <- unlist(lapply(corr, function(x) ifelse(length(x) == 0, NA, x)))
         }
         if (errTag == 'time'){
             corr <- NA
@@ -125,6 +125,6 @@
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
-.synValues <- function(url){ # synonym vlaue extraction
+.synValues <- function(url){ # synonym value extraction
     return(unique(readGoogle(url)[, 2]))
 }
