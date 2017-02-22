@@ -20,7 +20,7 @@
 }
 
 ## Input is output of .extractErr
-.assignCorr <- function(extractOut, match = 'index', durationDb = NULL){
+.assignCorr <- function(extractOut, match = 'index', db = NULL){
     if (any(is.na(extractOut$errHDIM))){
         corr <- NA
     } else {
@@ -43,9 +43,7 @@
             corr <- NA
         }
         if (errTag == 'beatduration'){ 
-            browser()
-            # corr <- .durationCorr(errOut$errHDIM, durationDb)
-            corr <- 420
+            corr <- .durationCorr(extractOut$errHDIM, db)
         }
     } 
     return(data.frame(extractOut, corr))
@@ -110,14 +108,18 @@
     return(corr)
 }
 
-.durationCorr <- function(errHDIM, durationDb) {
+.durationCorr <- function(errHDIM, db) {
     corr <- c()
     for (hdim in errHDIM) {
-        site <- durationDb['Plot', hdim]
+        site <- db[db['HDIM'] == hdim, 'Plot']
+        if (length(site) > 1) {
+            corr <- c(corr, 'NA')
+        } else {
         values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
-        corr <- Reduce('+', as.numeric(values)) != 420) 
-        errHDIM <- c(errHDIM, list(db[values, ]$HDIM))
+        corr <- c(corr, 420 - Reduce('+', as.numeric(values)))
+        }
     }
+    return(corr)
 }
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
