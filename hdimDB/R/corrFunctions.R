@@ -20,7 +20,7 @@
 }
 
 ## Input is output of .extractErr
-.assignCorr <- function(extractOut, match = 'index', durationDb = NULL){
+.assignCorr <- function(extractOut, match = 'index', db = NULL){
     if (any(is.na(extractOut$errHDIM))){
         corr <- NA
     } else {
@@ -38,14 +38,13 @@
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
+            corr <- unlist(lapply(corr, function(x) ifelse(length(x) == 0, NA, x)))
         }
         if (errTag == 'time'){
             corr <- NA
         }
         if (errTag == 'beatduration'){ 
-            browser()
-            # corr <- .durationCorr(errOut$errHDIM, durationDb)
-            corr <- 420
+            corr <- .durationCorr(extractOut$errHDIM, db)
         }
     } 
     return(data.frame(extractOut, corr))
@@ -109,6 +108,7 @@
     }
     return(corr)
 }
+
 # 
 # .durationCorr <- function(errHDIM, durationDb) {
 #     corr <- c()
@@ -122,6 +122,6 @@
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
-.synValues <- function(url){ # synonym vlaue extraction
+.synValues <- function(url){ # synonym value extraction
     return(unique(readGoogle(url)[, 2]))
 }
