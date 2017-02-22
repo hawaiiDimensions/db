@@ -17,6 +17,7 @@ Depends:
 Imports:
     RCurl,
     RecordLinkage
+    rmarkdown
 Suggests:
     testthat
 RoxygenNote: 5.0.1
