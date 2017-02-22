@@ -7,7 +7,6 @@
 #' @param hdim the unique identifier(s) to be printed
 #' @param dir the directory in which to save the labels
 #' @param sheetName the file name to give the sheet of labels
-#' @param defaultYear the year to be given to labels with a missing year
 #' @param repID the number of labels for each unique identifier (can be a single value or a vector of length equal to length of \code{hdim})
 #' 
 #' @return A data.frame of the google sheet
@@ -19,7 +18,10 @@
 
 ## helper functions need to pull info from database and organize that into a label
 
-makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
+makeLabels <- function(hdim, dir, sheetName, repID=1) {
+    ## set a default year in case missing
+    defaultYear <- 2015
+    
     ## load data base
     db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
     
@@ -42,33 +44,32 @@ makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
         this.label <- .makeOneLabel(db[i, ])
         
         if(i %% 6 == 0 & i != nrow(db)) {
-        	this.label <- paste(this.label, '\\\\ \n\\vspace{0.001in} \n\n\\noindent')
+        	this.label <- paste(this.label, '\n\\vspace{-0.075in} \n\n\\noindent')
         }
         
         out[i] <- this.label
     }
     
-    out <- c('\\documentclass[2pt]{extarticle}',
-             '\\usepackage[margin=0.5in]{geometry}',
-             '\\geometry{letterpaper}',
-             '\\usepackage{graphicx}',
-             '\\usepackage{setspace}',
-             '\\usepackage{amssymb}',
-             '\\usepackage{amsmath}',
-             '\\usepackage{epstopdf}',
+    out <- c('---',
+             'header-includes:',
+             '- \\usepackage{graphicx}',
+             '- \\usepackage{setspace}',
+             '- \\usepackage{amssymb}',
+             '- \\usepackage{amsmath}',
+             '- \\usepackage{epstopdf}',
+             'geometry: margin=0.5in',
+             'output: pdf_document',
+             '---',
              '\n',
-             '\\begin{document}',
              '\\noindent', 
              '\\raggedright',
-             out,
-             '\\end{document}')
+             out)
     
-    writeLines(out, paste(dir, '/', sheetName, '.tex', sep=''))
+    tempLabels <- file.path(tempdir(), 'mkdownLabels.Rmd')
+    writeLines(out, con = tempLabels)
     
-    ######### not working right yet!!!! ############
-    
-    system(sprintf('%s %s/%s.tex', system('which pdflatex', intern=TRUE), dir, sheetName))
-    system(sprintf('rm %s/%s.aux %s/%s.log', dir, sheetName, dir, sheetName))
+    rmarkdown::render(tempLabels, output_dir = dir, 
+                      output_file = paste(sheetName, 'pdf', sep = '.'))
 
     if(length(badHDIM) > 0) warning('missing HDIMs:', paste(badHDIM, collapse=', '))
     invisible(badHDIM)
@@ -132,37 +133,37 @@ makeLabels <- function(hdim, dir, sheetName, defaultYear=2015, repID=1) {
 
 ## fakeLabels Implementation ##
 
-fakelabels <- function(hdims, numLabels) {
-    ## desired number of rows and columns
-    nrow <- 24
-    ncol <- 6
-    
-    ## replicate all hdims by number of desired labels
-    allHDIM <- rep(hdims, numLabels)
-    
-    ## figure out how to pack it into a matrix
-    if(length(allHDIM) < nrow * ncol) {
-        allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
-    } else if(length(allHDIM) > nrow * ncol) {
-        addRow <- ceiling((length(allHDIM) - nrow * ncol) / (nrow * ncol))
-        nrow <- nrow + nrow*addRow
-        if(length(allHDIM) < nrow * ncol) {
-            allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
-        }
-    }
-    
-    ## make the matrix
-    labelMatrix <- matrix(allHDIM, nrow = nrow, ncol = ncol, byrow = TRUE)
-    
-    # knitr::kable \ to make matrix markdown table: http://stackoverflow.com/questions/15488350/programmatically-creating-markdown-tables-in-r-with-knitr
-    mkdownLabels <- knitr::kable(labelMatrix, format = "markdown", col.names = rep('', ncol)) # convert to Rmd file
-    tempLabels <- file.path(tempdir(), 'mkdownLabels.Rmd')
-    writeLines(mkdownLabels, con = tempLabels)
-    
-    # rmarkdown::render \ render table to html: http://stackoverflow.com/questions/28507693/call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
-    rmarkdown::render(tempLabels, output_dir = getwd(), output_file = 'labels.html')
-}
-# return html file
-# embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
-
-fakelabels(5000:5001, numLabels = 2:3)
+# fakelabels <- function(hdims, numLabels) {
+#     ## desired number of rows and columns
+#     nrow <- 24
+#     ncol <- 6
+#     
+#     ## replicate all hdims by number of desired labels
+#     allHDIM <- rep(hdims, numLabels)
+#     
+#     ## figure out how to pack it into a matrix
+#     if(length(allHDIM) < nrow * ncol) {
+#         allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
+#     } else if(length(allHDIM) > nrow * ncol) {
+#         addRow <- ceiling((length(allHDIM) - nrow * ncol) / (nrow * ncol))
+#         nrow <- nrow + nrow*addRow
+#         if(length(allHDIM) < nrow * ncol) {
+#             allHDIM <- c(allHDIM, rep('', nrow * ncol - length(allHDIM)))
+#         }
+#     }
+#     
+#     ## make the matrix
+#     labelMatrix <- matrix(allHDIM, nrow = nrow, ncol = ncol, byrow = TRUE)
+#     
+#     # knitr::kable \ to make matrix markdown table: http://stackoverflow.com/questions/15488350/programmatically-creating-markdown-tables-in-r-with-knitr
+#     mkdownLabels <- knitr::kable(labelMatrix, format = "markdown", col.names = rep('', ncol)) # convert to Rmd file
+#     tempLabels <- file.path(tempdir(), 'mkdownLabels.Rmd')
+#     writeLines(mkdownLabels, con = tempLabels)
+#     
+#     # rmarkdown::render \ render table to html: http://stackoverflow.com/questions/28507693/call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
+#     rmarkdown::render(tempLabels, output_dir = getwd(), output_file = 'labels.html')
+# }
+# # return html file
+# # embed into Shiny App https://shiny.rstudio.com/articles/generating-reports.html
+# 
+# fakelabels(5000:5001, numLabels = 2:3)
