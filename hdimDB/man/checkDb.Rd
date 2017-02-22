@@ -4,7 +4,7 @@
 \alias{checkDb}
 \title{Checks Dimensions Database for errors}
 \usage{
-checkDb(db)
+checkDb(db, match = "index")
 }
 \arguments{
 \item{db}{The database to be checked}
