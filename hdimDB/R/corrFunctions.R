@@ -117,11 +117,12 @@
             corr <- c(corr, 'NA')
         } else {
             values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
-            corr <- c(corr, 420 - Reduce('+', as.numeric(values)))
+            corr <- c(corr, Reduce('+', as.numeric(values)) - 420)
         }
     }
     return(corr)
 }
+
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
 .synValues <- function(url) { # synonym value extraction
