@@ -14,10 +14,10 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-checkDb <- function(db){
+checkDb <- function(db, match = 'index'){
     duplicatedHDIM <-dupHDIM(db)
     empty <- checkEmpty(db)
-    misspelled <- checkMisspell(db)
+    misspelled <- checkMisspell(db, match)
     wrongTime <- checkTime(db)
     wrongDuration <- checkDuration(db)
     return(rbind(duplicatedHDIM, empty, misspelled, wrongTime, wrongDuration))

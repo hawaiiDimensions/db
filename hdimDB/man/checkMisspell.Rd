@@ -4,7 +4,7 @@
 \alias{checkMisspell}
 \title{Checks Dimensions Database for misspelled empty entries}
 \usage{
-checkMisspell(db)
+checkMisspell(db, match = "index")
 }
 \arguments{
 \item{db}{the database to be checked}

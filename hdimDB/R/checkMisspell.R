@@ -18,7 +18,7 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-checkMisspell <- function(db){
+checkMisspell <- function(db, match = 'index'){
     db[is.na(db)] <- ''
     
     ## Non-Synonym Correction Vectors - 'cor.'
@@ -45,7 +45,7 @@ checkMisspell <- function(db){
     
     errHDIM <- mapply(.misColumn, misspelled.columns, cor.list, MoreArgs=list(db))
     extractOut <- .extractErr(db, errHDIM, 'misspelled')
-    return(.assignCorr(extractOut))
+    return(.assignCorr(extractOut, match))
 }
 
 ## Hidden functions
