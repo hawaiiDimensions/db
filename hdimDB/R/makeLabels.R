@@ -1,13 +1,15 @@
 #' @title Make collection event or specimen labels
 #'  
-#' @description \code{makeLabels} reads the online database and prints labels requested by unique identifier (HDIM or EMEC number)
+#' @description \code{makeLabels} reads the online database and prints labels requested by 
+#' unique identifier (HDIM or EMEC number)
 #' 
 # @details See example
 #' 
 #' @param hdim the unique identifier(s) to be printed
 #' @param dir the directory in which to save the labels
 #' @param sheetName the file name to give the sheet of labels
-#' @param repID the number of labels for each unique identifier (can be a single value or a vector of length equal to length of \code{hdim})
+#' @param repID the number of labels for each unique identifier (can be a single value or 
+#' a vector of length equal to length of \code{hdim})
 #' 
 #' @return A data.frame of the google sheet
 #'
@@ -85,22 +87,12 @@ makeLabels <- function(hdim, dir, sheetName, repID=1) {
         if(length(coll) < 1) {
         	coll <- '\\rule{0ex}{0ex}\\hspace{6em}'
         }
-        
-        # if(length(coll) > 1) {
-        	# coll <- substring(coll, 1, 4)
-        	# coll <- gsub('\\. ', '', coll)
-        	# coll <- paste(coll, collapse=', ')
-        # }
 
         if(grepl('beat', Method, ignore.case=TRUE) & !(is.na(TimeBegin) | TimeBegin == '')) {
             endt <- paste('--', TimeEnd, sep='')
         } else {
             endt <- ''
         }
-        
-#         if(is.na(TimeBegin) | TimeBegin == '') {
-#             TimeBegin <- '\\rule{0ex}{0ex}\\hspace{4.5em}'
-#         }
         
         if(is.na(Date) | Date == '') {
         	date <- defaultYear
@@ -118,13 +110,14 @@ makeLabels <- function(hdim, dir, sheetName, repID=1) {
             BeatingDuration <- paste(' ', BeatingDuration, ' sec. ', sep='')
         }
         
-        paste('\\parbox{0.16\\textwidth}{\\tiny ', '\\raggedright ', '\\rule[-0.3\\baselineskip]{0pt}{10pt}',
+        paste('\\parbox{0.16\\textwidth}{\\tiny ', '\\raggedright ', 
+              '\\rule[-0.3\\baselineskip]{0pt}{10pt}',
               paste('HDIM', HDIM, sep=''), '; ', gsub('_', '\\\\_', Plot), '\\\\ ',
-              Method, ifelse(is.na(PitFallSlice) | PitFallSlice=='', '', paste(' ', PitFallSlice, sep='')),
-              ifelse(is.na(Plant) | Plant=='', '', paste(' ', Plant, sep='')), BeatingDuration, # '\\\\ ',
+              Method, ifelse(is.na(PitFallSlice) | PitFallSlice=='', '', 
+                             paste(' ', PitFallSlice, sep='')),
+              ifelse(is.na(Plant) | Plant=='', '', paste(' ', Plant, sep='')), BeatingDuration,
               TimeBegin, endt, '; ', date, '\\\\ ',
               paste(coll, collapse=', '), ifelse(length(coll) > 1, ' colls.', ' coll.'), 
-              # 
               '}',
               sep='')
     })
