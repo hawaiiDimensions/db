@@ -4,7 +4,7 @@
 \alias{makeLabels}
 \title{Make collection event or specimen labels}
 \usage{
-makeLabels(hdim, dir, sheetName, defaultYear = 2015, repID = 1)
+makeLabels(hdim, dir, sheetName, repID = 1)
 }
 \arguments{
 \item{hdim}{the unique identifier(s) to be printed}
@@ -13,15 +13,15 @@ makeLabels(hdim, dir, sheetName, defaultYear = 2015, repID = 1)
 
 \item{sheetName}{the file name to give the sheet of labels}
 
-\item{defaultYear}{the year to be given to labels with a missing year}
-
-\item{repID}{the number of labels for each unique identifier (can be a single value or a vector of length equal to length of \code{hdim})}
+\item{repID}{the number of labels for each unique identifier (can be a single value or 
+a vector of length equal to length of \code{hdim})}
 }
 \value{
 A data.frame of the google sheet
 }
 \description{
-\code{makeLabels} reads the online database and prints labels requested by unique identifier (HDIM or EMEC number)
+\code{makeLabels} reads the online database and prints labels requested by 
+unique identifier (HDIM or EMEC number)
 }
 \author{
 Andy Rominger <ajrominger@gmail.com>

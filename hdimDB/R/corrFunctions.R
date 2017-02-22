@@ -109,19 +109,16 @@
     return(corr)
 }
 
-.durationCorr <- function(errHDIM, db) {
-    corr <- c()
-    for (hdim in errHDIM) {
-        site <- db[db['HDIM'] == hdim, 'Plot']
-        if (length(site) > 1) {
-            corr <- c(corr, 'NA')
-        } else {
-        values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
-        corr <- c(corr, 420 - Reduce('+', as.numeric(values)))
-        }
-    }
-    return(corr)
-}
+# 
+# .durationCorr <- function(errHDIM, durationDb) {
+#     corr <- c()
+#     for (hdim in errHDIM) {
+#         site <- durationDb['Plot', hdim]
+#         values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
+#         corr <- Reduce('+', as.numeric(values)) != 420) 
+#         errHDIM <- c(errHDIM, list(db[values, ]$HDIM))
+#     }
+# }
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
