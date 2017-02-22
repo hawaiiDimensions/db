@@ -38,6 +38,7 @@
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
+            corr <- lapply(corr, function(x) ifelse(length(x) == 0, NA, x))
         }
         if (errTag == 'time'){
             corr <- NA
