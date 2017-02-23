@@ -34,7 +34,7 @@
         if (errTag == 'misspelled'){
             errColumn <- gsub('.*\\.', '', extractOut$errMessage)
             method <- switch(match, 
-                             'levenshtein' = .closestMatch,
+                             'levenshtein' = .levenshteinMatch,
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
@@ -52,7 +52,7 @@
 
 ## AUTOCORRECTION METHOD FUNCTIONS ##
 
-.closestMatch <- function(verbatim, column){ # levenshtein distance
+.levenshteinMatch <- function(verbatim, column){ # levenshtein distance
     synVector <- switch(column,
                         'Plot' = .synValues(synPlotURL),
                         'Collector' = .synValues(synCollectURL),
