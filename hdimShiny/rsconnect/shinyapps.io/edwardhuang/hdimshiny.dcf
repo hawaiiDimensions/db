@@ -1,8 +1,10 @@
-name: hdimshiny
+name: hdimShiny
 title:
 account: edwardhuang
 server: shinyapps.io
 appId: 147417
-bundleId: 660670
+bundleId: 736586
 url: https://edwardhuang.shinyapps.io/hdimshiny/
-when: 1482710828.16861
+when: 1488872292.5125
+asMultiple: FALSE
+asStatic: FALSE
