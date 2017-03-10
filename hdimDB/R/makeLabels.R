@@ -71,16 +71,17 @@ makeLabels <- function(hdim, dir = NULL, sheetName, repID=1) {
     writeLines(out, con = tempLabels)
     
     if(is.null(dir)) {
-        rmarkdown::render(tempLabels, envir = new.env(parent = globalenv()),
+        outpath <- rmarkdown::render(tempLabels, envir = new.env(parent = globalenv()),
                           output_file = paste(sheetName, 'pdf', sep = '.'))
     } else {
-        rmarkdown::render(tempLabels, output_dir = dir, envir = new.env(parent = globalenv()),
+        outpath <- rmarkdown::render(tempLabels, output_dir = dir, envir = new.env(parent = globalenv()),
                           output_file = paste(sheetName, 'pdf', sep = '.'))
     }
     
 
     if(length(badHDIM) > 0) warning('missing HDIMs:', paste(badHDIM, collapse=', '))
-    invisible(badHDIM)
+    # invisible(badHDIM)
+    return(outpath)
 }
 
 .makeOneLabel <- function(x) {
