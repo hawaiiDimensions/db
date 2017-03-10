@@ -15,14 +15,15 @@ function(input, output) {
 #     output$errors <- renderDataTable(checkDb(db2))
     
     output$downloadData <- downloadHandler(
-        filename = 'labels.csv',
-        content =  function(file) {
-            write.csv(readGoogle(colEventsURL), file)
-#         content = function(file) {
-#            makeLabels(hdim = as.list(strsplit(input$hdimList, ", ")[[1]]), 
-#                       dir = NULL, 
-#                       sheetName = file,
-#                       repID = input$repID)
+        filename = 'labels.pdf',
+        # content =  function(file) {
+#            write.csv(readGoogle(colEventsURL), file)
+        content = function(file) {
+           out <- makeLabels(hdim = strsplit(input$hdimList, ", ")[[1]],
+                      dir = NULL,
+                      sheetName = file,
+                      repID = input$repID)
+           file.rename(out, file)
         }
     )
 }
