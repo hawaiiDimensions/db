@@ -17,10 +17,10 @@ function(input, output) {
     output$downloadData <- downloadHandler(
         filename = 'labels.pdf',
         content = function(file) {
-           out = makeLabels(hdim = strsplit(input$hdimList, ", ")[[1]],
+           out = makeLabels(hdim = strsplit(input$hdimList, ", |,")[[1]],
                       dir = NULL,
                       sheetName = file,
-                      repID = input$repID)
+                      repID = strsplit(input$repID, ", |,")[[1]])
            file.rename(out, file)
         }
     )
