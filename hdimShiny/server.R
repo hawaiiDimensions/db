@@ -19,7 +19,7 @@ function(input, output) {
         # content =  function(file) {
 #            write.csv(readGoogle(colEventsURL), file)
         content = function(file) {
-           out <- makeLabels(hdim = strsplit(input$hdimList, ", ")[[1]],
+           out = makeLabels(hdim = strsplit(input$hdimList, ", ")[[1]],
                       dir = NULL,
                       sheetName = file,
                       repID = input$repID)
