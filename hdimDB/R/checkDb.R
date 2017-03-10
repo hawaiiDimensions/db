@@ -5,6 +5,7 @@
 #' @details Developed specifically for the Dimensions in Biodiversity Evolab Database.
 #' 
 #' @param db The database to be checked
+#' @param match The misspelling correction method to be used
 #' 
 # @example 
 # checkDb('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
