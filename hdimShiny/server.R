@@ -15,10 +15,7 @@ function(input, output) {
 #     output$errors <- renderDataTable(checkDb(db2))
     
     output$downloadData <- downloadHandler(
-
         filename = 'labels.pdf',
-        # content =  function(file) {
-#            write.csv(readGoogle(colEventsURL), file)
         content = function(file) {
            out = makeLabels(hdim = strsplit(input$hdimList, ", ")[[1]],
                       dir = NULL,
