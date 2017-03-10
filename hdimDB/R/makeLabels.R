@@ -20,7 +20,7 @@
 
 ## helper functions need to pull info from database and organize that into a label
 
-makeLabels <- function(hdim, dir, sheetName, repID=1) {
+makeLabels <- function(hdim, dir = NULL, sheetName, repID=1) {
     ## set a default year in case missing
     defaultYear <- 2015
     
@@ -70,8 +70,14 @@ makeLabels <- function(hdim, dir, sheetName, repID=1) {
     tempLabels <- file.path(tempdir(), 'mkdownLabels.Rmd')
     writeLines(out, con = tempLabels)
     
-    rmarkdown::render(tempLabels, output_dir = dir, 
-                      output_file = paste(sheetName, 'pdf', sep = '.'))
+    if(is.null(dir)) {
+        rmarkdown::render(tempLabels, envir = new.env(parent = globalenv()),
+                          output_file = paste(sheetName, 'pdf', sep = '.'))
+    } else {
+        rmarkdown::render(tempLabels, output_dir = dir, envir = new.env(parent = globalenv()),
+                          output_file = paste(sheetName, 'pdf', sep = '.'))
+    }
+    
 
     if(length(badHDIM) > 0) warning('missing HDIMs:', paste(badHDIM, collapse=', '))
     invisible(badHDIM)
