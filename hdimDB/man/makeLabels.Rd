@@ -4,7 +4,7 @@
 \alias{makeLabels}
 \title{Make collection event or specimen labels}
 \usage{
-makeLabels(hdim, dir, sheetName, repID = 1)
+makeLabels(hdim, dir = NULL, sheetName, repID = 1)
 }
 \arguments{
 \item{hdim}{the unique identifier(s) to be printed}

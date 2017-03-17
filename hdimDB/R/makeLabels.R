@@ -79,7 +79,7 @@ makeLabels <- function(hdim, dir = NULL, sheetName, repID=1) {
     }
     
 
-    if(length(badHDIM) > 0) warning('missing HDIMs:', paste(badHDIM, collapse=', '))
+    # if(length(badHDIM) > 0) warning('missing HDIMs:', paste(badHDIM, collapse=', '))
     # invisible(badHDIM)
     return(outpath)
 }
