@@ -8,6 +8,8 @@ checkDb(db, match = "index")
 }
 \arguments{
 \item{db}{The database to be checked}
+
+\item{match}{The misspelling correction method to be used}
 }
 \value{
 Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
