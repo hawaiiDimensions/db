@@ -52,7 +52,7 @@ checkEmpty <- function(db){
 
 ## Hidden functions
 .emptyColumn <- function(column, db){
-    return(db[which(db[, column] == ''),]$HDIM)
+    return(db[which(db[, column] == ''), 'HDIM'])
 }
 
 .emptyContin <- function(method, vector, db){
