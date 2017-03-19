@@ -18,23 +18,16 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-## 1. checkTime
-##  a. Date / Date End
-##  b. Valid range for collection dates: March 1, 2014 to January 1, 2016. 
-##     Format should be %m/%d/YYYY (e.g. 7/8/2015 or 07/08/2015 are both valid, 
-##     but 7/8/15 would not be valid). 
 
-
-checkTime <- function(db){
-    dateCheck <- .dateColumn(db)
-    timeCheck <- .badHDIM(db)
-    out <- (c(dateCheck, timeCheck))
-    extractOut <- .extractErr(db, out, 'time.Date')
-    return(.assignCorr(extractOut))
+checkTime <- function(db){ 
+    db[is.na(db)] <- ''
+    dateOut <- .badDate(db)
+    timeOut <- .badTime(db)
+    extractDate <- .extractErr(db, dateOut, 'time.Date')
+    extractTime <- .extractErr(db, timeOut, 'time.TimeBegin')
+    return(.assignCorr(rbind(extractDate, extractTime)))
 }
 
-## =================================================================
-## ++++++++++++++++++++++ STAGED UPDATE ++++++++++++++++++++++++++++
 # .emptyTime <- function(db){ # checks TimeBegin / TimeEnd entries are in the correct locations
 #     # beating samples should have TimeBegin/TimeEnd entries
 #     beatingIndices <- which(tolower(db['Method']) == 'beating')
@@ -49,35 +42,47 @@ checkTime <- function(db){
 #     return(db[errIndices]$HDIM)
 # }
 
+## hidden helper functions 
+
 .badTime <- function(db){ # checks TimeBegin / TimeEnd entries are correctly formatted.
     # isolate indices of correctly located TimeBegin / TimeEnd entries
-    beatingIndices <- which(tolower(db[, 'Method']) == 'beating'
+    beatingIndices <- which(tolower(db[, 'Method']) == 'beating' # TimeBegin & TimeEnd only relevant for beating samples
                                   & db[, 'TimeEnd'] != '' 
                                   & db[, 'TimeBegin'] != '')
     # checking that entries are in 24hr/military time with regular expressions
-    begIndices <- which(!grepl('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', db[, 'TimeBegin'])) # HDIMs where no match
+    begIndices <- which(!grepl('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', db[, 'TimeBegin'])) # indices where there are no matches
     endIndices <- which(!grepl('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', db[, 'TimeEnd']))
     errIndices <- c(beatingIndices, unique(c(begIndices, endIndices))) 
     return(db[errIndices[duplicated(errIndices)], 'HDIM']) # duplicate indices are errors
-} # FINISHED & TESTED 
+} 
 
 
-## +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## =======================================================================
+.badDate <- function(db){ # checks whether entries in the date column are correctly formatted
+    
+    # indices of target subsets
+    dateIndices <- which(db[, 'Date'] != '' ) 
+    endIndices <- which(db[, 'Method'] == 'pitfall'  # only pitfall samples use DateEnd
+                      & db[, 'DateEnd'] != '')
+    
+    # establish valid date range
+    firstDay <- as.numeric(as.Date('2014/3/1')) # March 1, 2014
+    lastDay <- as.numeric(as.Date('2016/1/1')) # January 1, 2016
+    
+    # convert all date entries to numeric datetime objects
+    dateNumerics <- as.numeric(Map(as.Date, db[,'Date'], format = '%m/%d/%Y')) # must do each column seperately
+    endNumerics <- as.numeric(Map(as.Date, db[,'DateEnd'], format = '%m/%d/%Y')) # to preserve indices
+    
+    # compare against date range
+    dateErr <- which(dateNumerics[] <= firstDay | dateNumerics[] >= lastDay) 
+    endErr <- which(endNumerics[] <= firstDay | endNumerics[] >= lastDay)
+        
+    allErr <- unique(c(dateErr, endErr)) # compile errors
+    allInd <- unique(c(dateIndices, endIndices)) # compile indices
+    mixedInd <- c(allErr, allInd)
+    
+    # compare against all filled date entries
+    return(db[mixedInd[duplicated(mixedInd)], 'HDIM']) # duplicate indices are where errors are located
+} 
 
-## hidden helper functions
-.dateColumn <- function(db){
-    db[is.na(db)] <- ''
-    dates <- (as.Date(db[, 'Date'], format = '%m/%d/%Y' ))
-    dates.indices <- which(is.na(as.character(dates)) == 'TRUE')
-    return(db[dates.indices,]$HDIM)
-}
 
-## Standin format checker function, please replace
-.dateContin <- function(date.column, date.format){
-  empty.dates <- which(db[, date.column] != "")
-  dates <- as.Date(db[, date.column], format = date.format )
-  dates.indices <- which(is.na(as.character(dates)))
-  dates.vector <- c(empty.dates, dates.indices)
-  return(db[unique(dates.vector[duplicated(dates.vector)]), ]$HDIM)
-}
+
