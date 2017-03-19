@@ -25,11 +25,13 @@ checkDuration <- function(db) {
         values <- db[db$Plot == site & db$Method == 'beating', 'BeatingDuration']
         if (length(values) == 0) {
             # no relevant rows found
+        } else if ("" %in% values | NA %in% values) {
+            # correction unable to be calculated
         } else if (Reduce('+', as.numeric(values)) != 420) {
             errHDIM <- c(errHDIM, db[db$Plot == site & db$Method == 'beating', ]$HDIM)
         }
     } 
-    extractOut <- .extractErr(db, errHDIM, 'beatduration')
+    extractOut <- .extractErr(db, errHDIM, 'BeatingDuration')
     return(.assignCorr(extractOut, db = db))
 }
 
