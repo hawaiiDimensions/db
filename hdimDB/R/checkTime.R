@@ -28,19 +28,6 @@ checkTime <- function(db){
     return(.assignCorr(rbind(extractDate, extractTime)))
 }
 
-# .emptyTime <- function(db){ # checks TimeBegin / TimeEnd entries are in the correct locations
-#     # beating samples should have TimeBegin/TimeEnd entries
-#     beatingIndices <- which(tolower(db['Method']) == 'beating')
-#     bErrors <- which(db[beatingIndices, 'TimeEnd'] == '' |
-#                      db[beatingIndices, 'TimeBegin'] == '')
-#     # nonbeating samples should not have TimeBegin/TimeEnd entries
-#     otherIndices <- which(tolower(db['Method']) != 'beating')
-#     oErrors <- which(db[beatingIndices, 'TimeEnd'] != '' |
-#                      db[beatingIndices, 'TimeBegin'] != '')
-#     # compile results
-#     errIndices <- unique(c(bErrors, oErrors))
-#     return(db[errIndices]$HDIM)
-# }
 
 ## hidden helper functions 
 
@@ -84,5 +71,16 @@ checkTime <- function(db){
     return(db[mixedInd[duplicated(mixedInd)], 'HDIM']) # duplicate indices are where errors are located
 } 
 
-
-
+# .emptyTime <- function(db){ # checks TimeBegin / TimeEnd entries are in the correct locations
+#     # beating samples should have TimeBegin/TimeEnd entries
+#     beatingIndices <- which(tolower(db['Method']) == 'beating')
+#     bErrors <- which(db[beatingIndices, 'TimeEnd'] == '' |
+#                      db[beatingIndices, 'TimeBegin'] == '')
+#     # nonbeating samples should not have TimeBegin/TimeEnd entries
+#     otherIndices <- which(tolower(db['Method']) != 'beating')
+#     oErrors <- which(db[beatingIndices, 'TimeEnd'] != '' |
+#                      db[beatingIndices, 'TimeBegin'] != '')
+#     # compile results
+#     errIndices <- unique(c(bErrors, oErrors))
+#     return(db[errIndices]$HDIM)
+# }
