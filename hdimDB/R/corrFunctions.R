@@ -43,7 +43,7 @@
         if (errTag == 'time'){
             corr <- NA
         }
-        if (errTag == 'beatduration'){ 
+        if (errTag == 'BeatingDuration'){ 
             corr <- .durationCorr(extractOut$errHDIM, db)
         }
     } 
