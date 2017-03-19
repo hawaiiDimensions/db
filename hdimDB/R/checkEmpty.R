@@ -26,7 +26,7 @@ checkEmpty <- function(db){
     gmal.vector <- c('DateEnd', 'PitFallSlice') # ground malaise 
     cmal.vector <- c('DateEnd', 'PitFallSlice') # canopy malaise 
     leaf.vector <- c('PitFallSlice') # leaf litter
-    pit.vector <- c('DateEnd', 'PitFallSlice') # pitfall trap
+    pit.vector <- c( 'PitFallSlice', 'DateEnd') # pitfall trap
     zook.vector <- c('PitFallSlice') # InsectaZooka
     soil.vector <- c('PitFallSlice') # soil extraction
     # canopy clipping has no contingent columns, does not need to be checked.
