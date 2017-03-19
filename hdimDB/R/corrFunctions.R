@@ -41,7 +41,7 @@
             corr <- unlist(lapply(corr, function(x) ifelse(length(x) == 0, NA, x)))
         }
         if (errTag == 'time'){
-            corr <- NA
+            corr <- mapply(.timeCorr, value = as.character(extractOut$verbatim))
         }
         if (errTag == 'BeatingDuration'){ 
             corr <- .durationCorr(extractOut$errHDIM, db)
@@ -122,6 +122,18 @@
     }
     return(corr)
 }
+
+.timeCorr <- function(value) {
+    if (grepl(pattern = ';', x = value)) {
+        return('Fix duplicate entries')
+    } else if (grepl(pattern = '/', x = value)) {
+        return('Change format to m/d/yyyy')
+    } else if (grepl(pattern = ':', x = value)) {
+        return('Change format to 24-hour time')
+    }
+    return(NA)
+}
+
 
 ## AUTOCORRECTION FUNCTION SCRIPTS END ## 
 
