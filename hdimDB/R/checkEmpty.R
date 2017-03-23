@@ -18,7 +18,7 @@
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
 
-checkEmpty <- function(db){
+checkEmpty <- function(db) {
     db[is.na(db)] <- ''
     
     ## Vectors of Factor Column Names - REPLACE WITH SYNONYM TABLE VALUES
@@ -45,22 +45,36 @@ checkEmpty <- function(db){
     # syn.method <- .synValues(synMethodURL)
     
     out <- list(column = mapply(.emptyColumn, empty.col, MoreArgs=list(db)),
-                contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db)))
+                contingency = mapply(.emptyContin, methods, contin.list, MoreArgs=list(db)),
+                misplaced = mapply(.misplacedContin, methods, contin.list, MoreArgs=list(db))
+                )
     extractOut <- .extractErr(db, out, 'empty')
     return(.assignCorr(extractOut))
 }
 
 ## Hidden functions
-.emptyColumn <- function(column, db){
+.emptyColumn <- function(column, db) {
     return(db[which(db[, column] == ''), 'HDIM'])
 }
 
 .emptyContin <- function(method, vector, db){
     method.ind <- which(db$Method == method)
     method.vec <- apply(db[vector], 2, function(x) which(x == ''))
-    # contingencies <- c('Plant', 'BeatingDuration', 'TimeBegin', 'TimeEnd', 'DateEnd', 'PitFallSlice') # all possible contingent columns
-    # empty.columns <- setdiff(contingencies, vector) # all contingency columns that are supposed to be empty
-    # nonempty <- apply(db[empty.columns], 2, function(x) which(x != '')) # finds indices of invalid filled contingent entries
-    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE))) # needs to be modified
+    empty.ind <- c(method.ind, unique(unlist(method.vec, recursive = TRUE))) 
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
+}
+
+################################################################################
+##++++++++++++++++++++++++++++ STAGED ++++++++++++++++++++++++++++++++++++++++++
+.misplacedContin <- function(method, vector, db) {
+    methodInd <- which(db$Method == method)
+    emptyColumns <- setdiff(c('Plant', 
+                               'BeatingDuration', 
+                               'TimeBegin', 
+                               'TimeEnd', 
+                               'DateEnd', 
+                               'PitFallSlice'), vector) # all contingency columns that are supposed to be empty
+    nonempty <- apply(db[emptyColumns], 2, function(x) which(x != '')) # finds indices of invalid filled contingent entries
+    emptyInd <- c(methodInd, unique(unlist(nonempty, recursive = TRUE))) # needs to be modified
+    return(db[emptyInd[duplicated(emptyInd)], 'HDIM'])
 }
