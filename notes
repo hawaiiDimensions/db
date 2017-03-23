@@ -7,7 +7,7 @@
 ## Use Jupyter notebook to initialize code and to introduce package to laymen - EXPLORED
 ## Comprehensive list of Plot names located in Siteinfo Google Drive file - COMPLETE
 ## use source() to initialize all relevant functions from a seperate script file (.R) - IRRELEVANT
-## output invalid entry information in a comprehensive list that can be returned with a wrapper function - COMPLETE
+## output invalid entry information in a comprehensive list returned with a wrapper function - COMPLETE
 
 ## 03.10.16 ROMINGER - HILGARD 305
 ## Function to return list of all mispellings and empty entries by HDIM number - COMPLETE
@@ -26,8 +26,8 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 03.29.16 ROMINGER - HILGARD 305
 ## Write a wrapper function for diagnose db for colEvent - COMPLETE
 ## Develop package with the written functions - DONE
-## Write functions that do automated corrections that creates new corrected dataframe and with also notes for what 
-## was corrected. - DONE
+## Write functions that make automated corrections that creates new corrected 
+## dataframe and with also notes for what was corrected. - DONE
 ## Check for duplicated HDIM numbers - COMPLETE
 ## Integrate photos with the database and site 
 ## Possible project: Shiny app of ecological data integrated with geographic data
@@ -93,7 +93,7 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## 10.25.16 ROMINGER - HILGARD 305
 ##
 ## 1. Sum of beating durations for all samples in any given site in a sampling 
-##    round should be exactly 420 seconds.
+##    round should be exactly 420 seconds. - DONE
 ##
 ## 2. Check collector names in proper format with regex - DONE # with levenstein
 ##     a. Format: "Capitalized initial". "Capitalized surname"
@@ -150,10 +150,10 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ##  3. Shiny App - DEPLOYED
 ##  4. Fix time function 
 ##  5. Make checkEmpty check that places that should be empty are empty - PROG
-##  6. Make readme.md for the package in Markdown 
-##  7. MakeLabel implementation 
-##  8. 420 sec BeatingDuration parameter implementation - TEST!
-##     a. Add extractErr clause for checkDuration verbatim 
+##  6. Make readme.md for the package in Markdown - DONE
+##  7. MakeLabel implementation - DONE
+##  8. 420 sec BeatingDuration parameter implementation - DONE
+##     a. Add extractErr clause for checkDuration verbatim - DONE
 ##     b. Add assignCorr clause - DONE
 ##     c. Add dbChecker clause - DONE
 #3  9. Modify roxygen tags - DONE
@@ -162,36 +162,79 @@ https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uG
 ## NOTE: synonym vectors do not include '' and mark empty entries as misspelled
 
 ## 01.30.17 ROMINGER - NEW MEXICO X HILGARD 305
-## 
 ## 1. Modify .regexMatch to .indexMatch, match verbatim to synVector[1], return synVector[2] - DONE
 ## 2. Allow users to add values to synonym tables in Shiny App 
 ##   a. Think about allowing Shiny app to directly edit the database 
 ##   b. Look into package for reading and writing directly to Google Docs 
-##   c. Have app push and commit change to Github or save to somewhere with timestamp of previous version
+##   c. Have app push and commit change to Github or save to somewhere with timestamp of previous version 
 ##   d. Look into Google's options for version control 
 ##   e. Andy will learn Shiny - OK 
 ## 3. Check in with Henrik and the Sorters - SCHEDULED
-##   a. See the latest output of checkDb - TRIVIAL
-## 4. checkDuration 420 update  
-##   a. First aggregate plots using verbatim and samplingRd
-##   b. Look into pplyr (ddply) and aggregate functions
+##   a. See the latest output of checkDb - DONE 
+## 4. checkDuration 420 update  - DONE
+##   a. First aggregate plots using verbatim and samplingRd - NOTED
+##   b. Look into pplyr (ddply) and aggregate functions - NOTED
 ## 5. Use blueJeans to have meetings - DONE
 ## 6. Look up and send Andy a link to Wrangle - DONE
 ## 7. Test update to checkEmpty 
-## 8. Rewrite tests
+## 8. Rewrite tests - DELAYED 
 
 ## 02.06.17 ROMINGER - NEW MEXICO X 1910 OXFORD
 ## 1. Maybe add switch function to assignCorr - DONE
 ## 2. Rewrite unit tests
 ##   a. `test_that('checkEmpty finds missing entries', {    expect_equal(check$errMessage, 'Collector')})`
-## 3. Rewrite Makelabels with Markdown 
+## 3. Rewrite Makelabels with Markdown - DONE
 
 ## 02.07.17 HUANG 
-## 1. Debug indexMatch
+## 1. Debug indexMatch - DONE
 ## 2. Allow user to specify regex, index, or leven in checkDb - DONE
 ## 3. Rename dbChecker to checkDb - DONE
 ## 4. Move .synValues - DONE
 
 ## 02.16.17 HUANG
 ## 1. Because .extractErr and .assignCorr tracks the error by HDIM, verbatim values
-##    are aggregated in the case od duplicate HDIMs and may interfer with the autocorrection process
+##    are aggregated in the case of duplicate HDIMs and may interfere 
+##    with the autocorrection process - IGNORE
+
+## 02.16.17 ROMINGER - NEW MEXICO X 305 HILGARD
+## 1. fakeLabels function integration with Shiny - DONE
+##   a. knitr::kable # http://stackoverflow.com/questions/15488350/ \ - DONE
+##      programmatically-creating-markdown-tables-in-r-with-knitr
+##   b. rmarkdown::render # http://stackoverflow.com/questions/28507693/ \ - DONE
+##      call-rmarkdown-on-command-line-using-a-r-that-is-passed-a-file
+##   c. Shiny integration # https://shiny.rstudio.com/articles/generating-reports.html - DONE
+## 2. Time Benchmark with: - DONE
+##    >>> t0 <- proc.time()
+##    >>> elapsed <- proc.time() - t0
+## 3. Shiny App checkDB one tab two window implementation
+
+## 02.21.17 ROMINGER - NEW MEXICO X 220 WELLMAN
+## 1. Implement fakeLabels in Shiny - DONE
+
+## 02.28.17 ROMINGER - NEW MEXICO X 305 HILGARD
+## 1. Implement makeLabels in Shiny - DONE
+
+## 03.10.17 ROMINGER - NEW MEXICO X 1910 OXFORD
+## 1. textInput for repID - DONE
+## 2. Upload new version to the shiny.io cloud - DONE
+## 3. Put up github issue "from and to are of different lengths" - DONE
+## 4. Kokua Data package? Look at Andy's link - DONE
+
+## 03.17.17 ROMINGER - NEW MEXICO X DAVIS HOUSE
+## 1. checkTime - DONE
+##   a. Date / Date End - DONE
+##   b. Time Begin/ Time End - DONE
+##   c. Valid range for collection dates: March 1, 2014 to January 1, 2016. 
+##      Format should be %m/%d/YYYY (e.g. 7/8/2015 or 07/08/2015 are both valid, 
+##      but 7/8/15 would not be valid). - NOTED
+##   d. TimeBegin and TimeEnd should be in 24hr time (i.e. military time) - DONE
+## 2. Allow users to add values to synonym tables in Shiny App 
+##   a. Think about allowing Shiny app to directly edit the database 
+##   b. Look into package for reading and writing directly to Google Docs 
+##   c. Have app push and commit change to Github or save to somewhere with timestamp of 
+##      previous version.
+## 3. Reduce hdimDB runtime
+##   a. Isolate checker functions to compare runtime - DONE
+##   b. Benchmark .levenshteinMatch and .indexMatch - DONE
+##   c. Find source of runtime - DONE
+## 4. Send the lab a link of the Shiny App - DONE
