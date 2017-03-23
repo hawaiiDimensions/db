@@ -134,8 +134,7 @@
     return(NA)
 }
 
-
-## AUTOCORRECTION FUNCTION SCRIPTS END ## 
+## AUTOCORRECTION SCRIPTS END ## 
 
 .synValues <- function(url) { # synonym value extraction
     return(unique(readGoogle(url)[, 2]))
