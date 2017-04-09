@@ -37,7 +37,16 @@
                              'levenshtein' = .levenshteinMatch,
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
-            corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn, method)
+            
+            ## BEGIN STAGED UPDATE ## 
+            synList = list(list(readGoogle(synPlotURL), readGoogle(synCollectURL),
+                           readGoogle(synMethodURL), readGoogle(synPlantURL),
+                           readGoogle(synPitURL), readGoogle(synWhereURL), c(1:2)))
+            corr <- mapply(verbatim = as.character(extractOut$verbatim), 
+                           column = errColumn, frameList = synList, method)
+            ## END STAGED UPDATE ##
+            
+            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn , method)
             corr <- unlist(lapply(corr, function(x) ifelse(length(x) == 0, NA, x)))
         }
         if (errTag == 'time'){
@@ -52,15 +61,24 @@
 
 ## AUTOCORRECTION METHOD FUNCTIONS ##
 
-.levenshteinMatch <- function(verbatim, column){ # levenshtein distance
+.levenshteinMatch <- function(verbatim, column, frameList){ # levenshtein distance
+#     synVector <- switch(column,
+#                         'Plot' = .synValues(synPlotURL),
+#                         'Collector' = .synValues(synCollectURL),
+#                         'Method' = .synValues(synMethodURL),
+#                         'Plant' = .synValues(synPlantURL),
+#                         'PitFallSlice' = .synValues(synPitURL),
+#                         'Whereabouts' = .synValues(synWhereURL),
+#                         'SamplingRound' = c(1:2))
     synVector <- switch(column,
-                        'Plot' = .synValues(synPlotURL),
-                        'Collector' = .synValues(synCollectURL),
-                        'Method' = .synValues(synMethodURL),
-                        'Plant' = .synValues(synPlantURL),
-                        'PitFallSlice' = .synValues(synPitURL),
-                        'Whereabouts' = .synValues(synWhereURL),
-                        'SamplingRound' = c(1:2))
+                       'Plot' = frameList[[1]],
+                       'Collector' = frameList[[2]],
+                       'Method' = frameList[[3]],
+                       'Plant' = frameList[[4]],
+                       'PitFallSlice' = frameList[[5]],
+                       'Whereabouts' = frameList[[6]],
+                       'SamplingRound' = frameList[[7]])
+    
     synVector <- synVector[synVector != '']
     distance <- RecordLinkage::levenshteinSim(verbatim, synVector)
     corr <- synVector[distance == max(distance)]
@@ -70,15 +88,27 @@
     return(corr)
 }
 
-.indexMatch <- function(verbatim, column){ # synonym table indexing
+.indexMatch <- function(verbatim, column, frameList){ # synonym table indexing
+    ## BEGIN STAGED UPDATE ##
     synFrame <- switch(column,
-                       'Plot' = readGoogle(synPlotURL),
-                       'Collector' = readGoogle(synCollectURL),
-                       'Method' = readGoogle(synMethodURL),
-                       'Plant' = readGoogle(synPlantURL),
-                       'PitFallSlice' = readGoogle(synPitURL),
-                       'Whereabouts' = readGoogle(synWhereURL),
-                       'SamplingRound' = c(1:2))
+                       'Plot' = frameList[[1]],
+                       'Collector' = frameList[[2]],
+                       'Method' = frameList[[3]],
+                       'Plant' = frameList[[4]],
+                       'PitFallSlice' = frameList[[5]],
+                       'Whereabouts' = frameList[[6]],
+                       'SamplingRound' = frameList[[7]])
+    ## END STAGED UPDATE ##
+    
+#     synFrame <- switch(column,
+#                        'Plot' = readGoogle(synPlotURL),
+#                        'Collector' = readGoogle(synCollectURL),
+#                        'Method' = readGoogle(synMethodURL),
+#                        'Plant' = readGoogle(synPlantURL),
+#                        'PitFallSlice' = readGoogle(synPitURL),
+#                        'Whereabouts' = readGoogle(synWhereURL),
+#                        'SamplingRound' = c(1:2))
+        
     corr <- synFrame[synFrame[1] == verbatim, ][[2]]
     if (length(corr) > 1){ # if multiple matches
         corr <- paste(corr, collapse = ';')
@@ -86,15 +116,25 @@
     return(corr)
 }
 
-.regexMatch <- function(verbatim, column){ # in development; regular expression matching
+.regexMatch <- function(verbatim, column, frameList){ # in development; regular expression matching
+#     synVector <- switch(column,
+#                         'Plot' = .synValues(synPlotURL),
+#                         'Collector' = .synValues(synCollectURL),
+#                         'Method' = .synValues(synMethodURL),
+#                         'Plant' = .synValues(synPlantURL),
+#                         'PitFallSlice' = .synValues(synPitURL),
+#                         'Whereabouts' = .synValues(synWhereURL),
+#                         'SamplingRound' = c(1:2))
+    
     synVector <- switch(column,
-                        'Plot' = .synValues(synPlotURL),
-                        'Collector' = .synValues(synCollectURL),
-                        'Method' = .synValues(synMethodURL),
-                        'Plant' = .synValues(synPlantURL),
-                        'PitFallSlice' = .synValues(synPitURL),
-                        'Whereabouts' = .synValues(synWhereURL),
-                        'SamplingRound' = c(1:2))
+                        'Plot' = frameList[[1]],
+                        'Collector' = frameList[[2]],
+                        'Method' = frameList[[3]],
+                        'Plant' = frameList[[4]],
+                        'PitFallSlice' = frameList[[5]],
+                        'Whereabouts' = frameList[[6]],
+                        'SamplingRound' = frameList[[7]])
+    
     synVector <- synVector[synVector != '']
     corr <- grep(verbatim, synVector, ignore.case=TRUE, value=TRUE) # specific search
     if (length(corr) == 0){ # if no match
