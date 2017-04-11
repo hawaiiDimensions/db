@@ -38,15 +38,12 @@
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             
-            ## BEGIN STAGED UPDATE ## 
             synList = list(list(readGoogle(synPlotURL), readGoogle(synCollectURL),
                            readGoogle(synMethodURL), readGoogle(synPlantURL),
                            readGoogle(synPitURL), readGoogle(synWhereURL), c(1:2)))
             corr <- mapply(verbatim = as.character(extractOut$verbatim), 
                            column = errColumn, frameList = synList, method)
-            ## END STAGED UPDATE ##
             
-            # corr <- mapply(verbatim = as.character(extractOut$verbatim), column = errColumn , method)
             corr <- unlist(lapply(corr, function(x) ifelse(length(x) == 0, NA, x)))
         }
         if (errTag == 'time'){
@@ -62,14 +59,6 @@
 ## AUTOCORRECTION METHOD FUNCTIONS ##
 
 .levenshteinMatch <- function(verbatim, column, frameList){ # levenshtein distance
-#     synVector <- switch(column,
-#                         'Plot' = .synValues(synPlotURL),
-#                         'Collector' = .synValues(synCollectURL),
-#                         'Method' = .synValues(synMethodURL),
-#                         'Plant' = .synValues(synPlantURL),
-#                         'PitFallSlice' = .synValues(synPitURL),
-#                         'Whereabouts' = .synValues(synWhereURL),
-#                         'SamplingRound' = c(1:2))
     synVector <- switch(column,
                        'Plot' = frameList[[1]],
                        'Collector' = frameList[[2]],
@@ -89,7 +78,6 @@
 }
 
 .indexMatch <- function(verbatim, column, frameList){ # synonym table indexing
-    ## BEGIN STAGED UPDATE ##
     synFrame <- switch(column,
                        'Plot' = frameList[[1]],
                        'Collector' = frameList[[2]],
@@ -98,16 +86,6 @@
                        'PitFallSlice' = frameList[[5]],
                        'Whereabouts' = frameList[[6]],
                        'SamplingRound' = frameList[[7]])
-    ## END STAGED UPDATE ##
-    
-#     synFrame <- switch(column,
-#                        'Plot' = readGoogle(synPlotURL),
-#                        'Collector' = readGoogle(synCollectURL),
-#                        'Method' = readGoogle(synMethodURL),
-#                        'Plant' = readGoogle(synPlantURL),
-#                        'PitFallSlice' = readGoogle(synPitURL),
-#                        'Whereabouts' = readGoogle(synWhereURL),
-#                        'SamplingRound' = c(1:2))
         
     corr <- synFrame[synFrame[1] == verbatim, ][[2]]
     if (length(corr) > 1){ # if multiple matches
@@ -117,15 +95,6 @@
 }
 
 .regexMatch <- function(verbatim, column, frameList){ # in development; regular expression matching
-#     synVector <- switch(column,
-#                         'Plot' = .synValues(synPlotURL),
-#                         'Collector' = .synValues(synCollectURL),
-#                         'Method' = .synValues(synMethodURL),
-#                         'Plant' = .synValues(synPlantURL),
-#                         'PitFallSlice' = .synValues(synPitURL),
-#                         'Whereabouts' = .synValues(synWhereURL),
-#                         'SamplingRound' = c(1:2))
-    
     synVector <- switch(column,
                         'Plot' = frameList[[1]],
                         'Collector' = frameList[[2]],
