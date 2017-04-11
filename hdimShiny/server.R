@@ -1,12 +1,9 @@
-devtools::install_github('hawaiiDimensions/db/hdimDB')
-
 ## hawaii_dimensions_shiny server.R
 library(shiny)
 library(hdimDB)
 
 ## 
 db <- readGoogle(colEventsURL)
-# db2 <- db[1:1000, ]
 errors <- checkDb(db)
 
 
@@ -14,7 +11,7 @@ errors <- checkDb(db)
 function(input, output) {
     
     output$colEvents <- renderDataTable(readGoogle(colEventsURL))
-    output$errors <- renderDataTable(checkDb(db2))
+    output$errors <- renderDataTable(checkDb(db))
     
     output$downloadData <- downloadHandler(
         filename = 'labels.pdf',
