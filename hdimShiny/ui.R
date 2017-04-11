@@ -14,8 +14,6 @@ fluidPage(
                       placeholder = 'separate HDIMs with commas'),
             textInput(inputId = 'repID', label = 'Number of Labels per HDIM', value = NA,
                       placeholder = 'separate numbers with commas'),
-#             sliderInput(inputId = 'repID', label = 'Number of Labels per HDIM',
-#                         value = 1, min = 1, max = 144),
             downloadButton('downloadData', 'Download Label Sheet')
         ),
         mainPanel(
