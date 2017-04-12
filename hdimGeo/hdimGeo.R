@@ -32,7 +32,10 @@ server <- function(input, output) {
             addMarkers(lng=~-longitude..W..DEG, 
                        lat=~latitude..N..DEG,
                        popup=siteLabels,
-                       label=siteLabels)
+                       label=siteLabels) %>%
+            addCircles(lng=~-longitude..W..DEG, 
+                       lat=~latitude..N..DEG,
+                       radius=50)
     })
 }
 
