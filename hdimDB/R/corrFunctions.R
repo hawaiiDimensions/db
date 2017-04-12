@@ -38,9 +38,12 @@
                              'index' = .indexMatch,
                              'regex' = .regexMatch)
             
-            synList = list(list(readGoogle(synPlotURL), readGoogle(synCollectURL),
-                           readGoogle(synMethodURL), readGoogle(synPlantURL),
-                           readGoogle(synPitURL), readGoogle(synWhereURL), c(1:2)))
+            synList = list(list(readGoogle(synPlotURL), 
+                                readGoogle(synCollectURL),
+                                readGoogle(synMethodURL), 
+                                readGoogle(synPlantURL),
+                                readGoogle(synPitURL), 
+                                readGoogle(synWhereURL), c(1:2)))
             corr <- mapply(verbatim = as.character(extractOut$verbatim), 
                            column = errColumn, frameList = synList, method)
             
