@@ -48,8 +48,7 @@ checkTime <- function(db){
     
     # indices of target subsets
     dateIndices <- which(db[, 'Date'] != '' ) 
-    endIndices <- which(db[, 'Method'] == 'pitfall'  # only pitfall samples use DateEnd
-                      & db[, 'DateEnd'] != '')
+    endIndices <- which(db[, 'Method'] %in% c('pitfall', 'malaise') & db[, 'DateEnd'] != '') # only pitfall or malaise samples use DateEnd 
     
     # establish valid date range
     firstDay <- as.numeric(as.Date('2014/3/1')) # March 1, 2014
