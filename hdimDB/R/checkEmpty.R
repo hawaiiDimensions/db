@@ -1,19 +1,19 @@
 #' @title Checks Dimensions Database for invalid empty entries
 #'  
-#' @description \code{checkEmpty} runs through the online database and returns a dataframe corresponding to invalid empty entries in the database
+#' @description \code{checkEmpty} processes the online database and returns a dataframe corresponding to invalid empty entries in the database
 #' 
-#' @details Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.
+#' @details Only relevant columns are fully checked for empty entries - factor columns contingent to certain collection methods are also considered. Misplaced entries are also checked. 
 #' 
 #' @param db the database to be checked
 #' 
 # @example 
 # ## Load the Database
-# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# db <- readGoogle(colEventsURL)
 # 
 # ## check empty entries
 # checkEmpty(db)
 #' 
-#' @return Dataframe with HDIM identifier and empy entry error tag.
+#' @return Dataframe with HDIM identifier and empty entry error tag.
 #'
 #' @author Edward Greg Huang <edwardgh@@berkeley.edu>
 #' @export
@@ -64,8 +64,7 @@ checkEmpty <- function(db) {
     return(db[unique(empty.ind[duplicated(empty.ind)]), ]$HDIM)
 }
 
-################################################################################
-##++++++++++++++++++++++++++++ STAGED ++++++++++++++++++++++++++++++++++++++++++
+## STAGED UPDATE ##
 .misplacedContin <- function(method, vector, db) {
     methodInd <- which(db$Method == method)
     emptyColumns <- setdiff(c('Plant', 

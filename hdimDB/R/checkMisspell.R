@@ -1,17 +1,18 @@
 #' @title Checks Dimensions Database for misspelled empty entries
 #'  
-#' @description \code{checkMisspell} runs through the online database and returns a dataframe corresponding to misspelled entries in the database
+#' @description \code{checkMisspell} processes the online database and returns a dataframe corresponding to misspelled entries in the database
 #' 
-#' @details Existing entries are compared against approved entries as listed in the synonym tables
+#' @details Existing entries are compared against approved entries listed in the synonym tables
 #' 
-#' @param db the database to be checked
+#' @param db The database to be checked
+#' @param match The autocorrection method to be used with misspelled entries
 #' 
 # @example 
 # ## Load the Database
-# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-# 
+# db <- readGoogle(colEventsURL)
+#
 # ## check misspellings
-# checkMisspell(db)
+# checkMisspell(db, match = 'index')
 #' 
 #' @return Dataframe with HDIM identifier, misspelling error tag, verbatim entry, and suggested correction.
 #'

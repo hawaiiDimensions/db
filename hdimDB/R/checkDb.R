@@ -1,14 +1,14 @@
 #' @title Checks Dimensions Database for errors
 #'  
-#' @description \code{checkDb} runs through the online database and returns a dataframe associated with specific errors
+#' @description \code{checkDb} processes the online database and returns a dataframe of errors and suggested corrections
 #' 
 #' @details Developed specifically for the Dimensions in Biodiversity Evolab Database.
 #' 
 #' @param db The database to be checked
-#' @param match The misspelling correction method to be used
+#' @param match The autocorrection method to be used with misspelled entries
 #' 
 # @example 
-# checkDb('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# checkDb(readGoogle(colEventsURL), match = 'index')
 #' 
 #' @return Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 #'

@@ -1,15 +1,14 @@
 #' @title Checks Dimensions Database for invalid BeatingDuration values
 #'  
-#' @description \code{checkDuration} runs through the online database and returns a dataframe corresponding to invalid beating duration entries in the database
+#' @description \code{checkDuration} processes the online database and returns a dataframe corresponding to invalid beating duration entries in the database
 #' 
-#' @details The sum of all values in the BeatingDuration column for any given plot should equal 420.
+#' @details The sum of all values in the BeatingDuration column for any given plot should equal 420. The suggested correction describes the number of seconds over or under the 420 quota. 
 #' 
 #' @param db the database to be checked
 #' 
 # @example 
 # ## Load the Database
-# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-# 
+# db <- readGoogle(colEventsURL)
 # ## check BeatingDuration entries
 # checkDuration(db)
 #' 

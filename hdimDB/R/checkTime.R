@@ -1,8 +1,8 @@
 #' @title Checks Dimensions Database for invalid time entries
 #'  
-#' @description \code{checkTime} runs through the online database and returns a dataframe corresponding to invalid time entries in the database
+#' @description \code{checkTime} processes the online database and returns a dataframe corresponding to invalid time entries in the database
 #' 
-#' @details Time entries will be checked, based on column name, for correct date and hour:minute formatting.
+#' @details Time entries will be checked, based on column name, for correct date and hour:minute formatting. Entries in the Date column are checked to be within the range of dates between March 1, 2014 and January 1, 2016. 
 #' 
 #' @param db The database for which time entries are to be checked
 #' 
@@ -10,8 +10,8 @@
 #' 
 # @example 
 # ## Load the Database
-# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
-# 
+# db <- readGoogle(colEventsURL)
+#
 # ## check times
 # checkTime(db)
 #'
@@ -48,12 +48,8 @@ checkTime <- function(db){
     
     # indices of target subsets
     dateIndices <- which(db[, 'Date'] != '' ) 
-<<<<<<< HEAD
     endIndices <- which(db[, 'Method'] %in% c('pitfall', 'malaise') & db[, 'DateEnd'] != '') # only pitfall or malaise samples use DateEnd 
-=======
-    endIndices <- which(db[, 'Method'] %in% c('pitfall', 'malaise') &  # only pitfall samples use DateEnd
-                            db[, 'DateEnd'] != '')
->>>>>>> a556c5164770f71bc86fa4031affb2b3f343404e
+
     
     # establish valid date range
     firstDay <- as.numeric(as.Date('2014/3/1')) # March 1, 2014

@@ -1,6 +1,6 @@
 #' @title Checks Dimensions Database for duplicate HDIM numbers
 #'  
-#' @description \code{dupHDIM} runs through the online database and returns a dataframe of repeated HDIM numbers 
+#' @description \code{dupHDIM} processes the online database and returns a dataframe of repeated HDIM numbers 
 #' 
 #' @details Only valid when called on a Dimensions Database with a column "HDIM"
 #' 
@@ -8,7 +8,7 @@
 #' 
 # @example 
 # ## Load the Database
-# db <- readGoogle('https://docs.google.com/spreadsheets/d/1Ve2NZwNuGMteQDOoewitaANfTDXLy8StoHOPv7uGmTM/pub?output=csv')
+# db <- readGoogle(colEventsURL)
 # 
 # ## check duplicate HDIM
 # dupHDIM(db)
