@@ -7,5 +7,5 @@ data('testData')
 check <- dupHDIM(testData)
 
 test_that('dupHDIM finds duplicate HDIM numbers', {
-    expect_equal(check, 9024)
+    expect_equal(check$errHDIM, testData$HDIM[testData$ERROR == 'duplicate hdim'])
 })
