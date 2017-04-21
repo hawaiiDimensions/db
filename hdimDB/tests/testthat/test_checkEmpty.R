@@ -15,3 +15,8 @@ test_that('checkEmpty finds missing contingencies', {
     expect_equal(check$errHDIM[check$errMessage == 'empty.contingency.beating'], 
                  testData$HDIM[testData$ERROR == 'empty contingency'])
 })
+
+test_that('checkEmpty finds missing contingencies', {
+    expect_equal(check$errHDIM[check$errMessage == 'empty.misplaced.beating'], 
+                 testData$HDIM[testData$ERROR == 'misplaced value'])
+})
