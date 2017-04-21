@@ -10,13 +10,13 @@ checkEmpty(db)
 \item{db}{the database to be checked}
 }
 \value{
-Dataframe with HDIM identifier and empy entry error tag.
+Dataframe with HDIM identifier and empty entry error tag.
 }
 \description{
-\code{checkEmpty} runs through the online database and returns a dataframe corresponding to invalid empty entries in the database
+\code{checkEmpty} processes the online database and returns a dataframe corresponding to invalid empty entries in the database
 }
 \details{
-Only certain columns are checked for empty entries, factor columns contingent to certain collection methods are considered.
+Only relevant columns are fully checked for empty entries - factor columns contingent to certain collection methods are also considered. Misplaced entries are also checked.
 }
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>

@@ -9,13 +9,13 @@ checkDb(db, match = "index")
 \arguments{
 \item{db}{The database to be checked}
 
-\item{match}{The misspelling correction method to be used}
+\item{match}{The autocorrection method to be used with misspelled entries}
 }
 \value{
 Dataframe with HDIM identifier, error type, verbatim entry, and suggested correction.
 }
 \description{
-\code{checkDb} runs through the online database and returns a dataframe associated with specific errors
+\code{checkDb} processes the online database and returns a dataframe of errors and suggested corrections
 }
 \details{
 Developed specifically for the Dimensions in Biodiversity Evolab Database.
