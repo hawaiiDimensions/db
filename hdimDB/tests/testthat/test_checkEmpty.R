@@ -7,9 +7,11 @@ data('testData')
 check <- checkEmpty(testData)
 
 test_that('checkEmpty finds missing entries', {
-    expect_equal(check$column$Collector, 4520)
+    expect_equal(check$errHDIM[check$errMessage == 'empty.column.Collector'], 
+                 testData$HDIM[testData$ERROR == 'empty value'])
 })
 
 test_that('checkEmpty finds missing contingencies', {
-    expect_equal(check$contingency$beating, 4445)
+    expect_equal(check$errHDIM[check$errMessage == 'empty.contingency.beating'], 
+                 testData$HDIM[testData$ERROR == 'empty contingency'])
 })
