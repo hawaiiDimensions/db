@@ -7,16 +7,18 @@
 checkMisspell(db, match = "index")
 }
 \arguments{
-\item{db}{the database to be checked}
+\item{db}{The database to be checked}
+
+\item{match}{The autocorrection method to be used with misspelled entries}
 }
 \value{
 Dataframe with HDIM identifier, misspelling error tag, verbatim entry, and suggested correction.
 }
 \description{
-\code{checkMisspell} runs through the online database and returns a dataframe corresponding to misspelled entries in the database
+\code{checkMisspell} processes the online database and returns a dataframe corresponding to misspelled entries in the database
 }
 \details{
-Existing entries are compared against approved entries as listed in the synonym tables
+Existing entries are compared against approved entries listed in the synonym tables
 }
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>

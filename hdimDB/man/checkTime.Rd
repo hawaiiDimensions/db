@@ -13,10 +13,10 @@ checkTime(db)
 Dataframe with HDIM identifier, invalid time error tag, verbatim entry, and suggested correction.
 }
 \description{
-\code{checkTime} runs through the online database and returns a dataframe corresponding to invalid time entries in the database
+\code{checkTime} processes the online database and returns a dataframe corresponding to invalid time entries in the database
 }
 \details{
-Time entries will be checked, based on column name, for correct date and hour:minute formatting.
+Time entries will be checked, based on column name, for correct date and hour:minute formatting. Entries in the Date column are checked to be within the range of dates between March 1, 2014 and January 1, 2016.
 }
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
