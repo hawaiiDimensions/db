@@ -1,9 +1,10 @@
 HDIM,Plot,Date,Collector,Method,Plant,BeatingDuration,TimeBegin,TimeEnd,DateEnd,CanopyMalaiseHeight..ft.,PitFallSlice,Whereabouts,SamplingRound,NoOfVials,Comments,ERROR
 9024,kohalaYng_10,9/18/2014,K. Jayd,InsectaZooka,,,,,,,A,UHH,1,1,,duplicate hdim
-4520,hippnet_13,12/8/2015,,beating,Cheirodendron,19,9:35,10:00,,,,Hilgard 220,1,1,,empty value
-3921,kokee_21,1/24/2015," K. Gallardo, R. Gillespie, A. Rominger",beating,brown Cibotium,45,16:20,17:00,,,C,UHH,1,2,,misplaced value
-4445,kokee_21,7/20/2015,R. Gillespie,beating,Ilex anomala,10,11:00,,,,,Hilgard 220,2,1,,empty contingency
-9024,alili_14,8/20/2015," N. Graham, L. Polgar, B. Mathat, E. Tielens",pitfail,"  E. Tielens, B. Cote, A. Miller",,,,8/27/2015,,B,UHH,1,1,,misspelled value
-8081,kamakou_07,4/21/2016,"B. Cote, B. Cole",canopy malaise,"M. Stark, L. Villegas-Villeza",,,,7/14/2015,,up,Hilgard 220,2,1,,invalid date
-4484,kokee_21,10/7/2015,E. Tielens,beating,Ilex anomala,3,8:35,25:00,,,,Hilgard 220,2,1,,invalid time format
-7042,kokee_21,3/20/2015,L. Guo,beating,green Cibotium,20,14:30,16:00,,,,UHH,1,3,,invalid beatingduration
+9024,kohalaYng_10,9/18/2014,K. Jayd,InsectaZooka,,,,,,,A,UHH,1,1,,duplicate hdim
+4520,hippnet_13,12/8/2015,,pitfall,,,,,12/19/2015,,B,Hilgard 220,1,1,,empty value
+3921,treePlanting_05,1/24/2015," K. Gallardo, R. Gillespie, A. Rominger",beating,brown Cibotium,420,16:20,17:00,,,C,UHH,1,2,,misplaced value
+4445,thurston_04,7/20/2015,R. Gillespie,beating,Ilex anomala,420,11:00,,,,,Hilgard 220,2,1,,empty contingency
+9023,alili_14,8/20/2015," N. Graham, L. Polgar, B. Mathat, E. Tielens",pitfal,,,,,8/27/2015,,B,UHH,1,1,,misspelled value
+8081,kamakou_07,4/21/2016,"B. Cote, B. Cole",canopy malaise,white mid,,,,7/14/2015,,up,Hilgard 220,2,1,,invalid date
+4484,kokee_21,10/7/2015,E. Tielens,beating,Ilex anomala,420,8:35,25:00,,,,Hilgard 220,2,1,,invalid time format
+7042,waikamoi_36,3/20/2015,L. Guo,beating,green Cibotium,20,14:30,16:00,,,,UHH,1,3,,invalid beatingduration
