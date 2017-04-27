@@ -7,6 +7,6 @@ data('testData')
 check <- checkMisspell(testData)
 
 test_that('checkMisspell finds misspelled entries', {
-    expect_equal(check$Method, 9024)
+    expect_equal(check$errHDIM[gsub("\\..*", '', as.character(check$errMessage)) == 'misspelled'], 
+                 testData$HDIM[testData$ERROR == 'misspelled value'])
 })
-
