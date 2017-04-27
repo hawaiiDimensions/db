@@ -141,7 +141,7 @@
     } else if (grepl(pattern = '/', x = value)) {
         return('Change format to m/d/yyyy')
     } else if (grepl(pattern = ':', x = value)) {
-        return('Change format to 24-hour time')
+        return('Change format of TimeBegin or TimeEnd to 24-hour time')
     }
     return(NA)
 }
