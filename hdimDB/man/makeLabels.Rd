@@ -26,4 +26,3 @@ unique identifier (HDIM or EMEC number)
 \author{
 Andy Rominger <ajrominger@gmail.com>
 }
-

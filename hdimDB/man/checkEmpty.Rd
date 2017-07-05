@@ -21,4 +21,3 @@ Only relevant columns are fully checked for empty entries - factor columns conti
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-

@@ -21,4 +21,3 @@ The sum of all values in the BeatingDuration column for any given plot should eq
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-

@@ -21,4 +21,3 @@ Time entries will be checked, based on column name, for correct date and hour:mi
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-

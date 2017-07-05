@@ -23,4 +23,3 @@ Existing entries are compared against approved entries listed in the synonym tab
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-

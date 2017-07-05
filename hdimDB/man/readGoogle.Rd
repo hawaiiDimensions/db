@@ -21,4 +21,3 @@ The google sheet must be published as a csv.  The function forces strings to be 
 \author{
 Andy Rominger <ajrominger@gmail.com>
 }
-

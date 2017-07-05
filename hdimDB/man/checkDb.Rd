@@ -23,4 +23,3 @@ Developed specifically for the Dimensions in Biodiversity Evolab Database.
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-

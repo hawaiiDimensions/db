@@ -3,11 +3,11 @@
 \docType{data}
 \name{colEventsURL}
 \alias{colEventsURL}
+\alias{synPlotURL}
 \alias{synCollectURL}
 \alias{synMethodURL}
-\alias{synPitURL}
 \alias{synPlantURL}
-\alias{synPlotURL}
+\alias{synPitURL}
 \alias{synWhereURL}
 \title{URLs for collection events and synonym tables}
 \format{An object of class \code{character} of length 1.}
@@ -36,4 +36,3 @@ URLs for collection events and synonym tables
 Andy Rominger <ajrominger@gmail.com>
 }
 \keyword{datasets}
-

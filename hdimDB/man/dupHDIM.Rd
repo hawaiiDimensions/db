@@ -21,4 +21,3 @@ Only valid when called on a Dimensions Database with a column "HDIM"
 \author{
 Edward Greg Huang <edwardgh@berkeley.edu>
 }
-
